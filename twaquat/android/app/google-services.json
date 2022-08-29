@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "814454778107",
+    "project_id": "twaquat",
+    "storage_bucket": "twaquat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814454778107:android:3e6fb725ef9b37acd7e85e",
+        "android_client_info": {
+          "package_name": "com.example.twaquat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814454778107-a5vprpvr91ijnf7vb3ffkfhuco40sg9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0TYnh8d6kuzRFnZTUZXY5-dKfLluilBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814454778107-a5vprpvr91ijnf7vb3ffkfhuco40sg9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
