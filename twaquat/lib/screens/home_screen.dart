@@ -4,20 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 
-
-
-
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
-   int _currentIndex = 0;
-List<Widget> body = const[
-  Icon(Icons.home),
-  Icon(Icons.menu),
-  Icon(Icons.person),
-  
-];
-
+  final int _currentIndex = 0;
+  final List<Widget> body = const [
+    Icon(Icons.home),
+    Icon(Icons.menu),
+    Icon(Icons.person),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +43,11 @@ List<Widget> body = const[
             },
             text: 'Delete Account',
           ),
-        
-
-           CountryListPick(
-             appBar: AppBar(
-             backgroundColor: Colors.blue,
-             title: Text('Choisier un pays'),
+          CountryListPick(
+            appBar: AppBar(
+              backgroundColor: Colors.blue,
+              title: Text('Choisier un pays'),
             ),
-
-
-
             theme: CountryTheme(
               isShowFlag: true,
               isShowTitle: true,
@@ -65,25 +55,18 @@ List<Widget> body = const[
               isShowCode: true,
               showEnglishName: true,
             ),
-             
-             initialSelection: '+62',
-
-            onChanged: (CountryCode ?code) {
+            initialSelection: '+62',
+            onChanged: (CountryCode? code) {
               print(code!.name);
               print(code.code);
               print(code.dialCode);
               print(code.flagUri);
             },
-
             useUiOverlay: true,
-
             useSafeArea: true,
-         ),
-
+          ),
         ],
       ),
-      
     );
-    
   }
 }
