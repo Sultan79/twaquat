@@ -26,4 +26,26 @@ class Storage {
 
     return url!;
   }
+
+
+  Future<String> uploadFileGroup(
+    String filePath,
+    String fileName,
+  ) async {
+    File file = File(filePath);
+    String? url ;
+
+    try {
+      print('Group Image has been saved');
+      await firebase_storage.FirebaseStorage.instance
+          .ref('imageGroup/$fileName')
+          .putFile(file)
+          .then((p0) async => url = await p0.ref.getDownloadURL());
+    } on firebase_core.FirebaseException catch (e) {
+      print('e.message');
+      print(e.message);
+    }
+
+    return url!;
+  }
 }
