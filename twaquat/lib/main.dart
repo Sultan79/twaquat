@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twaquat/firebase_options.dart';
+import 'package:twaquat/screens/description-of-the-application-screen.dart';
 import 'package:twaquat/screens/groups_page.dart';
 import 'package:twaquat/screens/home_screen.dart';
 import 'package:twaquat/screens/login_email_password_screen.dart';
 import 'package:twaquat/screens/login_screen.dart';
+import 'package:twaquat/screens/settingsScreen.dart';
 import 'package:twaquat/screens/signup_email_password_screen.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twaquat/screens/creat_group.dart';
 import 'package:twaquat/screens/routing_screen.dart';
+import 'package:twaquat/screens/settings-screen-2.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +54,9 @@ class MyApp extends StatelessWidget {
           groupsPage.routeName:(context) =>  groupsPage(),
           HomeScreen.routeName:(context) => const HomeScreen(),
           CreateGroupScreen.routeName:(context) => const CreateGroupScreen(),
+          SettingScreen.routeName:(context) => const SettingScreen(),
+          Description_Of_The_Application.routeName:(context) => const Description_Of_The_Application(),
+          Settings.routeName:(context) => const Settings(),
           
         },
       ),

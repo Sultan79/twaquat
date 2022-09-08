@@ -12,34 +12,13 @@ class groupProfile extends StatelessWidget{
     return Padding(
      padding: const EdgeInsets.symmetric(vertical: 8.0),
      child: Container(
-      height: 400,
-      color: Color.fromARGB(255, 16, 98, 116),
+      height: 150,
+      color: Colors.deepPurple,
       child: Text(
         child,
-        style: TextStyle(fontSize: 40),
+        style: TextStyle(fontSize: 20),
       ),
      ),
-     
-     
-     
-     
-      // body: Column(
-      //   children: [
-      //     Expanded(
-      //     child: ListView.builder(
-      //       itemCount: _posts.length,
-      //       itemBuilder: (context, index) {
-      //         return groupProfile(
-      //           child: _posts[index],
-      //         );
-      //       },
-      //       )
-      //      )
-          
-          
-      //   ],
-      // ),
-
     );
   }
 }
