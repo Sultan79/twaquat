@@ -1,4 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/utils/showOTPDialog.dart';
 import 'package:twaquat/utils/showSnackbar.dart';
 import 'package:flutter/foundation.dart';
@@ -74,15 +80,33 @@ class FirebaseAuthMethods {
   // EMAIL VERIFICATION
   Future<void> sendEmailVerification(BuildContext context) async {
     try {
-      _auth.currentUser!.sendEmailVerification();
-      showSnackBar(context, 'Email verification sent!');
-      Navigator.pop(context);
+      // _auth.currentUser!.sendEmailVerification();
+      // DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore
+      //     .instance
+      //     .collection("users")
+      //     .doc(_auth.currentUser!.uid)
+      //     .get();
+      // Map<String, dynamic> userData = userDoc.data()!;
+      // Provider.of<UserDetails>(context,listen: false).setUserData(
+      //   id: userData["id"],
+      //   name: userData['userName'],
+      //   email: userData["userEmail"],
+      //   image: userData["url"],
+      //   firstCountry: userData["firstCountry"],
+      //   secondCountry: userData["secondCountry"],
+      //   thirdCountry: userData["thirdCountry"],
+      // points: userDoc.data()!["points"],
+      // rating: userDoc.data()!["rating"],
+      // correctGuess: userDoc.data()!["correctGuess"],
+      // wrongGuess: userDoc.data()!["wrongGuess"],
+      //);
+      showSnackBar(context, 'Logged in successfully');
+      // Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!); // Display error message
     }
   }
 
- 
   // ANONYMOUS SIGN IN
   Future<void> signInAnonymously(BuildContext context) async {
     try {

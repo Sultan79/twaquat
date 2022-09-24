@@ -2,7 +2,7 @@
     package="com.example.twaquat">
    <application
         android:label="twaquat"
-        android:name="${applicationName}"
+        android:name="Twaquat"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

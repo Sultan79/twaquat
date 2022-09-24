@@ -11,14 +11,18 @@ class Storage {
     String fileName,
   ) async {
     File file = File(filePath);
-    String? url ;
+    String? url;
 
     try {
       print('99999999');
       await firebase_storage.FirebaseStorage.instance
           .ref('imageHolder/$fileName')
           .putFile(file)
-          .then((p0) async => url = await p0.ref.getDownloadURL());
+          .then((p0) async => {
+                url = await p0.ref.getDownloadURL(),
+                print('Image has been uploaded')
+              });
+      ;
     } on firebase_core.FirebaseException catch (e) {
       print('e.message');
       print(e.message);
@@ -27,13 +31,12 @@ class Storage {
     return url!;
   }
 
-
   Future<String> uploadFileGroup(
     String filePath,
     String fileName,
   ) async {
     File file = File(filePath);
-    String? url ;
+    String? url;
 
     try {
       print('Group Image has been saved');
