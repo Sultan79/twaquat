@@ -4,11 +4,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:twaquat/services/user_details.dart';
+import 'package:twaquat/widgets/custom_filedText.dart';
 import 'package:twaquat/widgets/custom_textfield.dart';
 import '../services/fireStorage.dart';
 import '../services/firebase_auth_methods.dart';
 import 'package:twaquat/screens/groups_page.dart';
-
 
 class CreateGroupScreen extends StatefulWidget {
   const CreateGroupScreen({Key? key}) : super(key: key);
@@ -35,7 +37,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     String? url_plus;
     final Storage storage = Storage();
     url_plus = await uploadImage(context, storage);
-    
+
     FirebaseFirestore.instance
         .collection('group')
         .doc()
@@ -43,9 +45,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           'groupName': groupnameControllar.text.trim(),
           'descirption': descriptionControllar.text.trim(),
           'url': url_plus,
-          "users":[],
-          "isPlublic":check2,
-          "createdBy":FirebaseAuth.instance.currentUser!.uid,
+          "users": [context.read<UserDetails>().id],
+          "isPlublic": _selectedGroupType[0],
+          "createdBy": FirebaseAuth.instance.currentUser!.uid,
         })
         .then((value) => print("::::::::::::::::::::::::::::::::::::::::"))
         .catchError((error) => print("Failed to add user: $error"));
@@ -70,76 +72,153 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   }
 
   bool? check2 = true;
-  
+  final List<bool> _selectedGroupType = <bool>[false, true];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Title(color: Colors.black, child: const Text('Creat Group Page')),
-          Container(
-            padding: const EdgeInsets.all(34),
-            child: Column(
-              children: [
-                _image != null
-                    ? Image.file(
-                        _image!,
-                        width: 200,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      )
-                    : const FlutterLogo(size: 200)
-              ],
+      appBar: AppBar(
+        elevation: 0,
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        title: Text(
+          "Create a group",
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      ),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: () => pickImage(),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(1000),
+                child: Container(
+                  height: 150,
+                  width: 150,
+                  // padding: const EdgeInsets.all(34),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.primary),
+                    shape: BoxShape.circle,
+                  ),
+                  child: _image != null
+                      ? Image.file(
+                          _image!,
+                          fit: BoxFit.cover,
+                        )
+                      : const FlutterLogo(size: 200),
+                ),
+              ),
             ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromHeight(50),
-              primary: Colors.blue,
-              onPrimary: Colors.black,
-              textStyle: const TextStyle(fontSize: 20),
-            ),
-            child: Row(
-              children: const [
-                Icon(Icons.browse_gallery_rounded, size: 28),
-                SizedBox(width: 10),
-                Text('Pick Gallery'),
-              ],
-            ),
-            onPressed: () {
-              pickImage();
-            },
-          ),
-          const SizedBox(height: 20),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomTextField(
+            const SizedBox(height: 20),
+            CustomFiledText(
               controller: groupnameControllar,
-              hintText: 'Enter Group Name',
+              title: "Name",
+              hintText: "Enter your group name",
             ),
-          ),
-          const SizedBox(height: 30),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomTextField(
-              controller: descriptionControllar,
-              hintText: 'Write Description Here',
+            const SizedBox(height: 30),
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Description'),
+                  SizedBox(
+                    height: 13,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Colors.grey.shade300,
+                      ),
+                    ),
+                    width: 350,
+                    height: 160,
+                    child: TextField(
+                      controller: descriptionControllar,
+                      textAlignVertical: TextAlignVertical.top,
+                      minLines: 1,
+                      maxLines: 7,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        hintText:
+                            'Enter teh description related to your groub here',
+                        hintStyle: Theme.of(context).textTheme.labelLarge,
+                        fillColor: Colors.red,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          
-       CheckboxListTile( 
-               value: check2,
-               onChanged: (bool? value) {  
-           setState(() {
-                 check2 = value;
-            });
-          },
-          title: Text("Click to make the group private"),
-         ),
-       ElevatedButton(onPressed: () {createGroup();}, child: const Text('Supmit Group'),),
-        
-        ElevatedButton(onPressed: (){ Navigator.pop(context); }, child: const Text('Groups Page')),
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Row(
+                children: [
+                  Text(
+                    "Groub Type",
+                  ),
+                ],
+              ),
+            ),
+            ToggleButtons(
+              direction: Axis.horizontal,
+              onPressed: (int index) {
+                setState(() {
+                  // The button that is tapped is set to true, and the others to false.
+                  for (int i = 0; i < _selectedGroupType.length; i++) {
+                    _selectedGroupType[i] = i == index;
+                  }
+                });
+              },
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              selectedBorderColor: Theme.of(context).colorScheme.primary,
+              selectedColor: Colors.white,
+              fillColor: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary,
+              constraints: const BoxConstraints(
+                minHeight: 50.0,
+                minWidth: 175.0,
+              ),
+              children: <Widget>[Text('Public Groub'), Text('Private Group')],
+              isSelected: _selectedGroupType,
+            ),
+            SizedBox(
+              height: 35,
+            ),
+            SizedBox(
+              height: 60,
+              width: 350,
+              child: ElevatedButton(
+                onPressed: () {
+                  createGroup();
+                },
+                child: Text(
+                  'Supmit Group',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 35,
+            ),
+          ],
+        ),
       ),
     );
   }

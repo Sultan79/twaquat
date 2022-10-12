@@ -74,9 +74,9 @@ class _Signup_ScreenState extends State<Signup_Screen> {
             {
               'userName': usernameControllar.text,
               'userEmail': emailController.text,
-              'firstCountry': flags['flag1'],
-              'secondCountry': flags['flag2'],
-              'thirdCountry': flags['flag3'],
+              'myCuntry': flags['flag1'],
+              'firstWinner': flags['flag2'],
+              'secondWinner': flags['flag3'],
               'id': auth.currentUser!.uid,
               'url': url_plus!,
               'correctGuess': 0,
@@ -110,104 +110,128 @@ class _Signup_ScreenState extends State<Signup_Screen> {
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              runSpacing: 25,
-              children: [
-                InkWell(
-                  onTap: () => pickImage(),
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(150),
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          color: Colors.white,
-                          child: _image != null
-                              ? Image.file(
-                                  _image!,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  "assets/images/avatar2.png",
-                                ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: Container(
-                          // padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 40.0),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                runSpacing: 25,
+                spacing: 1000,
+                children: [
+                  InkWell(
+                    onTap: () => pickImage(),
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(150),
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            color: Colors.white,
+                            child: _image != null
+                                ? Image.file(
+                                    _image!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    "assets/images/avatar2.png",
+                                  ),
                           ),
-                          child: SvgPicture.asset('assets/svg/Exclude.svg'),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 10,
+                          child: Container(
+                            // padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: SvgPicture.asset('assets/svg/Exclude.svg'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  CustomFiledText(
+                    controller: usernameControllar,
+                    title: 'Name',
+                    hintText: 'Enter your name here',
+                  ),
+                  CustomFiledText(
+                    controller: emailController,
+                    title: 'Email',
+                    hintText: 'Enter your email here',
+                  ),
+                  CustomFiledText(
+                    controller: passwordController,
+                    title: 'Password',
+                    hintText: 'Enter your password here',
+                  ),
+                  FlagsDropDown(
+                    data: 1,
+                    hint: "Pick one ",
+                    title: 'Pick your Country',
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      'Pick your predictions fow World Cup winner',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FlagsDropDown(
+                          data: 2,
+                          width: 100,
+                          hint: "Pick",
+                          title: 'First ',
+                        ),
+                        SizedBox(
+                          width: 100,
+                        ),
+                        FlagsDropDown(
+                          data: 3,
+                          width: 100,
+                          hint: "Pick",
+                          title: 'Second',
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      TextButton(
+                        onPressed: () =>
+                            Navigator.pushReplacementNamed(context, '/'),
+                        child: Text('Login'),
+                      ),
+                      SizedBox(
+                        height: 60,
+                        width: 350,
+                        child: ElevatedButton(
+                          onPressed: signUpUser,
+                          child: Text(
+                            "Sign Up",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(color: Colors.white),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                CustomFiledText(
-                  controller: usernameControllar,
-                  title: 'Name',
-                  hintText: 'Enter your name here',
-                ),
-                CustomFiledText(
-                  controller: emailController,
-                  title: 'Email',
-                  hintText: 'Enter your email here',
-                ),
-                CustomFiledText(
-                  controller: passwordController,
-                  title: 'Password',
-                  hintText: 'Enter your password here',
-                ),
-                FlagsDropDown(
-                  data: 1,
-                  hint: "Pick one ",
-                  title: 'First Country to Win',
-                ),
-                FlagsDropDown(
-                  data: 2,
-                  hint: "Pick one ",
-                  title: 'Second Country to Win',
-                ),
-                FlagsDropDown(
-                  data: 3,
-                  hint: "Pick one ",
-                  title: 'Third Country to Win',
-                ),
-                Column(
-                  children: [
-                    TextButton(
-                      onPressed: () =>
-                          Navigator.pushReplacementNamed(context, '/'),
-                      child: Text('Login'),
-                    ),
-                    SizedBox(
-                      height: 60,
-                      width: 350,
-                      child: ElevatedButton(
-                        onPressed: signUpUser,
-                        child: Text(
-                          "Sign Up",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -54,6 +54,12 @@ final twaquatThemeData = ThemeData(
       fontSize: 12,
       color: Colors.black,
     ),
+    labelSmall: TextStyle(
+      fontSize: 12,
+      letterSpacing: 1,
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+    ),
   ),
   snackBarTheme: SnackBarThemeData(
     backgroundColor: primaryColor(),

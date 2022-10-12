@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.twaquat">
    <application
-        android:label="twaquat"
-        android:name="Twaquat"
+        android:label="Twaquat"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

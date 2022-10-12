@@ -7,9 +7,9 @@ class UserDetails extends ChangeNotifier {
   String? name;
   String? email;
   String? image;
-  String? firstCountry;
-  String? secondCountry;
-  String? thirdCountry;
+  String? myCuntry;
+  String? firstWinner;
+  String? secondWinner;
   num? points;
   num? correctGuess;
   num? wrongGuess;
@@ -19,9 +19,9 @@ class UserDetails extends ChangeNotifier {
     this.name,
     this.email,
     this.image,
-    this.firstCountry,
-    this.secondCountry,
-    this.thirdCountry,
+    this.myCuntry,
+    this.firstWinner,
+    this.secondWinner,
     this.points,
     this.correctGuess,
     this.wrongGuess,
@@ -46,9 +46,9 @@ class UserDetails extends ChangeNotifier {
       name: name ?? this.name,
       email: email ?? this.email,
       image: image ?? this.image,
-      firstCountry: firstCountry ?? this.firstCountry,
-      secondCountry: secondCountry ?? this.secondCountry,
-      thirdCountry: thirdCountry ?? this.thirdCountry,
+      myCuntry: firstCountry ?? this.myCuntry,
+      firstWinner: secondCountry ?? this.firstWinner,
+      secondWinner: thirdCountry ?? this.secondWinner,
       points: points ?? this.points,
       correctGuess: correctGuess ?? this.correctGuess,
       wrongGuess: wrongGuess ?? this.wrongGuess,
@@ -62,9 +62,9 @@ class UserDetails extends ChangeNotifier {
       'name': name,
       'email': email,
       'image': image,
-      'firstCountry': firstCountry,
-      'secondCountry': secondCountry,
-      'thirdCountry': thirdCountry,
+      'firstCountry': myCuntry,
+      'secondCountry': firstWinner,
+      'thirdCountry': secondWinner,
       'points': points,
       'correctGuess': correctGuess,
       'wrongGuess': wrongGuess,
@@ -78,9 +78,9 @@ class UserDetails extends ChangeNotifier {
       name: map['name'],
       email: map['email'],
       image: map['image'],
-      firstCountry: map['firstCountry'],
-      secondCountry: map['secondCountry'],
-      thirdCountry: map['thirdCountry'],
+      myCuntry: map['firstCountry'],
+      firstWinner: map['secondCountry'],
+      secondWinner: map['thirdCountry'],
       points: map['points'],
       correctGuess: map['correctGuess'],
       wrongGuess: map['wrongGuess'],
@@ -95,7 +95,7 @@ class UserDetails extends ChangeNotifier {
 
   @override
   String toString() {
-    return 'UserDetails(id: $id, name: $name, email: $email, image: $image, firstCountry: $firstCountry, secondCountry: $secondCountry, thirdCountry: $thirdCountry, points: $points, correctGuess: $correctGuess, wrongGuess: $wrongGuess, rating: $rating)';
+    return 'UserDetails(id: $id, name: $name, email: $email, image: $image, firstCountry: $myCuntry, secondCountry: $firstWinner, thirdCountry: $secondWinner, points: $points, correctGuess: $correctGuess, wrongGuess: $wrongGuess, rating: $rating)';
   }
 
   @override
@@ -107,9 +107,9 @@ class UserDetails extends ChangeNotifier {
         other.name == name &&
         other.email == email &&
         other.image == image &&
-        other.firstCountry == firstCountry &&
-        other.secondCountry == secondCountry &&
-        other.thirdCountry == thirdCountry &&
+        other.myCuntry == myCuntry &&
+        other.firstWinner == firstWinner &&
+        other.secondWinner == secondWinner &&
         other.points == points &&
         other.correctGuess == correctGuess &&
         other.wrongGuess == wrongGuess &&
@@ -122,9 +122,9 @@ class UserDetails extends ChangeNotifier {
         name.hashCode ^
         email.hashCode ^
         image.hashCode ^
-        firstCountry.hashCode ^
-        secondCountry.hashCode ^
-        thirdCountry.hashCode ^
+        myCuntry.hashCode ^
+        firstWinner.hashCode ^
+        secondWinner.hashCode ^
         points.hashCode ^
         correctGuess.hashCode ^
         wrongGuess.hashCode ^
@@ -144,14 +144,13 @@ class UserDetails extends ChangeNotifier {
     num? wrongGuess,
     num? rating,
   }) {
-
     this.id = id ?? this.id;
     this.name = name ?? this.name;
     this.email = email ?? this.email;
     this.image = image ?? this.image;
-    this.firstCountry = firstCountry ?? this.firstCountry;
-    this.secondCountry = secondCountry ?? this.secondCountry;
-    this.thirdCountry = thirdCountry ?? this.thirdCountry;
+    this.myCuntry = firstCountry ?? this.myCuntry;
+    this.firstWinner = secondCountry ?? this.firstWinner;
+    this.secondWinner = thirdCountry ?? this.secondWinner;
     this.points = points ?? this.points;
     this.correctGuess = correctGuess ?? this.correctGuess;
     this.wrongGuess = wrongGuess ?? this.wrongGuess;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twaquat/widgets/nav_bar/floating_navbar_item.dart';
 
 typedef Widget ItemBuilder(
@@ -41,7 +42,7 @@ class FloatingNavbar extends StatefulWidget {
     this.width = double.infinity,
     this.elevation = 0.0,
   })  : assert(items.length > 1),
-        assert(items.length <= 5),
+        assert(items.length <= 6),
         assert(currentIndex <= items.length),
         assert(width > 50),
         this.itemBuilder = itemBuilder ??
@@ -128,7 +129,7 @@ ItemBuilder _defaultItemBuilder({
               children: [
                 AnimatedContainer(
                   width: 35,
-                  duration: Duration(milliseconds: 1),
+                  duration: Duration(milliseconds: 100),
                   decoration: BoxDecoration(
                       color: currentIndex == index
                           ? selectedBackgroundColor
@@ -152,12 +153,14 @@ ItemBuilder _defaultItemBuilder({
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           item.customWidget == null
-                              ? Icon(
+                              ? SvgPicture.asset(
                                   item.icon,
                                   color: currentIndex == index
                                       ? selectedItemColor
-                                      : unselectedItemColor,
-                                  size: iconSize,
+                                      : item.title == 'Admin'
+                                          ? Colors.amber.shade700
+                                          : unselectedItemColor,
+                                  height: iconSize,
                                 )
                               : item.customWidget!,
                         ],
@@ -172,8 +175,10 @@ ItemBuilder _defaultItemBuilder({
                       '${item.title}',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: fontSize,
-                      ),
+                          fontSize: fontSize,
+                          color: item.title != 'Admin'
+                              ? null
+                              : Colors.amber.shade700),
                     ),
                   ),
               ],

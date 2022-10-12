@@ -1,21 +1,11 @@
-import 'dart:convert';
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
-import 'package:twaquat/screens/creat_group.dart';
 import 'package:dio/dio.dart';
 import 'package:twaquat/screens/quiz_screen.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/widgets/account_card.dart';
-import 'package:twaquat/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:country_list_pick/country_list_pick.dart';
-import 'package:twaquat/widgets/groupProfile.dart';
-import 'package:twaquat/screens/groups_page.dart';
-import 'package:twaquat/widgets/match_result_card.dart';
 import 'package:twaquat/widgets/voting_match_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic>? userData;
   Response? firstNextGame;
   Response? twoLastGame;
-  Future<Response<dynamic>?> getUpcomingFixture() async {
+
+  Future<Response<dynamic>?> getTodayFixture() async {
     var dio = Dio();
     dio.options.headers['Content-Type'] = 'application/json';
     dio.options.headers['x-rapidapi-key'] = '96e6716660c4e9cbeb2ace74e71c2af5';
@@ -39,30 +30,31 @@ class _HomeScreenState extends State<HomeScreen> {
         'league': 1,
         'season': 2022,
         'timezone': 'Asia/Riyadh',
-        'next': 1
+        'date': '2022-11-21' //DateTime.now().toString().substring(0, 10)
       },
     );
   }
 
-  Future<Response<dynamic>?> getLastTwoFixture() async {
-    var dio = Dio();
-    dio.options.headers['Content-Type'] = 'application/json';
-    dio.options.headers['x-rapidapi-key'] = '96e6716660c4e9cbeb2ace74e71c2af5';
-    return twoLastGame = await dio.get(
-      'https://v3.football.api-sports.io/fixtures',
-      queryParameters: {
-        'league': 1,
-        'season': 2018,
-        'timezone': 'Asia/Riyadh',
-        'last': 2
-      },
-    );
-  }
+  // Future<Response<dynamic>?> getLastTwoFixture() async {
+  //   var dio = Dio();
+  //   dio.options.headers['Content-Type'] = 'application/json';
+  //   dio.options.headers['x-rapidapi-key'] = '96e6716660c4e9cbeb2ace74e71c2af5';
+  //   return twoLastGame = await dio.get(
+  //     'https://v3.football.api-sports.io/fixtures',
+  //     queryParameters: {
+  //       'league': 1,
+  //       'season': 2018,
+  //       'timezone': 'Asia/Riyadh',
+  //       'last': 2
+  //     },
+  //   );
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('2022-11-21');
     getUserData();
   }
 
@@ -78,9 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
           name: userData['userName'],
           email: userData["userEmail"],
           image: userData["url"],
-          firstCountry: userData["firstCountry"],
-          secondCountry: userData["secondCountry"],
-          thirdCountry: userData["thirdCountry"],
+          firstCountry: userData["myCuntry"],
+          secondCountry: userData["firstWinner"],
+          thirdCountry: userData["secondWinner"],
           points: userDoc.data()!["points"],
           rating: userDoc.data()!["rating"],
           correctGuess: userDoc.data()!["correctGuess"],
@@ -91,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Center(
@@ -108,15 +102,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? AccountCard(
                           name: context.read<UserDetails>().name!,
                           image: context.read<UserDetails>().image!,
-                          firestTeam: context.read<UserDetails>().firstCountry!,
-                          seacondTeam:
-                              context.read<UserDetails>().secondCountry!,
-                          thirdTeam: context.read<UserDetails>().thirdCountry!,
+                          firestTeam: context.read<UserDetails>().myCuntry!,
+                          seacondTeam: context.read<UserDetails>().firstWinner!,
+                          thirdTeam: context.read<UserDetails>().secondWinner!,
                           points:
                               context.read<UserDetails>().points!.toString(),
                           correctGuess: context
                               .read<UserDetails>()
                               .correctGuess!
+                              .toString(),
+                          wrongGuess: context
+                              .read<UserDetails>()
+                              .wrongGuess!
                               .toString(),
                           rating:
                               context.read<UserDetails>().rating!.toDouble(),
@@ -143,128 +140,97 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Image.asset('assets/images/football.png'),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Upcoming matches'),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0,
+                        vertical: 5,
                       ),
-                    ],
-                  ),
-                ),
-                // SizedBox(
-                //   height: 150,
-                //   child: FutureBuilder(
-                //     future: getUpcomingFixture(),
-                //     builder: (context, snapshot) {
-                //       switch (snapshot.connectionState) {
-                //         case ConnectionState.waiting:
-                //           return Text('Loading....');
-                //         default:
-                //           if (snapshot.hasError)
-                //             return Text('Error: ${snapshot.error}');
-                //           else {
-                //             Response data = snapshot.data! as Response;
-                //             if (data.data['errors'].toString().isEmpty) {
-                //               return Text(
-                //                 'Error: ${data.data['errors']['requests']}',
-                //                 textAlign: TextAlign.center,
-                //                 style: Theme.of(context).textTheme.bodySmall,
-                //               );
-                //             } else {
-                //               String date =
-                //                   data.data['response'][0]['fixture']['date'];
-                //               return Column(
-                //                 children: [
-                //                   VotingMatchCard(
-                //                     firstTeam: data.data['response'][0]['teams']
-                //                         ['home']['name'],
-                //                     secondTeam: data.data['response'][0]
-                //                         ['teams']['away']['name'],
-                //                     date: date.split('T').first,
-                //                     time: DateFormat.jm()
-                //                         .format(DateTime.parse(date)),
-                //                     fexture: data.data['response'][0]['fixture']
-                //                         ['id'],
-                //                   ),
-                //                 ],
-                //               );
-                //             }
-                //           }
-                //       }
-                //     },
-                //   ),
-                // ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Last Two Matches'),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Upcoming matches for Today'),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 205 * 3,
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              children: [
+                                VotingMatchCard(),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                // SizedBox(
-                //   height: 185 * 2.5,
-                //   child: FutureBuilder(
-                //     future: getLastTwoFixture(),
-                //     builder: (context, snapshot) {
-                //       switch (snapshot.connectionState) {
-                //         case ConnectionState.waiting:
-                //           return Text('Loading....');
-                //         default:
-                //           if (snapshot.hasError)
-                //             return Text('Error: ${snapshot.error}');
-                //           else {
-                //             Response? data = snapshot.data! as Response?;
-                //             if (data!.data['errors'].toString().isEmpty) {
-                //               return Text(
-                //                 'Error: ${data.data['errors']['requests']}',
-                //                 textAlign: TextAlign.center,
-                //                 style: Theme.of(context).textTheme.bodySmall,
-                //               );
-                //             } else {
-                //               return ListView.builder(
+                SizedBox(
+                  height: 100,
+                ),
+                // FutureBuilder(
+                //   future: getTodayFixture(),
+                //   builder: (context, snapshot) {
+                //     switch (snapshot.connectionState) {
+                //       case ConnectionState.waiting:
+                //         return Text('Loading....');
+                //       default:
+                //         if (snapshot.hasError)
+                //           return Text('Error: ${snapshot.error}');
+                //         else {
+                //           Response? data = snapshot.data! as Response?;
+                //           if (data!.data['errors'].toString().isEmpty) {
+                //             return Text(
+                //               'Error: ${data.data['errors']['requests']}',
+                //               textAlign: TextAlign.center,
+                //               style: Theme.of(context).textTheme.bodySmall,
+                //             );
+                //           } else {
+                //             var response = data.data['response'];
+                //             return SizedBox(
+                //               height: 170 *
+                //                   double.parse(response.length.toString()),
+                //               child: ListView.builder(
                 //                 physics: NeverScrollableScrollPhysics(),
-                //                 itemCount: 2,
+                //                 itemCount: response.length,
                 //                 itemBuilder: (context, index) {
-                //                   String date = twoLastGame!.data['response']
-                //                       [index]['fixture']['date'];
+                //                   String date =
+                //                       response[index]['fixture']['date'];
                 //                   return Container(
                 //                     margin: EdgeInsets.symmetric(vertical: 10),
                 //                     child: Column(
                 //                       children: [
-                //                         MatchResultCard(
-                //                           firstTeam: twoLastGame!
-                //                                   .data['response'][index]
-                //                               ['teams']['home']['name'],
-                //                           secondTeam: twoLastGame!
-                //                                   .data['response'][index]
-                //                               ['teams']['away']['name'],
+                //                         VotingMatchCard(
+                //                           firstTeam: response[index]['teams']
+                //                               ['home']['name'],
+                //                           secondTeam: response[index]['teams']
+                //                               ['away']['name'],
                 //                           date: date.split('T').first,
                 //                           time: DateFormat.jm()
                 //                               .format(DateTime.parse(date)),
-                //                           fexture: data.data['response'][index]
-                //                               ['fixture']['id'],
-                //                           firstTeamScore: data.data['response']
-                //                               [index]['goals']['home'],
-                //                           secondTeamScore: data.data['response']
-                //                               [index]['goals']['away'],
+                //                           fexture: response[index]['fixture']
+                //                               ['id'],
                 //                         ),
                 //                       ],
                 //                     ),
                 //                   );
                 //                 },
-                //               );
-                //             }
+                //               ),
+                //             );
                 //           }
-                //       }
-                //     },
-                //   ),
+                //         }
+                //     }
+                //   },
                 // ),
               ],
             ),

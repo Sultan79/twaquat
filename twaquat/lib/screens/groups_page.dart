@@ -1,51 +1,113 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:twaquat/screens/creat_group.dart';
+import 'package:twaquat/screens/group_room_screen.dart';
+import 'package:twaquat/services/user_details.dart';
+import 'package:twaquat/widgets/groub_widget.dart';
 import 'package:twaquat/widgets/groupProfile.dart';
 
-class groupsPage extends StatelessWidget {
+class GroupsPage extends StatefulWidget {
   static String routeName = '/groupsPage';
-  groupsPage({Key? key}) : super(key: key);
+  GroupsPage({Key? key}) : super(key: key);
 
+  @override
+  State<GroupsPage> createState() => _GroupsPageState();
+}
+
+class _GroupsPageState extends State<GroupsPage> {
   final List _posts = ['profile 1', 'profile 2', 'profile 3', 'profile 4'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.only(top: 25.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () =>
-                      Navigator.pushNamed(context, CreateGroupScreen.routeName),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-                ),
-              ),
-              Title(color: Colors.purple, child: const Text('Groups')),
-            ],
+        appBar: AppBar(
+          elevation: 0,
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          title: Text(
+            "Groubs",
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: _posts.length,
-                itemBuilder: (context, index) {
-                  return groupProfile(
-                    child: _posts[index],
-                  );
-                }),
-          )
-        ],
-      ),
-    ));
+        ),
+        body: Padding(
+          padding: EdgeInsets.only(top: 25.0),
+          child: SafeArea(
+            bottom: false,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      width: 170,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Companies joing'),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                      width: 170,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pushNamed(
+                            context, CreateGroupScreen.routeName),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.black),
+                          side: MaterialStateProperty.all(
+                              BorderSide(color: Colors.grey.shade300)),
+                        ),
+                        child: Text('Create a group'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    future: FirebaseFirestore.instance
+                        .collection('group')
+                        .where('users',
+                            arrayContains: context.read<UserDetails>().id)
+                        .get(),
+                    builder: (context, snapshot) {
+                      return Expanded(
+                        child: ListView.builder(
+                            itemCount: snapshot.data!.size,
+                            itemExtent: 120,
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> doc =
+                                  snapshot.data!.docs[index].data();
+                              String id = snapshot.data!.docs[index].id;
+                              return GroupWidget(
+                                onClick: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GroupRoomScreen(
+                                            id: id,
+                                            doc: doc,
+                                          )),
+                                ),
+                                GroupName: doc['groupName'],
+                                GroupDescription: doc['descirption'],
+                                url: doc['url'],
+                                NumberOfMembers: doc['users'].length.toString(),
+                                isPublic: doc['isPlublic'],
+                              );
+                            }),
+                      );
+                    })
+              ],
+            ),
+          ),
+        ));
   }
 }
+
+

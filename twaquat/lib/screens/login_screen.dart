@@ -29,21 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: Text(
-          "Login",
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-      ),
       body: Align(
         alignment: Alignment.center,
         child: Wrap(
           alignment: WrapAlignment.center,
           runSpacing: 25,
+          spacing: 1000,
           children: [
             const Text(
               "Login",

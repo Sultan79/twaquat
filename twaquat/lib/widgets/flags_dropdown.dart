@@ -4,10 +4,11 @@ import 'package:twaquat/services/dropDown_flags.dart';
 
 class FlagsDropDown extends StatefulWidget {
   const FlagsDropDown(
-      {super.key, required this.hint, required this.title, required this.data});
+      {super.key, required this.hint, required this.title, this.width = 350,required this.data});
 
   final String hint;
   final String title;
+  final double width;
   final data;
   @override
   State<FlagsDropDown> createState() => _FlagsDropDownState();
@@ -62,7 +63,7 @@ class _FlagsDropDownState extends State<FlagsDropDown> {
         ),
         SizedBox(
           height: 60,
-          width: 350,
+          width: widget.width,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: Colors.white,

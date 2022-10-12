@@ -3,22 +3,37 @@
 import 'package:flutter/material.dart';
 
 class CustomTabWidget extends StatelessWidget {
-  const CustomTabWidget({
+  CustomTabWidget({
+    this.tabss = const [
+      Tab(
+        text: 'Ranking',
+      ),
+      Tab(
+        text: "Alart",
+      ),
+      Tab(
+        text: 'Deications',
+      ),
+    ],
+    required this.children,
     Key? key,
   }) : super(key: key);
 
+  final List<Tab> tabss;
+  List<Widget> children;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: tabss.length,
       child: Scaffold(
         body: SafeArea(
+          bottom: false,
           child: Column(
             children: [
               Container(
-                height: 50,
-                width: 300,
-                padding: EdgeInsets.all(6),
+                height: 60,
+                width: 350,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -32,39 +47,16 @@ class CustomTabWidget extends StatelessWidget {
                   indicator: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(15),
-                    // border: Border.all(
-                    //   width: 15,
-                    //   color: Colors.blue,
-                    // ),
                   ),
-                  tabs: [
-                    Tab(
-                      text: 'Ranking',
-                    ),
-                    Tab(
-                      text: "Alart",
-                    ),
-                    Tab(
-                      text: 'Deications',
-                    ),
-                  ],
+                  tabs: tabss,
                 ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Expanded(
                 child: TabBarView(
-                  children: [
-                    ListView.builder(
-                      itemCount: 100,
-                      itemBuilder: (context, index) => Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Center(
-                          child: Text('Ranking ${index}'),
-                        ),
-                      ),
-                    ),
-                    Container(child: Center(child: Text('Alart'))),
-                    Container(child: Center(child: Text('De'))),
-                  ],
+                  children: children,
                 ),
               )
             ],

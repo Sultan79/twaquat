@@ -40,6 +40,8 @@ class CustomFiledText extends StatelessWidget {
               controller: controller,
               textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
                 hintText: hintText,
                 hintStyle: Theme.of(context).textTheme.labelLarge,
                 fillColor: Colors.red,

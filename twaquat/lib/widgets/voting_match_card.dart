@@ -15,14 +15,14 @@ class VotingMatchCard extends StatefulWidget {
     this.secondTeam = 'Saudi Arabia',
     this.time = '07:15',
     this.date = '2022/08/22',
-    this.fexture = 1,
+    this.fixture = 1,
   }) : super(key: key);
 
   final String firstTeam;
   final String secondTeam;
   final String time;
   final String date;
-  final int fexture;
+  final int fixture;
 
   @override
   State<VotingMatchCard> createState() => _VotingMatchCardState();
@@ -31,6 +31,9 @@ class VotingMatchCard extends StatefulWidget {
 class _VotingMatchCardState extends State<VotingMatchCard> {
   int firstTeamScore = 0;
   int secondTeamScore = 0;
+  int firstTeamVotes = 0;
+  int secondTeamVotes = 0;
+  int drawVotes = 0;
 
   @override
   void initState() {
@@ -44,21 +47,38 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
         .collection('users')
         .doc(context.read<FirebaseAuthMethods>().user.uid)
         .collection("predictions")
-        .doc(widget.fexture.toString())
+        .doc(widget.fixture.toString())
         .get();
+    var fbFixture = await FirebaseFirestore.instance
+        .collection('fixtures')
+        .doc(widget.fixture.toString())
+        .collection('predictions')
+        .get();
+
+    for (var doc in fbFixture.docs) {
+      if (doc['votingFor'] == "HOME") {
+        firstTeamVotes += 1;
+      } else if (doc['votingFor'] == "AWAY") {
+        secondTeamVotes += 1;
+      } else if (doc['votingFor'] == "DRAW") {
+        drawVotes += 1;
+      }
+      print(doc['votingFor']);
+    }
+
     if (lastSavePredictoin != null) {
       firstTeamScore = lastSavePredictoin.data()!['home'];
       secondTeamScore = lastSavePredictoin.data()!['away'];
-      setState(() {});
     }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
+      height: 185,
       width: 350,
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -77,15 +97,17 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                     VotingButton(
                       ontapFunction: () {
                         firstTeamScore++;
-                        print(firstTeamScore);
+                        // print(firstTeamScore);
                         savePrediction(context);
                         setState(() {});
                       },
                     ),
                     VotingButton(
                         ontapFunction: () {
-                          firstTeamScore--;
-                          print(firstTeamScore);
+                          if (firstTeamScore > 0) {
+                            firstTeamScore--;
+                          }
+                          // print(firstTeamScore);
 
                           savePrediction(context);
                           setState(() {});
@@ -135,7 +157,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                     VotingButton(
                       ontapFunction: () {
                         secondTeamScore++;
-                        print(secondTeamScore);
+                        // print(secondTeamScore);
 
                         savePrediction(context);
                         setState(() {});
@@ -143,8 +165,10 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                     ),
                     VotingButton(
                         ontapFunction: () {
-                          secondTeamScore--;
-                          print(secondTeamScore);
+                          if (secondTeamScore > 0) {
+                            secondTeamScore--;
+                          }
+                          // print(secondTeamScore);
 
                           savePrediction(context);
                           setState(() {});
@@ -247,20 +271,191 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
               ],
             ),
           ),
+          Divider(
+            height: 1,
+          ),
+          SizedBox(
+            height: 35 + 10,
+            width: 350,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: 115,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // SvgPicture.asset(
+                      //   'assets/svg/Document.svg',
+                      //   height: 17,
+                      // ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 80,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.firstTeam,
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "$firstTeamVotes",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: Colors.grey,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                VerticalDivider(
+                  color: Colors.grey.shade300,
+                  width: 1,
+                ),
+                SizedBox(
+                  width: 115,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // SvgPicture.asset(
+                      //   'assets/svg/HandsClapping.svg',
+                      //   height: 20,
+                      // ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Draw',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            "$drawVotes",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: Colors.green,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                VerticalDivider(
+                  color: Colors.grey.shade300,
+                  width: 1,
+                ),
+                SizedBox(
+                  width: 115,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // SvgPicture.asset(
+                      //   'assets/svg/HandFist.svg',
+                      //   height: 20,
+                      // ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 80,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.secondTeam,
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "$secondTeamVotes",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: Colors.red,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
   }
 
-  Future<void> savePrediction(BuildContext context) {
-    return FirebaseFirestore.instance
+  Future<void> savePrediction(BuildContext context) async {
+    await FirebaseFirestore.instance
         .collection('users')
         .doc(context.read<FirebaseAuthMethods>().user.uid)
         .collection("predictions")
-        .doc(widget.fexture.toString())
+        .doc(widget.fixture.toString())
         .set({
       "home": firstTeamScore,
       "away": secondTeamScore,
     }, SetOptions(merge: true));
+
+    var fbFixture = FirebaseFirestore.instance
+        .collection('fixtures')
+        .doc(widget.fixture.toString())
+        .collection('predictions')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+
+    if (firstTeamScore == secondTeamScore) {
+      fbFixture.set(
+        {
+          'votingFor': "DRAW",
+        },
+        SetOptions(merge: true),
+      );
+    } else if (firstTeamScore > secondTeamScore) {
+      fbFixture.set(
+        {
+          'votingFor': "HOME",
+        },
+        SetOptions(merge: true),
+      );
+    } else if (firstTeamScore < secondTeamScore) {
+      fbFixture.set(
+        {
+          'votingFor': "AWAY",
+        },
+        SetOptions(merge: true),
+      );
+    }
   }
 }

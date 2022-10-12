@@ -71,119 +71,197 @@ class _MatchResultCardState extends State<MatchResultCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 185,
+      height: 225 + 10,
       width: 350,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.grey.shade300),
       ),
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: Column(
+          SizedBox(
+            height: 185,
+            child: Row(
               children: [
                 Expanded(
-                  flex: 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  child: Column(
                     children: [
-                      SvgPicture.asset(
-                        'assets/matchesFlags/${widget.firstTeam}.svg',
-                        colorBlendMode: BlendMode.colorBurn,
-                        height: 65,
+                      Expanded(
+                        flex: 3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/matchesFlags/${widget.firstTeam}.svg',
+                              colorBlendMode: BlendMode.colorBurn,
+                              height: 65,
+                            ),
+                            SvgPicture.asset('assets/svg/vs.svg',
+                                color: Colors.green),
+                            SvgPicture.asset(
+                              'assets/matchesFlags/${widget.secondTeam}.svg',
+                              colorBlendMode: BlendMode.colorBurn,
+                              height: 65,
+                            ),
+                          ],
+                        ),
                       ),
-                      SvgPicture.asset('assets/svg/vs.svg',
-                          color: Colors.green),
-                      SvgPicture.asset(
-                        'assets/matchesFlags/${widget.secondTeam}.svg',
-                        colorBlendMode: BlendMode.colorBurn,
-                        height: 65,
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 40,
+                          width: 175,
+                          margin: EdgeInsets.only(top: 5),
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            // borderRadius: BorderRadius.only(
+                            //   bottomLeft: Radius.circular(15),
+                            // ),
+                          ),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  widget.firstTeam,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(color: Colors.white),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/vs.svg',
+                                  ),
+                                ),
+                                Text(
+                                  widget.secondTeam,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 40,
-                    width: 175,
-                    margin: EdgeInsets.only(top: 5),
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(15))),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            widget.firstTeam,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(color: Colors.white),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: SvgPicture.asset(
-                              'assets/svg/vs.svg',
-                            ),
-                          ),
-                          Text(
-                            widget.secondTeam,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                VerticalDivider(
+                  color: Colors.grey.shade300,
+                  width: 1,
                 ),
-              ],
-            ),
-          ),
-          VerticalDivider(
-            color: Colors.grey.shade300,
-            width: 1,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Align(
-                  alignment: Alignment.center,
+                Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text('Anticipation'),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        width: 125,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.grey.shade300),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Anticipation'),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              height: 40,
+                              width: 125,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: Colors.grey.shade300),
+                              ),
+                              child: firstTeamAnticipationScore != null
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          "${firstTeamAnticipationScore.toString()}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  color: firstTeamAnticipationScore! >
+                                                          secondTeamAnticipationScore!
+                                                      ? Colors.green
+                                                      : Colors.red),
+                                        ),
+                                        Text(
+                                          ':',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
+                                        ),
+                                        Text(
+                                          "${secondTeamAnticipationScore.toString()}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  color: secondTeamAnticipationScore! >
+                                                          firstTeamAnticipationScore!
+                                                      ? Colors.green
+                                                      : Colors.red),
+                                        ),
+                                      ],
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('You Don\'t Have Predict'),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                            )
+                          ],
                         ),
-                        child: firstTeamAnticipationScore != null
-                            ? Row(
+                      ),
+                      Divider(
+                        color: Colors.grey.shade300,
+                        height: 1,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Result'),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              height: 40,
+                              width: 125,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: Colors.grey.shade300),
+                              ),
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    "${firstTeamAnticipationScore.toString()}",
+                                    "${widget.firstTeamScore.toString()}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge!
                                         .copyWith(
-                                            color: firstTeamAnticipationScore! >
-                                                    secondTeamAnticipationScore!
+                                            color: widget.firstTeamScore >
+                                                    widget.secondTeamScore
                                                 ? Colors.green
                                                 : Colors.red),
                                   ),
@@ -193,93 +271,156 @@ class _MatchResultCardState extends State<MatchResultCard> {
                                         Theme.of(context).textTheme.bodyLarge,
                                   ),
                                   Text(
-                                    "${secondTeamAnticipationScore.toString()}",
+                                    "${widget.secondTeamScore.toString()}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge!
                                         .copyWith(
-                                            color: secondTeamAnticipationScore! >
-                                                    firstTeamAnticipationScore!
+                                            color: widget.secondTeamScore >
+                                                    widget.firstTeamScore
                                                 ? Colors.green
                                                 : Colors.red),
                                   ),
                                 ],
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('You Don\'t Have Predict'),
-                                    ],
-                                  ),
-                                ),
                               ),
-                      )
-                    ],
-                  ),
-                ),
-                Divider(
-                  color: Colors.grey.shade300,
-                  height: 1,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Result'),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        width: 125,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.grey.shade300),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "${widget.firstTeamScore.toString()}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                      color: widget.firstTeamScore >
-                                              widget.secondTeamScore
-                                          ? Colors.green
-                                          : Colors.red),
-                            ),
-                            Text(
-                              ':',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            Text(
-                              "${widget.secondTeamScore.toString()}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                      color: widget.secondTeamScore >
-                                              widget.firstTeamScore
-                                          ? Colors.green
-                                          : Colors.red),
-                            ),
+                            )
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
           ),
+          Divider(
+            height: 1,
+          ),
+          SizedBox(
+            height: 35 + 10,
+            width: 350,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: 115,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svg/Document.svg',
+                        height: 17,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 80,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                'All Predictions',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '12',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: Colors.grey,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                VerticalDivider(
+                  color: Colors.grey.shade300,
+                  width: 1,
+                ),
+                SizedBox(
+                  width: 115,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svg/HandsClapping.svg',
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Correct',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            '12',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: Colors.green,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                VerticalDivider(
+                  color: Colors.grey.shade300,
+                  width: 1,
+                ),
+                SizedBox(
+                  width: 115,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svg/HandFist.svg',
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Wrong',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            '12',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: Colors.red,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

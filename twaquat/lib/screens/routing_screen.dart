@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twaquat/screens/rank_screen.dart';
+import 'package:twaquat/screens/AdminScreen.dart';
 import 'package:twaquat/screens/groups_page.dart';
 import 'package:twaquat/screens/home_screen.dart';
+import 'package:twaquat/screens/matches_screen.dart';
 import 'package:twaquat/screens/settingsScreen.dart';
 import 'package:twaquat/widgets/nav_bar/floating_navbar.dart';
 import 'package:twaquat/widgets/nav_bar/floating_navbar_item.dart';
@@ -23,10 +27,11 @@ class _RoutingScreenState extends State<RoutingScreen> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    groupsPage(),
-    groupsPage(),
-    groupsPage(),
+    MatchesScreen(),
+    GroupsPage(),
+    RankScreen(),
     SettingScreen(),
+    AdminScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -44,11 +49,12 @@ class _RoutingScreenState extends State<RoutingScreen> {
         itemBorderRadius: 9,
         margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         items: [
-          FloatingNavbarItem(icon: Icons.home, title: 'Home'),
-          FloatingNavbarItem(icon: Icons.explore, title: 'Explore'),
-          FloatingNavbarItem(icon: Icons.chat_bubble_outline, title: 'Chats'),
-          FloatingNavbarItem(icon: Icons.star, title: 'Star'),
-          FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
+          FloatingNavbarItem(icon: 'assets/svg/Home.svg', title: 'Main'),
+          FloatingNavbarItem(icon: 'assets/svg/Matches.svg', title: 'Matches'),
+          FloatingNavbarItem(icon: 'assets/svg/Group.svg', title: 'Groups'),
+          FloatingNavbarItem(icon: 'assets/svg/Rank.svg', title: 'Ranking'),
+          FloatingNavbarItem(icon: 'assets/svg/User.svg', title: 'Profile'),
+          FloatingNavbarItem(icon: 'assets/svg/Admin.svg', title: 'Admin'),
         ],
       ),
     );
