@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:twaquat/screens/description-of-the-application-screen.dart';
@@ -12,6 +13,7 @@ import 'package:twaquat/screens/rank_screen.dart';
 import 'package:twaquat/screens/settingsScreen.dart';
 import 'package:twaquat/screens/signup_screen.dart';
 import 'package:twaquat/services/dropDown_flags.dart';
+import 'package:twaquat/services/droupDown_user.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +28,17 @@ import 'package:sizer/sizer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await EasyLocalization.ensureInitialized();
 
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
-      builder: (context) => MyApp(), // Wrap your app
+      builder: (context) => EasyLocalization(
+          supportedLocales: [Locale('en'), Locale('ar')],
+          path:
+              'assets/translations', // <-- change the path of the translation files
+          fallbackLocale: Locale('en'),
+          child: MyApp()), // Wrap your app
     ),
   );
 }
@@ -48,6 +56,9 @@ class MyApp extends StatelessWidget {
         Provider<DropDownFlags>(
           create: (_) => DropDownFlags(flag1: '', flag2: '', flag3: ''),
         ),
+        Provider<DropDownUsers>(
+          create: (_) => DropDownUsers(),
+        ),
         ListenableProvider<UserDetails>(
           create: (_) => UserDetails(),
         ),
@@ -59,8 +70,11 @@ class MyApp extends StatelessWidget {
       child: Sizer(
         builder: (context, orientation, deviceType) {
           return MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
             useInheritedMediaQuery: true,
-            locale: DevicePreview.locale(context),
+            // locale: DevicePreview.locale(context),
             builder: DevicePreview.appBuilder,
             theme: twaquatThemeData,
             debugShowCheckedModeBanner: false,

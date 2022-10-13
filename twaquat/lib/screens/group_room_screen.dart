@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:twaquat/widgets/custom_tab_widget.dart';
 import 'package:twaquat/widgets/gift_widget.dart';
@@ -93,7 +94,28 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
                     ],
                     children: [
                       GroupRank(allUsers: allGroupUsersDocs),
-                      Center(child: Text('data')),
+                      Center(
+                        child: 0 == 0
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/svg/Alert.svg'),
+                                  Text('There is no Alert'),
+                                  SizedBox(
+                                    height: 100,
+                                  ),
+                                ],
+                              )
+                            : ListView.separated(
+                                separatorBuilder: (context, index) => SizedBox(
+                                  height: 10,
+                                ),
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  return AlertWidget();
+                                },
+                              ),
+                      ),
                       Center(
                           child: SizedBox(
                         width: 350,
@@ -105,6 +127,8 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
                           itemBuilder: (context, index) {
                             return GiftWidget(
                               imageNumber: index,
+                              users: allGroupUsersDocs,
+                              groupId: widget.id,
                             );
                           },
                         ),
@@ -117,6 +141,64 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AlertWidget extends StatelessWidget {
+  const AlertWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 350,
+          height: 70,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.grey.shade300),
+            color: Colors.white,
+          ),
+          child: Row(
+            children: [
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  image: DecorationImage(
+                    image: NetworkImage('https://shortest.link/5pLk'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 30,
+                width: 265,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Lorem ipsum dolor sit amet, ',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      // textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            fontSize: 11,
+                            letterSpacing: 0,
+                          )),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:twaquat/screens/quiz_screen.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
 import 'package:twaquat/services/user_details.dart';
@@ -120,6 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       : AccountCard(),
                 ),
+                //!!!! DELETE LATER !!!!
+                Text('test'.tr()),
                 Container(
                   height: 60,
                   width: 350,

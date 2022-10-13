@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twaquat/screens/rank_screen.dart';
@@ -38,6 +39,15 @@ class _RoutingScreenState extends State<RoutingScreen> {
     return Scaffold(
       extendBody: true,
       body: _pages[_index],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.locale.toString() == "en"
+              ? context.setLocale(Locale('ar'))
+              : context.setLocale(Locale('en'));
+          // setState(() {});
+        },
+        child: Text('change'),
+      ),
       bottomNavigationBar: FloatingNavbar(
         onTap: (int val) => setState(() => _index = val),
         currentIndex: _index,

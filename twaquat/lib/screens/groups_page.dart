@@ -27,7 +27,7 @@ class _GroupsPageState extends State<GroupsPage> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            "Groubs",
+            "Groups",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
@@ -109,5 +109,3 @@ class _GroupsPageState extends State<GroupsPage> {
         ));
   }
 }
-
-
