@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       showPopupMessage(context);
                     },
                     child: Text(
-                      "Test your knowledge and get points",
+                      "Test your knowledge and get points".tr(),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Upcoming matches for Today'),
+                            child: Text('Upcoming matches for Today'.tr()),
                           ),
                         ],
                       ),
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actionsPadding: EdgeInsets.only(bottom: 10, right: 20, left: 20),
           contentPadding: EdgeInsets.only(top: 10),
           title: Text(
-            'Test your knowledge !',
+            'Test your knowledge !'.tr(),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
@@ -273,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 250,
                       height: 100,
                       child: Text(
-                          'It is a test consisting of 15 questions. Questions related to football in general. You have only 15 minutes to solve all the questions and finish the test',
+                          'It is a test consisting of 15 questions. Questions related to football in general. You have only 15 minutes to solve all the questions and finish the test'.tr(),
                           textAlign: TextAlign.center,
                           // textWidthBasis: TextWidthBasis.parent,
                           overflow: TextOverflow.fade,
@@ -294,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'Test Now',
+                    'Test Now'.tr(),
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!

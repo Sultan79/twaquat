@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatefulWidget {
@@ -12,7 +13,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text('Settings'.tr()),
         backgroundColor: Color.fromARGB(255, 40, 49, 96),
       ),
     );

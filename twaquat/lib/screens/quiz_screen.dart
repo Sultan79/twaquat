@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -29,10 +30,10 @@ class _QuizScreenState extends State<QuizScreen> {
   String question = '';
   String rightAnswer = '';
   List options = [
-    {"option": ""},
-    {"option": ""},
-    {"option": ""},
-    {"option": ""}
+    {"option".tr(): ""},
+    {"option".tr(): ""},
+    {"option".tr(): ""},
+    {"option".tr(): ""}
   ];
   double totalPoins = 0;
   String? userPick;
@@ -162,7 +163,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Question :"),
+                      Text("Question :".tr()),
                       SizedBox(
                         height: 10,
                       ),
@@ -265,8 +266,8 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
               Text(
                 totalPoins > (questionNumber / 2)
-                    ? 'Congratulation'
-                    : 'Unfortunately',
+                    ? 'Congratulation'.tr()
+                    : 'Unfortunately'.tr(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -305,7 +306,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'Return To Home',
+                    'Return To Home'.tr(),
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -341,7 +342,7 @@ class _QuizScreenState extends State<QuizScreen> {
           title: Column(
             children: [
               Text(
-                'You Aready take this Quiz',
+                'You Aready take this Quiz'.tr(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -380,7 +381,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'Return To Home',
+                    'Return To Home'.tr(),
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!

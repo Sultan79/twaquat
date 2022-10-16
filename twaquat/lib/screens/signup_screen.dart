@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twaquat/services/dropDown_flags.dart';
@@ -43,7 +44,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
     String? uid_plus;
     String? url_plus;
     final snackBar = SnackBar(
-      content: Text('Yay! A SnackBar!'),
+      content: Text('Yay! A SnackBar!'.tr()),
       action: SnackBarAction(
         label: 'Undo',
         onPressed: () {
@@ -54,7 +55,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
     final Storage storage = Storage();
     final flags = context.read<DropDownFlags>().toMap();
     if (_image == null) {
-      showSnackBar(context, 'Pick image first');
+      showSnackBar(context, 'Pick image first'.tr());
     } else {
       await context
           .read<FirebaseAuthMethods>()
@@ -106,7 +107,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Create an account",
+          "Create an account".tr(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -158,29 +159,29 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                   ),
                   CustomFiledText(
                     controller: usernameControllar,
-                    title: 'Name',
-                    hintText: 'Enter your name here',
+                    title: 'Name'.tr(),
+                    hintText: 'Enter your name here'.tr(),
                   ),
                   CustomFiledText(
                     controller: emailController,
-                    title: 'Email',
-                    hintText: 'Enter your email here',
+                    title: 'Email'.tr(),
+                    hintText: 'Enter your email here'.tr(),
                   ),
                   CustomFiledText(
                     controller: passwordController,
-                    title: 'Password',
-                    hintText: 'Enter your password here',
+                    title: 'Password'.tr(),
+                    hintText: 'Enter your password here'.tr(),
                   ),
                   FlagsDropDown(
                     data: 1,
-                    hint: "Pick one ",
-                    title: 'Pick your Country',
+                    hint: "Pick one".tr(),
+                    title: 'Pick your Country'.tr(),
                   ),
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
-                      'Pick your predictions fow World Cup winner',
+                      'Pick your predictions for World Cup winner'.tr(),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -192,8 +193,8 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                         FlagsDropDown(
                           data: 2,
                           width: 100,
-                          hint: "Pick",
-                          title: 'First ',
+                          hint: "Pick".tr(),
+                          title: 'First'.tr(),
                         ),
                         SizedBox(
                           width: 100,
@@ -201,8 +202,8 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                         FlagsDropDown(
                           data: 3,
                           width: 100,
-                          hint: "Pick",
-                          title: 'Second',
+                          hint: "Pick".tr(),
+                          title: 'Second'.tr(),
                         ),
                       ],
                     ),
@@ -212,7 +213,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                       TextButton(
                         onPressed: () =>
                             Navigator.pushReplacementNamed(context, '/'),
-                        child: Text('Login'),
+                        child: Text('Login'.tr()),
                       ),
                       SizedBox(
                         height: 60,
@@ -220,7 +221,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                         child: ElevatedButton(
                           onPressed: signUpUser,
                           child: Text(
-                            "Sign Up",
+                            "Sign Up".tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!

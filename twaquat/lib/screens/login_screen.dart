@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
 import 'package:twaquat/widgets/custom_filedText.dart';
 import 'package:twaquat/widgets/custom_textfield.dart';
@@ -36,20 +37,20 @@ class _LoginScreenState extends State<LoginScreen> {
           runSpacing: 25,
           spacing: 1000,
           children: [
-            const Text(
-              "Login",
+             Text(
+              "Login".tr(),
               style: TextStyle(fontSize: 30),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.08),
             CustomFiledText(
               controller: emailController,
-              title: 'Email',
-              hintText: 'Enter your email here',
+              title: 'Email'.tr(),
+              hintText: 'Enter your email here'.tr(),
             ),
             CustomFiledText(
               controller: passwordController,
-              title: 'Password',
-              hintText: 'Enter your password here',
+              title: 'Password'.tr(),
+              hintText: 'Enter your password here'.tr(),
             ),
             const SizedBox(height: 40),
             Column(
@@ -59,8 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 350,
                   child: ElevatedButton(
                     onPressed: loginUser,
-                    child: const Text(
-                      "Login",
+                    child: Text(
+                      "Login".tr(),
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
@@ -73,8 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (context) => const Signup_Screen()),
                     );
                   },
-                  child: const Text(
-                    'Sign Up',
+                  child: Text(
+                    'Sign Up'.tr(),
                     // style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),

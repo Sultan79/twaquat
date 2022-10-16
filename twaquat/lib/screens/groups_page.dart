@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twaquat/screens/creat_group.dart';
@@ -27,7 +28,7 @@ class _GroupsPageState extends State<GroupsPage> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            "Groups",
+            "Groups".tr(),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
@@ -45,7 +46,7 @@ class _GroupsPageState extends State<GroupsPage> {
                       width: 170,
                       child: ElevatedButton(
                         onPressed: () {},
-                        child: Text('Companies joing'),
+                        child: Text('Companies joing'.tr()),
                       ),
                     ),
                     SizedBox(
@@ -62,7 +63,7 @@ class _GroupsPageState extends State<GroupsPage> {
                           side: MaterialStateProperty.all(
                               BorderSide(color: Colors.grey.shade300)),
                         ),
-                        child: Text('Create a group'),
+                        child: Text('Create a group'.tr()),
                       ),
                     ),
                   ],

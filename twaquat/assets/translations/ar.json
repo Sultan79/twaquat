@@ -1,3 +1,61 @@
 {
-  "test": "اختبار"
+  
+  "test": "اختبار",
+  "Test your knowledge and get points": "اختبر معلوماتك وأكسب نقاط",
+  "Upcoming matches for Today": "المباريات القادمة اليوم",
+  "Test your knowledge !":"اختبر معلوماتك",
+  "Create a group":"أنشاء مجموعة",
+  "Name": "الأسم",
+  "Enter your group name": "أدخل أسم مجموعتك",
+  "Enter the description related to your groub here":"أدخل الوصف الخاص بمجموعتك هنا ",
+  "Groub Type": "نوع المجموعة",
+  "Supmit Group":"أرفق المجموعة",
+  "Private Group":"مجموعة خاصة",
+  "Public Groub":"مجموعة عامة",
+  "Description":"الوصف",
+  "It is a test consisting of 15 questions. Questions related to football in general. You have only 15 minutes to solve all the questions and finish the test":
+  "الأختبار يحتوي على 15 سؤال , الأسئلة متعلقه بمعلومات عامة في كرة القدم ,أنت تملك فقط 15 دقيقة للاجابة على جميع الأسئله و انهاء الاختبار",
+  "Test Now":"أختبر الأن",
+  "Groups":"المجموعات",
+  "Companies joing": "انظمام الشركات",
+  "Email":"الايميل",
+  "Enter your email here":"أدخل الايميل هنا",
+  "Password":"كلمة السر",
+  "Enter your password here":"أدخل كلمة السر هنا",
+  "Login": "تسجيل الدخول",
+  "Sign Up": "التسجيل",
+  "Matches": "المباريات",
+  "Upcoming": "القادمة",
+  "Past": "الماضي",
+  "option":"الأختيار",
+  "Question :":"",
+  "Congratulation":"مبروك",
+  "Unfortunately":"للأسف",
+  "Return To Home":"الرجوع الى القائمة الرئيسية",
+  "You Aready take this Quiz":"لقد أخذت هذا الاختبار مسبقا",
+  "Overall Rank":"المرتبة الاجمالية",
+  "points": "النقاط",
+  "Correct predictions: ":": التوقعوات الصحيحة",
+  "Main":"الرئيسية",
+  "Ranking":"الترتيب",
+  "Profile":"الحساب",
+  "Admin":"المشرف",
+  "Settings":"الاعدادات",
+  "Description of the application":"وصف البرنامج",
+  "Rate us":"قيمنا",
+  "Share the app":"انشر التطبيق",
+  "Technical support":"الدعم الفني",
+  "Sign Out":"تسجيل الخروج",
+  "Pick one":"اختار واحدا",
+  "Pick your Country":"اختر بلدك",
+  "Pick your predictions for World Cup winner":"اختر توقعاتك للفائز بكأس العالم",
+  "Enter your name here":"ادخل اسمك هنا",
+  "Pick":"اختر",
+  "First":"الأول",
+  "Second":"الثاني"
+
+
+ 
+
+  
 }

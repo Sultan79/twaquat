@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class _SettingScreenState extends State<SettingScreen> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Setting",
+          "Setting".tr(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -85,7 +86,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Description of the application'),
+                      Text('Description of the application'.tr()),
                     ],
                   ),
                 ),
@@ -124,7 +125,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Settings'),
+                      Text('Settings'.tr()),
                     ],
                   ),
                 ),
@@ -162,7 +163,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Rate us'),
+                      Text('Rate us'.tr()),
                     ],
                   ),
                 ),
@@ -201,7 +202,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Share the app'),
+                      Text('Share the app'.tr()),
                     ],
                   ),
                 ),
@@ -240,7 +241,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Technical support'),
+                      Text('Technical support'.tr()),
                     ],
                   ),
                 ),
@@ -254,7 +255,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 onPressed: () {
                   context.read<FirebaseAuthMethods>().signOut(context);
                 },
-                child: Text('Sign Out'),
+                child: Text('Sign Out'.tr()),
               ),
               SizedBox(height: 35.w),
             ],

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -43,7 +44,7 @@ class _RankScreenState extends State<RankScreen> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Overall Rank",
+          "Overall Rank".tr(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -142,7 +143,7 @@ class _RankScreenState extends State<RankScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'points',
+                                  'points'.tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
@@ -230,7 +231,7 @@ class _RankScreenState extends State<RankScreen> {
                             ),
                           ),
                           Text(
-                            'points',
+                            'points'.tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
@@ -320,7 +321,7 @@ class _RankScreenState extends State<RankScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'points',
+                                  'points'.tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
@@ -419,7 +420,7 @@ class _RankScreenState extends State<RankScreen> {
                                                     ),
                                               ),
                                               Text(
-                                                " points",
+                                                "points".tr(),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
@@ -434,7 +435,7 @@ class _RankScreenState extends State<RankScreen> {
                                           Row(
                                             children: [
                                               Text(
-                                                "Correct predictions: ",
+                                                "Correct predictions: ".tr(),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!

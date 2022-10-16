@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -24,7 +25,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Matches",
+          "Matches".tr(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -42,10 +43,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
             child: CustomTabWidget(
               tabss: [
                 Tab(
-                  text: 'Upcoming',
+                  text: 'Upcoming'.tr(),
                 ),
                 Tab(
-                  text: "Past",
+                  text: "Past".tr(),
                 )
               ],
               children: [

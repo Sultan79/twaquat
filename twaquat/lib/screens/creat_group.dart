@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Create a group",
+          "Create a group".tr(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -116,15 +117,15 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             const SizedBox(height: 20),
             CustomFiledText(
               controller: groupnameControllar,
-              title: "Name",
-              hintText: "Enter your group name",
+              title: "Name".tr(),
+              hintText: "Enter your group name".tr(),
             ),
             const SizedBox(height: 30),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Description'),
+                  Text('Description'.tr()),
                   SizedBox(
                     height: 13,
                   ),
@@ -149,7 +150,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
                         hintText:
-                            'Enter teh description related to your groub here',
+                            "Enter the description related to your groub here".tr(),
                         hintStyle: Theme.of(context).textTheme.labelLarge,
                         fillColor: Colors.red,
                         border: InputBorder.none,
@@ -168,7 +169,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               child: Row(
                 children: [
                   Text(
-                    "Groub Type",
+                    "Groub Type".tr(),
                   ),
                 ],
               ),
@@ -192,7 +193,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 minHeight: 50.0,
                 minWidth: 175.0,
               ),
-              children: <Widget>[Text('Public Groub'), Text('Private Group')],
+              children: <Widget>[Text("Public Groub".tr()), Text("Private Group".tr())],
               isSelected: _selectedGroupType,
             ),
             SizedBox(
@@ -206,7 +207,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   createGroup();
                 },
                 child: Text(
-                  'Supmit Group',
+                  'Supmit Group'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
