@@ -170,15 +170,18 @@ ItemBuilder _defaultItemBuilder({
                 ),
                 if (item.title != null)
                   Container(
+                    height: 10,
                     margin: EdgeInsets.only(top: 5),
-                    child: Text(
-                      '${item.title}',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: fontSize,
-                          color: item.title != 'Admin'
-                              ? null
-                              : Colors.amber.shade700),
+                    child: FittedBox(
+                      child: Text(
+                        '${item.title}',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: fontSize,
+                            color: item.title != 'Admin'
+                                ? null
+                                : Colors.amber.shade700),
+                      ),
                     ),
                   ),
               ],

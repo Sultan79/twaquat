@@ -10,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:twaquat/screens/creat_company_group.dart';
 import 'package:twaquat/utils/showSnackbar.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -24,8 +25,8 @@ class _AdminScreenState extends State<AdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
+        child: Center(
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 ElevatedButton(
@@ -69,6 +70,13 @@ class _AdminScreenState extends State<AdminScreen> {
                     print(fixtureDco.data()!['home']);
                   },
                   child: Text('test'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    Navigator.pushNamed(
+                        context, CreateCompnyGroupScreen.routeName);
+                  },
+                  child: Text('Create Compony Group'),
                 ),
               ],
             ),

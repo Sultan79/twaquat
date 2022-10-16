@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:twaquat/screens/creat_company_group.dart';
 import 'package:twaquat/screens/description-of-the-application-screen.dart';
 import 'package:twaquat/screens/group_room_screen.dart';
 import 'package:twaquat/screens/groups_page.dart';
@@ -21,6 +22,7 @@ import 'package:provider/provider.dart';
 import 'package:twaquat/screens/creat_group.dart';
 import 'package:twaquat/screens/routing_screen.dart';
 import 'package:twaquat/screens/settings-screen-2.dart';
+import 'package:twaquat/services/gift.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/static.dart';
 import 'package:sizer/sizer.dart';
@@ -59,6 +61,9 @@ class MyApp extends StatelessWidget {
         Provider<DropDownUsers>(
           create: (_) => DropDownUsers(),
         ),
+        Provider<Gifts>(
+          create: (_) => Gifts(),
+        ),
         ListenableProvider<UserDetails>(
           create: (_) => UserDetails(),
         ),
@@ -95,6 +100,7 @@ class MyApp extends StatelessWidget {
               QuizScreen.routeName: (context) => const QuizScreen(),
               MatchesScreen.routeName: (context) => const MatchesScreen(),
               RankScreen.routeName: (context) => const RankScreen(),
+              CreateCompnyGroupScreen.routeName: (context) => const CreateCompnyGroupScreen(),
             },
           );
         },

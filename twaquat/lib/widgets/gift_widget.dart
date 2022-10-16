@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:twaquat/services/droupDown_user.dart';
 import 'package:twaquat/services/user_details.dart';
+import 'package:twaquat/services/gift.dart';
 import 'package:twaquat/utils/showSnackbar.dart';
 import 'package:twaquat/widgets/usersDropDown.dart';
 
@@ -13,62 +14,13 @@ class GiftWidget extends StatelessWidget {
     this.imageNumber = 0,
     required this.users,
     required this.groupId,
+    required this.groupName,
   }) : super(key: key);
   final String groupId;
+  final String groupName;
   final int imageNumber;
   final List users;
-  final List<String> giftsImagePath = [
-    "1F94A_BoxingGlove_MOD_01_01 1.png",
-    "blue medical gloves.png",
-    "coffee spilling out of mug.png",
-    "cupcake with cherry.png",
-    "easter egg.png",
-    "front view of black eyeglasses.png",
-    "front view of red scooter.png",
-    "image 27.png",
-    "snow globe with house and trees.png",
-    "soccer ball.png",
-    "tool box.png",
-    "t-shirt mockup.png",
-    "White skin hands with a phone.png",
-    "white sneakers.png",
-    "Wrapped gift.png",
-  ];
-  final List<String> giftsName = [
-    "test",
-    "blue test",
-    "coffee ",
-    "cupcake test",
-    "test",
-    "front test",
-    "front ",
-    "test",
-    "snow ",
-    "test",
-    "test",
-    "t-test",
-    "White ",
-    "test",
-    "test",
-  ];
-  final List<int> giftsPrices = [
-    26,
-    25,
-    21,
-    22,
-    25,
-    24,
-    22,
-    22,
-    21,
-    21,
-    20,
-    21,
-    21,
-    22,
-    29,
-  ];
-
+  final Gifts gifts = Gifts();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,13 +55,13 @@ class GiftWidget extends StatelessWidget {
                       border: Border.all(color: Colors.grey.shade400),
                     ),
                     child: Image.asset(
-                      'assets/images/${giftsImagePath[imageNumber]}',
+                      'assets/images/${gifts.giftsImagePath[imageNumber]}',
                       // fit: BoxFit.scaleDown,
                       cacheHeight: 80,
                     ),
                   ),
                   Text(
-                    giftsName[imageNumber],
+                    gifts.giftsName[imageNumber],
                     // style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Container(
@@ -126,7 +78,7 @@ class GiftWidget extends StatelessWidget {
                         children: [
                           SvgPicture.asset('assets/svg/Coins.svg'),
                           SizedBox(width: 5),
-                          Text('${giftsPrices[imageNumber]}'),
+                          Text('${gifts.giftsPrices[imageNumber]}'),
                         ],
                       ),
                     ),
@@ -180,7 +132,7 @@ class GiftWidget extends StatelessWidget {
                         border: Border.all(color: Colors.grey.shade400),
                       ),
                       child: Image.asset(
-                        'assets/images/${giftsImagePath[imageNumber]}',
+                        'assets/images/${gifts.giftsImagePath[imageNumber]}',
                         // fit: BoxFit.scaleDown,
                         cacheHeight: 80,
                       ),
@@ -189,7 +141,7 @@ class GiftWidget extends StatelessWidget {
                       height: 25,
                     ),
                     Text(
-                      giftsName[imageNumber],
+                      gifts.giftsName[imageNumber],
                     ),
                     SizedBox(
                       height: 25,
@@ -234,7 +186,7 @@ class GiftWidget extends StatelessWidget {
                   onPressed: () async {
                     if (context.read<DropDownUsers>().userPicked != null) {
                       num newPoints = context.read<UserDetails>().points! -
-                          giftsPrices[imageNumber];
+                          gifts.giftsPrices[imageNumber];
 
                       if (newPoints >= 0) {
                         print("context.read<DropDownUsers>().userPicked");
@@ -251,11 +203,17 @@ class GiftWidget extends StatelessWidget {
                             .collection('alerts')
                             .add({
                           "fromUser": context.read<UserDetails>().id,
+                          "fromUserName": context.read<UserDetails>().name,
                           "toUser":
                               context.read<DropDownUsers>().userPicked['id'],
-                          "gift": giftsName[imageNumber],
+                          "toUserName": context
+                              .read<DropDownUsers>()
+                              .userPicked['userName'],
+                          "gift": gifts.giftsName[imageNumber],
                           "groupId": groupId,
+                          "groupName": groupName,
                           "opend": false,
+                          "time": DateTime.now(),
                         });
                         await FirebaseFirestore.instance
                             .collection('group')
@@ -263,11 +221,17 @@ class GiftWidget extends StatelessWidget {
                             .collection('alerts')
                             .add({
                           "fromUser": context.read<UserDetails>().id,
+                          "fromUserName": context.read<UserDetails>().name,
                           "toUser":
                               context.read<DropDownUsers>().userPicked['id'],
-                          "gift": giftsName[imageNumber],
+                          "toUserName": context
+                              .read<DropDownUsers>()
+                              .userPicked['userName'],
+                          "gift": gifts.giftsName[imageNumber],
                           "groupId": groupId,
+                          "groupName": groupName,
                           "opend": false,
+                          "time": DateTime.now(),
                         });
                       } else {
                         showSnackBar(context, 'You Don\'t have Enough points');

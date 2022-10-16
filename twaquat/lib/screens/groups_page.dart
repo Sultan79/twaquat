@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:twaquat/screens/company_group_room_screen.dart';
 import 'package:twaquat/screens/creat_group.dart';
 import 'package:twaquat/screens/group_room_screen.dart';
 import 'package:twaquat/services/user_details.dart';
@@ -89,11 +90,18 @@ class _GroupsPageState extends State<GroupsPage> {
                               return GroupWidget(
                                 onClick: () => Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) => GroupRoomScreen(
-                                            id: id,
-                                            doc: doc,
-                                          )),
+                                  doc['isCompany']
+                                      ? MaterialPageRoute(
+                                          builder: (context) =>
+                                              CompanyGroupRoomScreen(
+                                                id: id,
+                                                doc: doc,
+                                              ))
+                                      : MaterialPageRoute(
+                                          builder: (context) => GroupRoomScreen(
+                                                id: id,
+                                                doc: doc,
+                                              )),
                                 ),
                                 GroupName: doc['groupName'],
                                 GroupDescription: doc['descirption'],

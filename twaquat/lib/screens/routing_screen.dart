@@ -60,10 +60,14 @@ class _RoutingScreenState extends State<RoutingScreen> {
         margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         items: [
           FloatingNavbarItem(icon: 'assets/svg/Home.svg', title: 'Main'.tr()),
-          FloatingNavbarItem(icon: 'assets/svg/Matches.svg', title: 'Matches'.tr()),
-          FloatingNavbarItem(icon: 'assets/svg/Group.svg', title: 'Groups'.tr()),
-          FloatingNavbarItem(icon: 'assets/svg/Rank.svg', title: 'Ranking'.tr()),
-          FloatingNavbarItem(icon: 'assets/svg/User.svg', title: 'Profile'.tr()),
+          FloatingNavbarItem(
+              icon: 'assets/svg/Matches.svg', title: 'Matches'.tr()),
+          FloatingNavbarItem(
+              icon: 'assets/svg/Group.svg', title: 'Groups'.tr()),
+          FloatingNavbarItem(
+              icon: 'assets/svg/Rank.svg', title: 'Ranking'.tr()),
+          FloatingNavbarItem(
+              icon: 'assets/svg/User.svg', title: 'Profile'.tr()),
           FloatingNavbarItem(icon: 'assets/svg/Admin.svg', title: 'Admin'.tr()),
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:twaquat/screens/quiz_screen.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
+import 'package:twaquat/services/gift.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/widgets/account_card.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic>? userData;
   Response? firstNextGame;
   Response? twoLastGame;
-
+  Gifts gifts = Gifts();
   Future<Response<dynamic>?> getTodayFixture() async {
     var dio = Dio();
     dio.options.headers['Content-Type'] = 'application/json';
@@ -55,8 +56,98 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('2022-11-21');
     getUserData();
+    showAlerts();
+  }
+
+  showAlerts() async {
+    QuerySnapshot<Map<String, dynamic>> userAlerts = await FirebaseFirestore
+        .instance
+        .collection("users")
+        .doc(context.read<FirebaseAuthMethods>().user.uid)
+        .collection("alerts")
+        .where('opend', isEqualTo: false)
+        .get();
+    print('2022-11-21');
+    print(userAlerts);
+
+    if (userAlerts.docs.isEmpty) {
+      return;
+    }
+
+    for (var alert in userAlerts.docs) {
+      String giftImage = '';
+      for (var i = 0; i < gifts.giftsName.length; i++) {
+        if (gifts.giftsName[i] == alert.data()['gift']) {
+          giftImage = gifts.giftsImagePath[i];
+        }
+      }
+      await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            titlePadding: EdgeInsets.only(top: 40),
+            actionsPadding: EdgeInsets.only(bottom: 10, right: 20, left: 20),
+            contentPadding: EdgeInsets.only(top: 10),
+            content: SizedBox(
+              height: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 150,
+                    width: 150,
+                    margin: EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background,
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(color: Colors.grey.shade400),
+                    ),
+                    child: Image.asset(
+                      'assets/images/${giftImage}',
+                      // fit: BoxFit.scaleDown,
+                      cacheHeight: 100,
+                    ),
+                  ),
+                  Text(
+                    'the User :' + alert.data()['fromUserName'],
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Text(
+                    "send " + alert.data()['gift'] + " to you",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Text(
+                    "from groub:  " + alert.data()['groupName'],
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(context.read<UserDetails>().id)
+                          .collection('alerts')
+                          .doc(alert.id)
+                          .update({'opend': true});
+                      Navigator.pop(context);
+                    },
+                    child: Text('Exit'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 
   Future<void> getUserData() async {
@@ -122,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       : AccountCard(),
                 ),
                 //!!!! DELETE LATER !!!!
-                Text('test'.tr()),
+                // Text('test'.tr()),
                 Container(
                   height: 60,
                   width: 350,
@@ -273,7 +364,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 250,
                       height: 100,
                       child: Text(
-                          'It is a test consisting of 15 questions. Questions related to football in general. You have only 15 minutes to solve all the questions and finish the test'.tr(),
+                          'It is a test consisting of 15 questions. Questions related to football in general. You have only 15 minutes to solve all the questions and finish the test'
+                              .tr(),
                           textAlign: TextAlign.center,
                           // textWidthBasis: TextWidthBasis.parent,
                           overflow: TextOverflow.fade,

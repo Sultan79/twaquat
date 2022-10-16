@@ -4,28 +4,33 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:twaquat/services/gift.dart';
+import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/widgets/custom_tab_widget.dart';
 import 'package:twaquat/widgets/gift_widget.dart';
 import 'package:twaquat/widgets/groub_widget.dart';
 
-class GroupRoomScreen extends StatefulWidget {
-  const GroupRoomScreen({super.key, required this.id, required this.doc});
+class CompanyGroupRoomScreen extends StatefulWidget {
+  const CompanyGroupRoomScreen(
+      {super.key, required this.id, required this.doc});
   final String id;
   final Map<String, dynamic> doc;
 
   static String routeName = '/groupsRoom';
 
   @override
-  State<GroupRoomScreen> createState() => GroupRoomScreenState();
+  State<CompanyGroupRoomScreen> createState() => CompanyGroupRoomScreenState();
 }
 
-class GroupRoomScreenState extends State<GroupRoomScreen> {
+class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
   QuerySnapshot<Map<String, dynamic>>? allUsers;
   DocumentSnapshot<Map<String, dynamic>>? groupUsers;
   QuerySnapshot<Map<String, dynamic>>? groupAlerts;
   List allGroupUsersDocs = [];
+  List allSectionUsersDocs = [];
+  List usersSectionIDs = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -46,6 +51,22 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
         .collection('group')
         .doc(widget.id)
         .get();
+
+    Map<String, dynamic> allUsersSection = groupUsers!.data()!['userss'];
+    String? userSection;
+
+    allUsersSection.forEach((key, value) {
+      if (key == context.read<UserDetails>().id) {
+        userSection = value;
+      }
+      print(value);
+    });
+    allUsersSection.forEach((key, value) {
+      if (value == userSection) {
+        usersSectionIDs.add(key);
+      }
+    });
+
     groupAlerts = await FirebaseFirestore.instance
         .collection('group')
         .doc(widget.id)
@@ -60,6 +81,11 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
     for (var doc in allUsers!.docs) {
       if (allGroupUsersIDs.contains(doc.id)) {
         allGroupUsersDocs.add(doc.data());
+      }
+    }
+    for (var doc in allUsers!.docs) {
+      if (usersSectionIDs.contains(doc.id)) {
+        allSectionUsersDocs.add(doc.data());
       }
     }
     setState(() {});
@@ -99,12 +125,22 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
                   height: 70.h,
                   child: CustomTabWidget(
                     tabss: [
-                      Tab(text: 'Ranking'),
+                      Tab(
+                        child: FittedBox(
+                          child: Text("Company"),
+                        ),
+                      ),
+                      Tab(
+                        child: FittedBox(
+                          child: Text("Section"),
+                        ),
+                      ),
                       Tab(text: 'Alerts'),
                       Tab(text: 'Gifts'),
                     ],
                     children: [
                       GroupRank(allUsers: allGroupUsersDocs),
+                      GroupRank(allUsers: allSectionUsersDocs),
                       Center(
                         child: groupAlerts!.docs.isEmpty
                             ? Column(

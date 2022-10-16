@@ -48,6 +48,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           'url': url_plus,
           "users": [context.read<UserDetails>().id],
           "isPlublic": _selectedGroupType[0],
+          "isCompany": false,
           "createdBy": FirebaseAuth.instance.currentUser!.uid,
         })
         .then((value) => print("::::::::::::::::::::::::::::::::::::::::"))
