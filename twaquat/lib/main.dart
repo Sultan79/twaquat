@@ -2,6 +2,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twaquat/screens/creat_company_group.dart';
 import 'package:twaquat/screens/description-of-the-application-screen.dart';
 import 'package:twaquat/screens/group_room_screen.dart';
@@ -26,28 +28,35 @@ import 'package:twaquat/services/gift.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/static.dart';
 import 'package:sizer/sizer.dart';
+import 'package:twaquat/widgets/onboarding/onboarding_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
-
-  runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => EasyLocalization(
-          supportedLocales: [Locale('en'), Locale('ar')],
-          path:
-              'assets/translations', // <-- change the path of the translation files
-          fallbackLocale: Locale('en'),
-          child: MyApp()), // Wrap your app
-    ),
-  );
+  final prefs = await SharedPreferences.getInstance();
+  final showHome = prefs.getBool("showHome") ?? false;
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => EasyLocalization(
+            supportedLocales: [Locale('en'), Locale('ar')],
+            path:
+                'assets/translations', // <-- change the path of the translation files
+            fallbackLocale: Locale('en'),
+            child: MyApp(
+              showHome: showHome,
+            )), // Wrap your app
+      ),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  const MyApp({Key? key, required this.showHome}) : super(key: key);
+  final bool showHome;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -84,9 +93,11 @@ class MyApp extends StatelessWidget {
             theme: twaquatThemeData,
             debugShowCheckedModeBanner: false,
             // home: AuthWrapper(),
-            initialRoute: '/',
+            initialRoute: showHome ? '/' : OnboardingScreen.routeName,
             routes: {
-              '/': (context) => const AuthWrapper(),
+              '/': (context) => AuthWrapper(),
+              OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+              Signup_Screen.routeName: (context) => const Signup_Screen(),
               Signup_Screen.routeName: (context) => const Signup_Screen(),
               LoginScreen.routeName: (context) => const LoginScreen(),
               GroupsPage.routeName: (context) => GroupsPage(),
@@ -100,7 +111,8 @@ class MyApp extends StatelessWidget {
               QuizScreen.routeName: (context) => const QuizScreen(),
               MatchesScreen.routeName: (context) => const MatchesScreen(),
               RankScreen.routeName: (context) => const RankScreen(),
-              CreateCompnyGroupScreen.routeName: (context) => const CreateCompnyGroupScreen(),
+              CreateCompnyGroupScreen.routeName: (context) =>
+                  const CreateCompnyGroupScreen(),
             },
           );
         },
@@ -114,12 +126,9 @@ class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
-
     if (firebaseUser != null) {
       return RoutingScreen();
     }
     return LoginScreen();
-
-    // return const Delete();
   }
 }

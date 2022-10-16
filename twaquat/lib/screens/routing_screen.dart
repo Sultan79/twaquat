@@ -39,15 +39,15 @@ class _RoutingScreenState extends State<RoutingScreen> {
     return Scaffold(
       extendBody: true,
       body: _pages[_index],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.locale.toString() == "en"
-              ? context.setLocale(Locale('ar'))
-              : context.setLocale(Locale('en'));
-          // setState(() {});
-        },
-        child: Text('change'),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     context.locale.toString() == "en"
+      //         ? context.setLocale(Locale('ar'))
+      //         : context.setLocale(Locale('en'));
+      //     // setState(() {});
+      //   },
+      //   child: Text('change'),
+      // ),
       bottomNavigationBar: FloatingNavbar(
         onTap: (int val) => setState(() => _index = val),
         currentIndex: _index,

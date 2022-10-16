@@ -157,6 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .doc(context.read<FirebaseAuthMethods>().user.uid)
         .get();
     Map<String, dynamic> userData = userDoc.data()!;
+    print(userDoc.data()!["quizzes"]);
     context.read<UserDetails>().setUserData(
           id: userData["id"],
           name: userData['userName'],
@@ -169,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
           rating: userDoc.data()!["rating"],
           correctGuess: userDoc.data()!["correctGuess"],
           wrongGuess: userDoc.data()!["wrongGuess"],
+          quizzes: userDoc.data()!["quizzes"],
         );
   }
 
@@ -207,8 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               .read<UserDetails>()
                               .wrongGuess!
                               .toString(),
-                          rating:
-                              context.read<UserDetails>().rating!.toDouble(),
+                          rating: context.read<UserDetails>().quizzes!,
                         )
                       : AccountCard(),
                 ),

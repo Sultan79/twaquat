@@ -15,7 +15,7 @@ class AccountCard extends StatelessWidget {
     this.firestTeam = 'USA',
     this.seacondTeam = 'USA',
     this.thirdTeam = 'USA',
-    this.rating = 3.5,
+    this.rating = const [],
   }) : super(key: key);
 
   final String name;
@@ -26,7 +26,7 @@ class AccountCard extends StatelessWidget {
   final String firestTeam;
   final String seacondTeam;
   final String thirdTeam;
-  final double rating;
+  final List rating;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -317,18 +317,38 @@ class AccountCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      RatingBarIndicator(
-                        rating: rating,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 1),
-                        unratedColor: Colors.white,
-                        itemCount: 10,
-                        itemSize: 18.0,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star_rounded,
-                          color: Colors.amber,
+                      SizedBox(
+                        height: 15,
+                        width: 200,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: rating.length,
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return Icon(
+                              rating[index]
+                                  ? Icons.star_rounded
+                                  : Icons.star_border_rounded,
+                              size: 15,
+                              color: Colors.amber,
+                            );
+                          },
                         ),
                       ),
+                      // RatingBarIndicator(
+                      //   rating: rating,
+                      //   itemPadding: EdgeInsets.symmetric(horizontal: 1),
+                      //   unratedColor: Colors.white,
+                      //   itemCount: 10,
+                      //   itemSize: 18.0,
+                      //   physics: BouncingScrollPhysics(),
+                      //   itemBuilder: (context, _) => Icon(
+                      //     Icons.star_rounded,
+                      //     color: Colors.amber,
+                      //   ),
+                      // ),
                     ],
                   )
                 ],

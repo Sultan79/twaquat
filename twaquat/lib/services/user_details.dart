@@ -10,6 +10,7 @@ class UserDetails extends ChangeNotifier {
   String? myCuntry;
   String? firstWinner;
   String? secondWinner;
+  List? quizzes;
   num? points;
   num? correctGuess;
   num? wrongGuess;
@@ -26,6 +27,7 @@ class UserDetails extends ChangeNotifier {
     this.correctGuess,
     this.wrongGuess,
     this.rating,
+    this.quizzes,
   });
 
   UserDetails copyWith({
@@ -40,6 +42,7 @@ class UserDetails extends ChangeNotifier {
     num? correctGuess,
     num? wrongGuess,
     num? rating,
+    List? quizzes,
   }) {
     return UserDetails(
       id: id ?? this.id,
@@ -53,6 +56,7 @@ class UserDetails extends ChangeNotifier {
       correctGuess: correctGuess ?? this.correctGuess,
       wrongGuess: wrongGuess ?? this.wrongGuess,
       rating: rating ?? this.rating,
+      quizzes: quizzes ?? this.quizzes,
     );
   }
 
@@ -143,6 +147,7 @@ class UserDetails extends ChangeNotifier {
     num? correctGuess,
     num? wrongGuess,
     num? rating,
+    List? quizzes,
   }) {
     this.id = id ?? this.id;
     this.name = name ?? this.name;
@@ -155,6 +160,7 @@ class UserDetails extends ChangeNotifier {
     this.correctGuess = correctGuess ?? this.correctGuess;
     this.wrongGuess = wrongGuess ?? this.wrongGuess;
     this.rating = rating ?? this.rating;
+    this.quizzes = quizzes ?? this.quizzes;
 
     notifyListeners();
   }

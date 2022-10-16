@@ -52,7 +52,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             .toString(),
                         wrongGuess:
                             context.read<UserDetails>().wrongGuess!.toString(),
-                        rating: context.read<UserDetails>().rating!.toDouble(),
+                        rating: context.read<UserDetails>().quizzes!,
                       )
                     : AccountCard(),
               ),

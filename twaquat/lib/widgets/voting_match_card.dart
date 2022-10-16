@@ -439,6 +439,8 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
       fbFixture.set(
         {
           'votingFor': "DRAW",
+          "home": firstTeamScore,
+          "away": secondTeamScore,
         },
         SetOptions(merge: true),
       );
@@ -446,6 +448,8 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
       fbFixture.set(
         {
           'votingFor': "HOME",
+          "home": firstTeamScore,
+          "away": secondTeamScore,
         },
         SetOptions(merge: true),
       );
@@ -453,6 +457,8 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
       fbFixture.set(
         {
           'votingFor': "AWAY",
+          "home": firstTeamScore,
+          "away": secondTeamScore,
         },
         SetOptions(merge: true),
       );

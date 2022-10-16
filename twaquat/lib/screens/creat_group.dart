@@ -51,7 +51,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           "isCompany": false,
           "createdBy": FirebaseAuth.instance.currentUser!.uid,
         })
-        .then((value) => print("::::::::::::::::::::::::::::::::::::::::"))
+        .then((value) => Navigator.pop(context))
         .catchError((error) => print("Failed to add user: $error"));
   }
 
@@ -151,7 +151,8 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
                         hintText:
-                            "Enter the description related to your groub here".tr(),
+                            "Enter the description related to your groub here"
+                                .tr(),
                         hintStyle: Theme.of(context).textTheme.labelLarge,
                         fillColor: Colors.red,
                         border: InputBorder.none,
@@ -194,7 +195,10 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 minHeight: 50.0,
                 minWidth: 175.0,
               ),
-              children: <Widget>[Text("Public Groub".tr()), Text("Private Group".tr())],
+              children: <Widget>[
+                Text("Public Groub".tr()),
+                Text("Private Group".tr())
+              ],
               isSelected: _selectedGroupType,
             ),
             SizedBox(

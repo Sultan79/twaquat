@@ -51,26 +51,26 @@ class _AdminScreenState extends State<AdminScreen> {
                   },
                   child: Text('Upload new Quiz'),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    // var userDoc = FirebaseFirestore.instance
-                    //     .collection('users')
-                    //     .doc(FirebaseAuth.instance.currentUser!.uid);
-                    // var userFilds = await userDoc.get();
-                    // List userQuizzes = userFilds.data()!['quizzes'];
-                    // print(userFilds.data()!['quizzes']);
-                    // userQuizzes.add(false);
-                    // userDoc.update({'quizzes': userQuizzes});
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     // var userDoc = FirebaseFirestore.instance
+                //     //     .collection('users')
+                //     //     .doc(FirebaseAuth.instance.currentUser!.uid);
+                //     // var userFilds = await userDoc.get();
+                //     // List userQuizzes = userFilds.data()!['quizzes'];
+                //     // print(userFilds.data()!['quizzes']);
+                //     // userQuizzes.add(false);
+                //     // userDoc.update({'quizzes': userQuizzes});
 
-                    var fbFixture = FirebaseFirestore.instance
-                        .collection('fixtures')
-                        .doc('1');
-                    var fixtureDco = await fbFixture.get();
-                    print(fixtureDco.data());
-                    print(fixtureDco.data()!['home']);
-                  },
-                  child: Text('test'),
-                ),
+                //     var fbFixture = FirebaseFirestore.instance
+                //         .collection('fixtures')
+                //         .doc('1');
+                //     var fixtureDco = await fbFixture.get();
+                //     print(fixtureDco.data());
+                //     print(fixtureDco.data()!['home']);
+                //   },
+                //   child: Text('test'),
+                // ),
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.pushNamed(
