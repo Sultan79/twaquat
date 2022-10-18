@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_new
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twaquat/main.dart';
@@ -117,14 +118,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             onPressed: () async {
                               final prefs =
                                   await SharedPreferences.getInstance();
-                              prefs.setBool('showHome', true);
+                              prefs.setBool('showHome'.tr(), true);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const AuthWrapper()),
                               );
                             },
-                            child: Text("START"),
+                            child: Text("START".tr()),
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   Theme.of(context).colorScheme.primary,
@@ -151,7 +152,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   _controller.jumpToPage(2);
                                 },
                                 child: Text(
-                                  "SKIP",
+                                  "SKIP".tr(),
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 style: TextButton.styleFrom(
@@ -169,7 +170,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     curve: Curves.easeIn,
                                   );
                                 },
-                                child: Text("NEXT"),
+                                child: Text("NEXT".tr()),
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.black,
                                   shape: new RoundedRectangleBorder(

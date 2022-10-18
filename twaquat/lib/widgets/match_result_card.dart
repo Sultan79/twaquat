@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -165,7 +166,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Anticipation'),
+                            Text('Anticipation'.tr()),
                             SizedBox(
                               height: 5,
                             ),
@@ -220,7 +221,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text('You Don\'t Have Predict'),
+                                            Text('You Do not Have Predict'.tr()),
                                           ],
                                         ),
                                       ),
@@ -238,7 +239,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Result'),
+                            Text('Result'.tr()),
                             SizedBox(
                               height: 5,
                             ),
@@ -323,7 +324,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
-                                'All Predictions',
+                                'All Predictions'.tr(),
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ),
@@ -363,7 +364,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Correct',
+                            'Correct'.tr(),
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(
@@ -401,7 +402,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Wrong',
+                            'Wrong'.tr(),
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(

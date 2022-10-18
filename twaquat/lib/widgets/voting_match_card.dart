@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -345,7 +346,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Draw',
+                            'Draw'.tr(),
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(
@@ -425,8 +426,8 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
         .collection("predictions")
         .doc(widget.fixture.toString())
         .set({
-      "home": firstTeamScore,
-      "away": secondTeamScore,
+      "home".tr(): firstTeamScore,
+      "away".tr(): secondTeamScore,
     }, SetOptions(merge: true));
 
     var fbFixture = FirebaseFirestore.instance
@@ -438,27 +439,27 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
     if (firstTeamScore == secondTeamScore) {
       fbFixture.set(
         {
-          'votingFor': "DRAW",
-          "home": firstTeamScore,
-          "away": secondTeamScore,
+          'votingFor'.tr(): "DRAW".tr(),
+          "home".tr(): firstTeamScore,
+          "away".tr(): secondTeamScore,
         },
         SetOptions(merge: true),
       );
     } else if (firstTeamScore > secondTeamScore) {
       fbFixture.set(
         {
-          'votingFor': "HOME",
-          "home": firstTeamScore,
-          "away": secondTeamScore,
+          'votingFor'.tr(): "HOME".tr(),
+          "home".tr(): firstTeamScore,
+          "away".tr(): secondTeamScore,
         },
         SetOptions(merge: true),
       );
     } else if (firstTeamScore < secondTeamScore) {
       fbFixture.set(
         {
-          'votingFor': "AWAY",
-          "home": firstTeamScore,
-          "away": secondTeamScore,
+          'votingFor'.tr(): "AWAY".tr(),
+          "home".tr(): firstTeamScore,
+          "away".tr(): secondTeamScore,
         },
         SetOptions(merge: true),
       );

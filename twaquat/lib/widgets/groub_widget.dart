@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class GroupWidget extends StatelessWidget {
@@ -108,7 +109,7 @@ class GroupWidget extends StatelessWidget {
                                       ),
                                 ),
                                 Text(
-                                  " members",
+                                  " members".tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -138,7 +139,7 @@ class GroupWidget extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Text(
-                                        "Public Group",
+                                        "Public Group".tr(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
@@ -159,7 +160,7 @@ class GroupWidget extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Text(
-                                        "Private Group",
+                                        "Private Group".tr(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!

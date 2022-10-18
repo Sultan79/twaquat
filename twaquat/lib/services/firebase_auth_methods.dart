@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/provider.dart';
@@ -44,10 +45,10 @@ class FirebaseAuthMethods {
       await sendEmailVerification(context);
     } on FirebaseAuthException catch (e) {
       // if you want to display your own custom error message
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+      if (e.code == 'weak-password'.tr()) {
+        print('The password provided is too weak.'.tr());
+      } else if (e.code == 'email-already-in-use'.tr()) {
+        print('The account already exists for that email.'.tr());
       }
       showSnackBar(
           context, e.message!); // Displaying the usual firebase error message
@@ -100,7 +101,7 @@ class FirebaseAuthMethods {
       // correctGuess: userDoc.data()!["correctGuess"],
       // wrongGuess: userDoc.data()!["wrongGuess"],
       //);
-      showSnackBar(context, 'Logged in successfully');
+      showSnackBar(context, 'Logged in successfully'.tr());
       // Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!); // Display error message
