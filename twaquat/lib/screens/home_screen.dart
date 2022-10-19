@@ -176,12 +176,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double VoringSizedBoxheight = 205 * 3;
     return Scaffold(
       extendBody: true,
-      body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: SafeArea(
+          bottom: false,
           child: Center(
             child: Wrap(
               alignment: WrapAlignment.center,
@@ -191,84 +192,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 25,
                 ),
-                Center(
-                  child: Provider.of<UserDetails>(context).name != null
-                      ? AccountCard(
-                          name: context.read<UserDetails>().name!,
-                          image: context.read<UserDetails>().image!,
-                          firestTeam: context.read<UserDetails>().myCuntry!,
-                          seacondTeam: context.read<UserDetails>().firstWinner!,
-                          thirdTeam: context.read<UserDetails>().secondWinner!,
-                          points:
-                              context.read<UserDetails>().points!.toString(),
-                          correctGuess: context
-                              .read<UserDetails>()
-                              .correctGuess!
-                              .toString(),
-                          wrongGuess: context
-                              .read<UserDetails>()
-                              .wrongGuess!
-                              .toString(),
-                          rating: context.read<UserDetails>().quizzes!,
-                        )
-                      : AccountCard(),
-                ),
-                //!!!! DELETE LATER !!!!
-                // Text('test'.tr()),
-                Container(
-                  height: 60,
-                  width: 350,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showPopupMessage(context);
-                    },
-                    child: Text(
-                      "Test your knowledge and get points".tr(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(color: Colors.white),
-                    ),
-                  ),
-                ),
+                HomeAccountCard(),
+                QuizButton(),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Image.asset('assets/images/football.png'),
                 ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0,
-                        vertical: 5,
-                      ),
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Upcoming matches for Today'.tr()),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 205 * 3,
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            child: Column(
-                              children: [
-                                VotingMatchCard(),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0,
+                    vertical: 5,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Upcoming matches for Today'.tr()),
+                  ),
+                ),
+                SizedBox(
+                  height: VoringSizedBoxheight,
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          children: [
+                            VotingMatchCard(),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 100,
@@ -334,7 +289,38 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
 
+class HomeAccountCard extends StatelessWidget {
+  const HomeAccountCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Provider.of<UserDetails>(context).name != null
+          ? AccountCard(
+              name: context.read<UserDetails>().name!,
+              image: context.read<UserDetails>().image!,
+              firestTeam: context.read<UserDetails>().myCuntry!,
+              seacondTeam: context.read<UserDetails>().firstWinner!,
+              thirdTeam: context.read<UserDetails>().secondWinner!,
+              points: context.read<UserDetails>().points!.toString(),
+              correctGuess:
+                  context.read<UserDetails>().correctGuess!.toString(),
+              wrongGuess: context.read<UserDetails>().wrongGuess!.toString(),
+              rating: context.read<UserDetails>().quizzes!,
+            )
+          : AccountCard(),
+    );
+  }
+}
+
+class QuizButton extends StatelessWidget {
+  const QuizButton({
+    super.key,
+  });
   void showPopupMessage(BuildContext context) {
     showDialog<void>(
       context: context,
@@ -403,6 +389,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 60,
+      width: 350,
+      child: ElevatedButton(
+        onPressed: () => showPopupMessage(context),
+        child: Text(
+          "Test your knowledge and get points".tr(),
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall!
+              .copyWith(color: Colors.white),
+        ),
+      ),
     );
   }
 }

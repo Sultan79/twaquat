@@ -126,7 +126,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  widget.firstTeam,
+                                  widget.firstTeam.tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -139,7 +139,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                                   ),
                                 ),
                                 Text(
-                                  widget.secondTeam,
+                                  widget.secondTeam.tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -221,7 +221,8 @@ class _MatchResultCardState extends State<MatchResultCard> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text('You Do not Have Predict'.tr()),
+                                            Text(
+                                                'You Do not Have Predict'.tr()),
                                           ],
                                         ),
                                       ),

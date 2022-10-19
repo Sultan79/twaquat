@@ -198,7 +198,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            widget.firstTeam,
+                            widget.firstTeam.tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -211,7 +211,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                             ),
                           ),
                           Text(
-                            widget.secondTeam,
+                            widget.secondTeam.tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -304,7 +304,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  widget.firstTeam,
+                                  widget.firstTeam.tr(),
                                   textAlign: TextAlign.start,
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
@@ -390,7 +390,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  widget.secondTeam,
+                                  widget.secondTeam.tr(),
                                   textAlign: TextAlign.start,
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),

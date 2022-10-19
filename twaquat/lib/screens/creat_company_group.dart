@@ -176,27 +176,34 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      itemCount2++;
-                      departmentsNameController.add(TextEditingController());
-                      print("items = $itemCount2");
-                      print("deper  = ${departmentsNameController.length}");
-                      setState(() {});
-                    },
-                    child: Text("add list")),
-                ElevatedButton(
-                    onPressed: () {
-                      if (itemCount2 == 1) {
-                        return;
-                      }
-                      itemCount2--;
-                      departmentsNameController.removeLast();
-                      print("items = $itemCount2");
-                      print("deper  = ${departmentsNameController.length}");
-                      setState(() {});
-                    },
-                    child: Text("Remove list")),
+                Wrap(
+                  direction: Axis.horizontal,
+                  spacing: 20,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          itemCount2++;
+                          departmentsNameController
+                              .add(TextEditingController());
+                          print("items = $itemCount2");
+                          print("deper  = ${departmentsNameController.length}");
+                          setState(() {});
+                        },
+                        child: Text("Add list")),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (itemCount2 == 1) {
+                            return;
+                          }
+                          itemCount2--;
+                          departmentsNameController.removeLast();
+                          print("items = $itemCount2");
+                          print("deper  = ${departmentsNameController.length}");
+                          setState(() {});
+                        },
+                        child: Text("Remove list")),
+                  ],
+                ),
                 SizedBox(
                   height: 13.h * itemCount2,
                   width: 350,
