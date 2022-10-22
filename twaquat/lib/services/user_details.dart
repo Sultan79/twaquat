@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserDetails extends ChangeNotifier {
@@ -62,33 +63,33 @@ class UserDetails extends ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'image': image,
-      'firstCountry': myCuntry,
-      'secondCountry': firstWinner,
-      'thirdCountry': secondWinner,
-      'points': points,
-      'correctGuess': correctGuess,
-      'wrongGuess': wrongGuess,
-      'rating': rating,
+      'id'.tr(): id,
+      'name'.tr(): name,
+      'email'.tr(): email,
+      'image'.tr(): image,
+      'firstCountry'.tr(): myCuntry,
+      'secondCountry'.tr(): firstWinner,
+      'thirdCountry'.tr(): secondWinner,
+      'points'.tr(): points,
+      'correctGuess'.tr(): correctGuess,
+      'wrongGuess'.tr(): wrongGuess,
+      'rating'.tr(): rating,
     };
   }
 
   factory UserDetails.fromMap(Map<String, dynamic> map) {
     return UserDetails(
-      id: map['id'],
-      name: map['name'],
-      email: map['email'],
-      image: map['image'],
-      myCuntry: map['firstCountry'],
-      firstWinner: map['secondCountry'],
-      secondWinner: map['thirdCountry'],
-      points: map['points'],
-      correctGuess: map['correctGuess'],
-      wrongGuess: map['wrongGuess'],
-      rating: map['rating'],
+      id: map['id'.tr()],
+      name: map['name'.tr()],
+      email: map['email'.tr()],
+      image: map['image'.tr()],
+      myCuntry: map['firstCountry'.tr()],
+      firstWinner: map['secondCountry'.tr()],
+      secondWinner: map['thirdCountry'.tr()],
+      points: map['points'.tr()],
+      correctGuess: map['correctGuess'.tr()],
+      wrongGuess: map['wrongGuess'.tr()],
+      rating: map['rating'.tr()],
     );
   }
 

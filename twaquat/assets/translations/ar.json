@@ -113,5 +113,36 @@
   "The password provided is too weak.":"كلمة السر المكتوبه ضعيفه جدا",
   "The account already exists for that email.":"يوجد حساب يحمل الايميل ذاته",
   "email-already-in-use":"الايميل مسجل مسبقا",
-  "Logged in successfully":"تم تجسيل الدخول بنجاح"
+  "Logged in successfully":"تم تجسيل الدخول بنجاح",
+  "id":"الحساب",
+  "name":"الأسم",
+  "email":"الايميل",
+  "image":"الصورة",
+  "firstCountry":"البلد الأول",
+  "secondCountry":"البلد الثاني",
+  "thirdCountry":"البلد الثالث",
+  "correctGuess":"توقع صحيح",
+  "wrongGuess":"توقع خاطئ",
+  "rating":"تقييم",
+  "Upload new Quiz":"رفع الاختبار الجديد",
+  "Create Compony Group":"انشاء مجموعة الشركة",
+  "File uploaded successfully":"الملف رفع بنجاح",
+  "Pick user to send gift to":"اختر حساب لترسل له الهدية",
+  "Submit":"ارسال",
+  "All you need to know":"كل ما تحتاج أن تعلمه",
+  "how to play":"كيف تلعب",
+  "Simply look at each game and attempt to predict the final scoreline. To enter your scores, click on the up and down arrows next to each team.":"ببساطة تابع أي مبارة و خمن النتيجة النهائية. اضغط على السهم الأعلى و السهم الأسفل لكل فريق",
+  "Each player has until 15 minutes before each game 'kicks off' to update their predicted final score, giving you time to assess the results of previous games. Players can make predictions and then change them at anytime, as often as they like until 15 minutes before each game.":
+  " .لكل لاعب الى 15 دقيقة قبل بداية المبارة لتحديث التخمينات النهائية للمبارة و هذا سيمنحك الوقت الى ان تخمن النتيجة على المباريات السابقة , اللاعبون يمكنهم أن يغيرون في تخميناتهم في أي وقت بشرط ان قبل اي مبارة ب 15 دقيقة لا يمكن لاي لاعب تغيير التخمينات ",
+  "If players fail to enter a score for any game, no points will be awarded.":"اذا فشل اللاعبون في ادخال النتيجة لأي مباراة, لن يتم منح أي نقاط",
+  "POINTS ARE AWARDED AS FOLLOWS:":"يتم منح النقاط على النحو التالي :",
+  "If you predict the correct score you will be awarded 3 points. (e.g. your prediction England 3-2 Germany, actual score England 3-2 Germany, therefore 3 points).":
+  "اذا خمنت النتيجة النهائية الصحيحة سوف تكافأ ب3 نقاط.(على سبيل المثال اذا خمنت ان انجلترا 3-2 المانيا, و كانت النتيجة هي انجلترا 3-2 المانيا, سوف تكافأ ب3 نقاط)",
+  "If, however, you have predicted the correct result but not the correct score you will be awarded 1 point. (e.g. your prediction England 3-2 Germany, actual score England 1-0 Germany, therefore 1 point).":
+  "ولكن اذا خمنت النتيجة النهائية وكانت صحيحة ولكن تخمينك لعدد الأهداف لم يكن صحيحا سوف تكافأ بنقطه واحده فقط.( على سبيل المثال كان تخمينك ان انجلترا 3-2 المانيا وكانت النتيجة هي انجلترا 1-0 المانيا سوف تكافأ بنقطه واحده فقط ",
+  "From the 'Second Round' onwards, predictions will be assessed against the final score including extra time play where applicable.":
+  "من الشوط الثاني فصاعدا , التخمينات سوف تقييم على حسب النقاط النهائية وايضا اذا وجد اشواط اضافية ستكون من ضمن النتيجة النهائية",
+  "":"",
+  "":"",
+  "":""
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 void showOTPDialog({
@@ -20,7 +21,7 @@ void showOTPDialog({
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text("Done"),
+          child: Text("Done".tr()),
           onPressed: onPressed,
         )
       ],

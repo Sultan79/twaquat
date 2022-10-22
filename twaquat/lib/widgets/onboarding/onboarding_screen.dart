@@ -127,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             },
                             child: Text("START".tr()),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
+                              primary:
                                   Theme.of(context).colorScheme.primary,
                               shape: new RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),

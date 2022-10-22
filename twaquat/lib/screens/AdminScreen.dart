@@ -107,7 +107,7 @@ class _AdminScreenState extends State<AdminScreen> {
                         },
                       );
                     },
-                    child: Text('Upload new Quiz'),
+                    child: Text('Upload new Quiz'.tr()),
                   ),
                 ),
                 // ElevatedButton(
@@ -138,7 +138,7 @@ class _AdminScreenState extends State<AdminScreen> {
                       Navigator.pushNamed(
                           context, CreateCompnyGroupScreen.routeName);
                     },
-                    child: Text('Create Compony Group'),
+                    child: Text('Create Compony Group'.tr()),
                   ),
                 ),
               ],
@@ -164,7 +164,7 @@ class _AdminScreenState extends State<AdminScreen> {
       'number': collection.docs.length,
       'url': url,
     }).whenComplete(() => {
-          showSnackBar(context, 'File uploaded successfully'),
+          showSnackBar(context, 'File uploaded successfully'.tr()),
           Navigator.of(context).pop()
         });
   }
