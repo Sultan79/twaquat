@@ -47,7 +47,7 @@ class _GroupsPageState extends State<GroupsPage> {
                       width: 170,
                       child: ElevatedButton(
                         onPressed: () {},
-                        child: Text('Companies joing'.tr()),
+                        child: Text('Companies joining'.tr()),
                       ),
                     ),
                     SizedBox(
@@ -103,11 +103,13 @@ class _GroupsPageState extends State<GroupsPage> {
                                                 doc: doc,
                                               )),
                                 ),
+                                id: id,
                                 GroupName: doc['groupName'],
                                 GroupDescription: doc['descirption'],
                                 url: doc['url'],
                                 NumberOfMembers: doc['users'].length.toString(),
                                 isPublic: doc['isPlublic'],
+                                isCompany: doc['isCompany'],
                               );
                             }),
                       );

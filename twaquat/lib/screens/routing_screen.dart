@@ -1,12 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:twaquat/screens/rank_screen.dart';
 import 'package:twaquat/screens/AdminScreen.dart';
 import 'package:twaquat/screens/groups_page.dart';
 import 'package:twaquat/screens/home_screen.dart';
 import 'package:twaquat/screens/matches_screen.dart';
-import 'package:twaquat/screens/settingsScreen.dart';
+import 'package:twaquat/screens/profileScreen.dart';
+import 'package:twaquat/services/firebase_dynamic_link.dart';
+import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/widgets/nav_bar/floating_navbar.dart';
 import 'package:twaquat/widgets/nav_bar/floating_navbar_item.dart';
 
@@ -34,6 +37,15 @@ class _RoutingScreenState extends State<RoutingScreen> {
     SettingScreen(),
     AdminScreen(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // FirebaseDynamicLinkService.initDynamicLink(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,18 +70,33 @@ class _RoutingScreenState extends State<RoutingScreen> {
         borderRadius: 15,
         itemBorderRadius: 9,
         margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-        items: [
-          FloatingNavbarItem(icon: 'assets/svg/Home.svg', title: 'Main'.tr()),
-          FloatingNavbarItem(
-              icon: 'assets/svg/Matches.svg', title: 'Matches'.tr()),
-          FloatingNavbarItem(
-              icon: 'assets/svg/Group.svg', title: 'Groups'.tr()),
-          FloatingNavbarItem(
-              icon: 'assets/svg/Rank.svg', title: 'Ranking'.tr()),
-          FloatingNavbarItem(
-              icon: 'assets/svg/User.svg', title: 'Profile'.tr()),
-          FloatingNavbarItem(icon: 'assets/svg/Admin.svg', title: 'Admin'.tr()),
-        ],
+        items: context.read<UserDetails>().isAdmin
+            ? [
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Home.svg', title: 'Main'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Matches.svg', title: 'Matches'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Group.svg', title: 'Groups'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Rank.svg', title: 'Ranking'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/User.svg', title: 'Profile'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Admin.svg', title: 'Admin'.tr()),
+              ]
+            : [
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Home.svg', title: 'Main'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Matches.svg', title: 'Matches'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Group.svg', title: 'Groups'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/Rank.svg', title: 'Ranking'.tr()),
+                FloatingNavbarItem(
+                    icon: 'assets/svg/User.svg', title: 'Profile'.tr()),
+              ],
       ),
     );
   }

@@ -15,7 +15,7 @@ import 'package:twaquat/screens/groups_page.dart';
 
 class CreateCompnyGroupScreen extends StatefulWidget {
   const CreateCompnyGroupScreen({Key? key}) : super(key: key);
-  static String routeName = '/CreateComponyGroupScreen';
+  static String routeName = '/CreateCompanyGroupScreen';
   @override
   State<CreateCompnyGroupScreen> createState() =>
       _CreateCompnyGroupScreenState();

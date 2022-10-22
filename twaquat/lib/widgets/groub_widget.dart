@@ -1,24 +1,31 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:twaquat/services/firebase_dynamic_link.dart';
 
 class GroupWidget extends StatelessWidget {
   const GroupWidget(
       {super.key,
+      required this.id,
       this.GroupName = "Groub Name",
       this.GroupDescription = "Groub Description ",
       this.url = 'https://shortest.link/5x7p',
       this.NumberOfMembers = '200',
       this.isPublic = false,
+      this.isCompany = false,
       required this.onClick});
 
+  final String id;
   final String GroupName;
   final String GroupDescription;
   final String url;
   final String NumberOfMembers;
   final bool isPublic;
+  final bool isCompany;
   final Function() onClick;
   @override
   Widget build(BuildContext context) {
+    // print(DateTime.now().compareTo(other));
     return Column(
       children: [
         InkWell(
@@ -60,10 +67,44 @@ class GroupWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             GroupName,
                           ),
+                          !isCompany
+                              ? SizedBox(
+                                  height: 20,
+                                  width: 25,
+                                  child: ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.transparent),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.grey),
+                                          overlayColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.grey.shade300),
+                                          padding: MaterialStateProperty.all(
+                                              EdgeInsets.zero)),
+                                      onPressed: () async {
+                                        String url =
+                                            await FirebaseDynamicLinkService
+                                                .createDynamicLink(id);
+                                        await Clipboard.setData(
+                                            ClipboardData(text: url));
+                                      },
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          Icons.share,
+                                          size: 15,
+                                        ),
+                                      )),
+                                )
+                              : SizedBox(),
                         ],
                       ),
                       Row(
@@ -122,45 +163,69 @@ class GroupWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          isPublic
-                              ? Container(
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary, //Colors.redAccent,
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: isPublic
-                                        ? Border.all(
-                                            color: Colors.grey.shade300,
-                                          )
-                                        : null,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Public Group".tr(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.white,
-                                            ),
+                          !isCompany
+                              ? isPublic
+                                  ? Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary, //Colors.redAccent,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: isPublic
+                                            ? Border.all(
+                                                color: Colors.grey.shade300,
+                                              )
+                                            : null,
                                       ),
-                                    ],
-                                  ),
-                                )
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Public".tr(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        color: Colors
+                                            .redAccent, //Colors.redAccent,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Private".tr(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
                               : Container(
                                   padding: EdgeInsets.all(5),
                                   decoration: BoxDecoration(
-                                    color: Colors.redAccent, //Colors.redAccent,
+                                    color:
+                                        Colors.blueAccent, //Colors.redAccent,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Row(
                                     children: [
                                       Text(
-                                        "Private Group".tr(),
+                                        "Company".tr(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!

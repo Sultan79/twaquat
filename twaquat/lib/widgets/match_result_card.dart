@@ -12,25 +12,19 @@ class MatchResultCard extends StatefulWidget {
     this.secondTeam = 'Saudi Arabia',
     this.time = '07:15',
     this.date = '2022/08/22',
-    this.fexture = 2,
+    this.fixture = 2,
     this.firstTeamScore = 2,
     this.secondTeamScore = 3,
-    this.firstTeamAnticipationScore = 5,
-    this.secondTeamAnticipationScore = 3,
   }) : super(key: key);
 
   final int firstTeamScore;
-
-  final int firstTeamAnticipationScore;
-
-  final int secondTeamAnticipationScore;
 
   final int secondTeamScore;
   final String firstTeam;
   final String secondTeam;
   final String time;
   final String date;
-  final int fexture;
+  final int fixture;
 
   @override
   State<MatchResultCard> createState() => _MatchResultCardState();
@@ -54,7 +48,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
         .collection('users')
         .doc(context.read<FirebaseAuthMethods>().user.uid)
         .collection("predictions")
-        .doc(widget.fexture.toString())
+        .doc(widget.fixture.toString())
         .get();
     if (lastSavePredictoin.exists) {
       firstTeamAnticipationScore = lastSavePredictoin.data()!['home'];

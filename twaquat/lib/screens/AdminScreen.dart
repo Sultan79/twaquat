@@ -11,8 +11,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:twaquat/screens/creat_company_group.dart';
+import 'package:twaquat/services/firebase_dynamic_link.dart';
 import 'package:twaquat/utils/showSnackbar.dart';
+import 'package:twaquat/services/fireStorage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -110,35 +115,25 @@ class _AdminScreenState extends State<AdminScreen> {
                     child: Text('Upload new Quiz'.tr()),
                   ),
                 ),
-                // ElevatedButton(
-                //   onPressed: () async {
-                //     // var userDoc = FirebaseFirestore.instance
-                //     //     .collection('users')
-                //     //     .doc(FirebaseAuth.instance.currentUser!.uid);
-                //     // var userFilds = await userDoc.get();
-                //     // List userQuizzes = userFilds.data()!['quizzes'];
-                //     // print(userFilds.data()!['quizzes']);
-                //     // userQuizzes.add(false);
-                //     // userDoc.update({'quizzes': userQuizzes});
-
-                //     var fbFixture = FirebaseFirestore.instance
-                //         .collection('fixtures')
-                //         .doc('1');
-                //     var fixtureDco = await fbFixture.get();
-                //     print(fixtureDco.data());
-                //     print(fixtureDco.data()!['home']);
-                //   },
-                //   child: Text('test'),
-                // ),
+                SizedBox(
+                  height: 60,
+                  width: 350,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, CreateCompnyGroupScreen.routeName);
+                    },
+                    child: Text('Create Company Group'),
+                  ),
+                ),
                 SizedBox(
                   height: 60,
                   width: 350,
                   child: ElevatedButton(
                     onPressed: () async {
-                      Navigator.pushNamed(
-                          context, CreateCompnyGroupScreen.routeName);
+                      uploadImage();
                     },
-                    child: Text('Create Compony Group'.tr()),
+                    child: Text('Upload AD Image'),
                   ),
                 ),
               ],
@@ -167,5 +162,30 @@ class _AdminScreenState extends State<AdminScreen> {
           showSnackBar(context, 'File uploaded successfully'.tr()),
           Navigator.of(context).pop()
         });
+  }
+
+  Future<void> uploadImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    final imageFile = File(image.path);
+    final fileName = imageFile.hashCode.toString();
+    String? url;
+    var fireStore = FirebaseFirestore.instance.collection('ad');
+    var collection = await fireStore.get();
+    try {
+      print('Group Image has been saved');
+      await firebase_storage.FirebaseStorage.instance
+          .ref('ad/$fileName')
+          .putFile(imageFile)
+          .then((p0) async => url = await p0.ref.getDownloadURL());
+
+      await FirebaseFirestore.instance.collection('ad').doc().set({
+        'adNumber': collection.docs.length,
+        'url': url,
+      });
+    } on firebase_core.FirebaseException catch (e) {
+      print('e.message');
+      print(e.message);
+    }
   }
 }

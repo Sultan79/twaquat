@@ -89,6 +89,7 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
               children: [
                 GroupWidget(
                   onClick: () {},
+                  id: widget.id,
                   GroupName: widget.doc['groupName'],
                   GroupDescription: widget.doc['descirption'],
                   url: widget.doc['url'],

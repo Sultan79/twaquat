@@ -17,6 +17,7 @@ class VotingMatchCard extends StatefulWidget {
     this.time = '07:15',
     this.date = '2022/08/22',
     this.fixture = 1,
+    this.close = true,
   }) : super(key: key);
 
   final String firstTeam;
@@ -24,6 +25,7 @@ class VotingMatchCard extends StatefulWidget {
   final String time;
   final String date;
   final int fixture;
+  final bool close;
 
   @override
   State<VotingMatchCard> createState() => _VotingMatchCardState();
@@ -76,6 +78,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
 
   @override
   Widget build(BuildContext context) {
+    // DateFormat.jm().format(DateTime.parse(DateTime.now().toString().substring(0, 10)));
     return Container(
       height: 185,
       width: 350,
@@ -92,30 +95,32 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    VotingButton(
-                      ontapFunction: () {
-                        firstTeamScore++;
-                        // print(firstTeamScore);
-                        savePrediction(context);
-                        setState(() {});
-                      },
-                    ),
-                    VotingButton(
-                        ontapFunction: () {
-                          if (firstTeamScore > 0) {
-                            firstTeamScore--;
-                          }
-                          // print(firstTeamScore);
+                widget.close
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          VotingButton(
+                            ontapFunction: () {
+                              firstTeamScore++;
+                              // print(firstTeamScore);
+                              savePrediction(context);
+                              setState(() {});
+                            },
+                          ),
+                          VotingButton(
+                              ontapFunction: () {
+                                if (firstTeamScore > 0) {
+                                  firstTeamScore--;
+                                }
+                                // print(firstTeamScore);
 
-                          savePrediction(context);
-                          setState(() {});
-                        },
-                        upArraw: true),
-                  ],
-                ),
+                                savePrediction(context);
+                                setState(() {});
+                              },
+                              upArraw: true),
+                        ],
+                      )
+                    : SizedBox(),
                 SvgPicture.asset(
                   'assets/matchesFlags/${widget.firstTeam}.svg',
                   colorBlendMode: BlendMode.colorBurn,
@@ -152,31 +157,33 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                   colorBlendMode: BlendMode.colorBurn,
                   height: 65,
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    VotingButton(
-                      ontapFunction: () {
-                        secondTeamScore++;
-                        // print(secondTeamScore);
+                widget.close
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          VotingButton(
+                            ontapFunction: () {
+                              secondTeamScore++;
+                              // print(secondTeamScore);
 
-                        savePrediction(context);
-                        setState(() {});
-                      },
-                    ),
-                    VotingButton(
-                        ontapFunction: () {
-                          if (secondTeamScore > 0) {
-                            secondTeamScore--;
-                          }
-                          // print(secondTeamScore);
+                              savePrediction(context);
+                              setState(() {});
+                            },
+                          ),
+                          VotingButton(
+                              ontapFunction: () {
+                                if (secondTeamScore > 0) {
+                                  secondTeamScore--;
+                                }
+                                // print(secondTeamScore);
 
-                          savePrediction(context);
-                          setState(() {});
-                        },
-                        upArraw: true),
-                  ],
-                ),
+                                savePrediction(context);
+                                setState(() {});
+                              },
+                              upArraw: true),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,7 @@ import 'package:twaquat/screens/login_screen.dart';
 import 'package:twaquat/screens/matches_screen.dart';
 import 'package:twaquat/screens/quiz_screen.dart';
 import 'package:twaquat/screens/rank_screen.dart';
-import 'package:twaquat/screens/settingsScreen.dart';
+import 'package:twaquat/screens/profileScreen.dart';
 import 'package:twaquat/screens/signup_screen.dart';
 import 'package:twaquat/services/dropDown_flags.dart';
 import 'package:twaquat/services/droupDown_user.dart';
@@ -23,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twaquat/screens/creat_group.dart';
 import 'package:twaquat/screens/routing_screen.dart';
-import 'package:twaquat/screens/settings-screen-2.dart';
+import 'package:twaquat/screens/settings_screen.dart';
 import 'package:twaquat/services/gift.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/static.dart';
@@ -34,6 +35,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
+  // Get any initial links
+  final PendingDynamicLinkData? initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool("showHome") ?? false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])

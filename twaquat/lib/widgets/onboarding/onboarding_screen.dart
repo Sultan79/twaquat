@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new
+// ignore_for_file: unnecessary_new, use_build_context_synchronously, sort_child_properties_last
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +119,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               final prefs =
                                   await SharedPreferences.getInstance();
                               prefs.setBool('showHome'.tr(), true);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const AuthWrapper()),

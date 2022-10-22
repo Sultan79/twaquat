@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:twaquat/services/firebase_dynamic_link.dart';
 import 'package:twaquat/services/gift.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/widgets/custom_tab_widget.dart';
@@ -26,11 +29,12 @@ class CompanyGroupRoomScreen extends StatefulWidget {
 
 class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
   QuerySnapshot<Map<String, dynamic>>? allUsers;
-  DocumentSnapshot<Map<String, dynamic>>? groupUsers;
+  DocumentSnapshot<Map<String, dynamic>>? groupDoc;
   QuerySnapshot<Map<String, dynamic>>? groupAlerts;
   List allGroupUsersDocs = [];
   List allSectionUsersDocs = [];
   List usersSectionIDs = [];
+  List listSections = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -47,12 +51,12 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
         )
         .get();
 
-    groupUsers = await FirebaseFirestore.instance
+    groupDoc = await FirebaseFirestore.instance
         .collection('group')
         .doc(widget.id)
         .get();
 
-    Map<String, dynamic> allUsersSection = groupUsers!.data()!['userss'];
+    Map<String, dynamic> allUsersSection = groupDoc!.data()!['userss'];
     String? userSection;
 
     allUsersSection.forEach((key, value) {
@@ -77,17 +81,29 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
         )
         .get();
     print(groupAlerts!.docs);
-    List allGroupUsersIDs = groupUsers!['users'];
+
+    Map allGroupUsersIDs = groupDoc!['userss'];
+
     for (var doc in allUsers!.docs) {
-      if (allGroupUsersIDs.contains(doc.id)) {
+      if (allGroupUsersIDs.containsKey(doc.id)) {
         allGroupUsersDocs.add(doc.data());
       }
     }
+    print('usersSectionIDs');
+    print(usersSectionIDs);
     for (var doc in allUsers!.docs) {
       if (usersSectionIDs.contains(doc.id)) {
         allSectionUsersDocs.add(doc.data());
       }
     }
+
+    allUsersSection.forEach((key, value) {
+      if (!listSections.contains(value)) {
+        listSections.add(value);
+      }
+    });
+    listSections = groupDoc!.data()!['department'];
+    print(listSections);
     setState(() {});
   }
 
@@ -115,29 +131,47 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
               children: [
                 GroupWidget(
                   onClick: () {},
+                  id: widget.id,
                   GroupName: widget.doc['groupName'],
                   GroupDescription: widget.doc['descirption'],
                   url: widget.doc['url'],
                   NumberOfMembers: widget.doc['users'].length.toString(),
                   isPublic: widget.doc['isPlublic'],
+                  isCompany: widget.doc['isCompany'],
                 ),
                 SizedBox(
                   height: 70.h,
                   child: CustomTabWidget(
-                    tabss: [
-                      Tab(
-                        child: FittedBox(
-                          child: Text("Company"),
-                        ),
-                      ),
-                      Tab(
-                        child: FittedBox(
-                          child: Text("Section"),
-                        ),
-                      ),
-                      Tab(text: 'Alerts'),
-                      Tab(text: 'Gifts'),
-                    ],
+                    tabss: context.read<UserDetails>().isAdmin
+                        ? [
+                            Tab(
+                              child: FittedBox(
+                                child: Text("Company"),
+                              ),
+                            ),
+                            Tab(
+                              child: FittedBox(
+                                child: Text("Section"),
+                              ),
+                            ),
+                            Tab(text: 'Alerts'),
+                            Tab(text: 'Gifts'),
+                            Tab(text: 'Share'),
+                          ]
+                        : [
+                            Tab(
+                              child: FittedBox(
+                                child: Text("Company"),
+                              ),
+                            ),
+                            Tab(
+                              child: FittedBox(
+                                child: Text("Section"),
+                              ),
+                            ),
+                            Tab(text: 'Alerts'),
+                            Tab(text: 'Gifts'),
+                          ],
                     children: [
                       GroupRank(allUsers: allGroupUsersDocs),
                       GroupRank(allUsers: allSectionUsersDocs),
@@ -189,6 +223,30 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
                               users: allGroupUsersDocs,
                               groupId: widget.id,
                               groupName: widget.doc['groupName'],
+                            );
+                          },
+                        ),
+                      )),
+                      Center(
+                          child: SizedBox(
+                        width: 350,
+                        child: ListView.separated(
+                          itemCount: listSections.length,
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 25,
+                          ),
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: Icon(Icons.share),
+                              title: Text("Section: ${listSections[index]}"),
+                              subtitle: Text('Click to copy link'.tr()),
+                              onTap: () async {
+                                String url = await FirebaseDynamicLinkService
+                                    .createDynamicCompanyLink(
+                                        widget.id, listSections[index]);
+                                await Clipboard.setData(
+                                    ClipboardData(text: url));
+                              },
                             );
                           },
                         ),

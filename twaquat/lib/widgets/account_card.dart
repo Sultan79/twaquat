@@ -16,7 +16,8 @@ class AccountCard extends StatelessWidget {
     this.firestTeam = 'USA',
     this.seacondTeam = 'USA',
     this.thirdTeam = 'USA',
-    this.rating = const [],
+    this.rank = '0',
+    this.quizzes = const [],
   }) : super(key: key);
 
   final String name;
@@ -27,7 +28,8 @@ class AccountCard extends StatelessWidget {
   final String firestTeam;
   final String seacondTeam;
   final String thirdTeam;
-  final List rating;
+  final String rank;
+  final List quizzes;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -189,25 +191,19 @@ class AccountCard extends StatelessWidget {
                         children: [
                           Container(
                             height: 30,
-                            width: 100,
+                            width: 60,
                             decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.primary,
                               borderRadius: BorderRadius.circular(5),
-                              // border: Border.all(color: Colors.grey.shade300),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                // SvgPicture.asset(
-                                //   'assets/svg/Coins.svg',
-                                //   color: Colors.white,
-                                // ),
-                                Icon(Icons.check,
-                                    size: 15, color: Colors.white),
-                                SizedBox(width: 5),
-                                SizedBox(
-                                  width: 40,
-                                  child: Text(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.check,
+                                      size: 15, color: Colors.white),
+                                  SizedBox(width: 5),
+                                  Text(
                                     correctGuess,
                                     style: Theme.of(context)
                                         .textTheme
@@ -217,36 +213,30 @@ class AccountCard extends StatelessWidget {
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                       Container(
                         height: 30,
-                        width: 100,
+                        width: 60,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.secondary,
                           borderRadius: BorderRadius.circular(5),
-                          // border: Border.all(color: Colors.grey.shade300),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            // SvgPicture.asset(
-                            //   'assets/svg/Coins.svg',
-                            //
-                            // ),
-                            Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 15,
-                            ),
-                            SizedBox(width: 5),
-                            SizedBox(
-                              width: 40,
-                              child: Text(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
                                 wrongGuess,
                                 style: Theme.of(context)
                                     .textTheme
@@ -256,45 +246,40 @@ class AccountCard extends StatelessWidget {
                                       fontWeight: FontWeight.normal,
                                     ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                      // Container(
-                      //   height: 30,
-                      //   width: 60,
-                      //   decoration: BoxDecoration(
-                      //     color: Theme.of(context).colorScheme.background,
-                      //     borderRadius: BorderRadius.circular(5),
-                      //     // border: Border.all(color: Colors.grey.shade300),
-                      //   ),
-                      //   child: FittedBox(
-                      //     fit: BoxFit.scaleDown,
-                      //     child: Row(
-                      //       children: [
-                      //         // SvgPicture.asset(
-                      //         //   'assets/svg/Coins.svg',
-                      //         //   // color: Colors.white,
-                      //         // ),
-                      //         Icon(
-                      //           Icons.military_tech,
-                      //           size: 15,
-                      //         ),
-                      //         SizedBox(width: 5),
-                      //         Text(
-                      //           points,
-                      //           style: Theme.of(context)
-                      //               .textTheme
-                      //               .bodyMedium!
-                      //               .copyWith(
-                      //                 // color: Colors.white,
-                      //                 fontWeight: FontWeight.normal,
-                      //               ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
+                      Container(
+                        height: 30,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.background,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.military_tech,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                rank,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      // color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -323,13 +308,13 @@ class AccountCard extends StatelessWidget {
                         width: 200,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          itemCount: rating.length,
+                          itemCount: quizzes.length,
                           separatorBuilder: (context, index) => SizedBox(
                             width: 10,
                           ),
                           itemBuilder: (context, index) {
                             return Icon(
-                              rating[index]
+                              quizzes[index]
                                   ? Icons.star_rounded
                                   : Icons.star_border_rounded,
                               size: 15,

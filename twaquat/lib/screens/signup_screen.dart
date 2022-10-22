@@ -82,8 +82,9 @@ class _Signup_ScreenState extends State<Signup_Screen> {
               'url': url_plus!,
               'correctGuess': 0,
               'wrongGuess': 0,
-              'rating': 0,
+              'quizzes': [],
               'points': 0,
+              'isAdmin': false,
             },
           ).then((value) => Navigator.pushReplacementNamed(context, '/'));
         },

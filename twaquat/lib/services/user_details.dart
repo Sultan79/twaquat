@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserDetails extends ChangeNotifier {
@@ -15,7 +14,8 @@ class UserDetails extends ChangeNotifier {
   num? points;
   num? correctGuess;
   num? wrongGuess;
-  num? rating;
+  num? rank;
+  bool isAdmin;
   UserDetails({
     this.id,
     this.name,
@@ -27,8 +27,9 @@ class UserDetails extends ChangeNotifier {
     this.points,
     this.correctGuess,
     this.wrongGuess,
-    this.rating,
+    this.rank,
     this.quizzes,
+    this.isAdmin = false,
   });
 
   UserDetails copyWith({
@@ -44,6 +45,7 @@ class UserDetails extends ChangeNotifier {
     num? wrongGuess,
     num? rating,
     List? quizzes,
+    bool? isAdmin,
   }) {
     return UserDetails(
       id: id ?? this.id,
@@ -56,40 +58,41 @@ class UserDetails extends ChangeNotifier {
       points: points ?? this.points,
       correctGuess: correctGuess ?? this.correctGuess,
       wrongGuess: wrongGuess ?? this.wrongGuess,
-      rating: rating ?? this.rating,
+      rank: rating ?? this.rank,
       quizzes: quizzes ?? this.quizzes,
+      isAdmin: isAdmin ?? this.isAdmin,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id'.tr(): id,
-      'name'.tr(): name,
-      'email'.tr(): email,
-      'image'.tr(): image,
-      'firstCountry'.tr(): myCuntry,
-      'secondCountry'.tr(): firstWinner,
-      'thirdCountry'.tr(): secondWinner,
-      'points'.tr(): points,
-      'correctGuess'.tr(): correctGuess,
-      'wrongGuess'.tr(): wrongGuess,
-      'rating'.tr(): rating,
+      'id': id,
+      'name': name,
+      'email': email,
+      'image': image,
+      'firstCountry': myCuntry,
+      'secondCountry': firstWinner,
+      'thirdCountry': secondWinner,
+      'points': points,
+      'correctGuess': correctGuess,
+      'wrongGuess': wrongGuess,
+      'rating': rank,
     };
   }
 
   factory UserDetails.fromMap(Map<String, dynamic> map) {
     return UserDetails(
-      id: map['id'.tr()],
-      name: map['name'.tr()],
-      email: map['email'.tr()],
-      image: map['image'.tr()],
-      myCuntry: map['firstCountry'.tr()],
-      firstWinner: map['secondCountry'.tr()],
-      secondWinner: map['thirdCountry'.tr()],
-      points: map['points'.tr()],
-      correctGuess: map['correctGuess'.tr()],
-      wrongGuess: map['wrongGuess'.tr()],
-      rating: map['rating'.tr()],
+      id: map['id'],
+      name: map['name'],
+      email: map['email'],
+      image: map['image'],
+      myCuntry: map['firstCountry'],
+      firstWinner: map['secondCountry'],
+      secondWinner: map['thirdCountry'],
+      points: map['points'],
+      correctGuess: map['correctGuess'],
+      wrongGuess: map['wrongGuess'],
+      rank: map['rating'],
     );
   }
 
@@ -100,7 +103,7 @@ class UserDetails extends ChangeNotifier {
 
   @override
   String toString() {
-    return 'UserDetails(id: $id, name: $name, email: $email, image: $image, firstCountry: $myCuntry, secondCountry: $firstWinner, thirdCountry: $secondWinner, points: $points, correctGuess: $correctGuess, wrongGuess: $wrongGuess, rating: $rating)';
+    return 'UserDetails(id: $id, name: $name, email: $email, image: $image, firstCountry: $myCuntry, secondCountry: $firstWinner, thirdCountry: $secondWinner, points: $points, correctGuess: $correctGuess, wrongGuess: $wrongGuess, rating: $rank)';
   }
 
   @override
@@ -118,7 +121,7 @@ class UserDetails extends ChangeNotifier {
         other.points == points &&
         other.correctGuess == correctGuess &&
         other.wrongGuess == wrongGuess &&
-        other.rating == rating;
+        other.rank == rank;
   }
 
   @override
@@ -133,7 +136,7 @@ class UserDetails extends ChangeNotifier {
         points.hashCode ^
         correctGuess.hashCode ^
         wrongGuess.hashCode ^
-        rating.hashCode;
+        rank.hashCode;
   }
 
   void setUserData({
@@ -149,6 +152,7 @@ class UserDetails extends ChangeNotifier {
     num? wrongGuess,
     num? rating,
     List? quizzes,
+    bool? isAdmin,
   }) {
     this.id = id ?? this.id;
     this.name = name ?? this.name;
@@ -160,8 +164,9 @@ class UserDetails extends ChangeNotifier {
     this.points = points ?? this.points;
     this.correctGuess = correctGuess ?? this.correctGuess;
     this.wrongGuess = wrongGuess ?? this.wrongGuess;
-    this.rating = rating ?? this.rating;
+    this.rank = rating ?? this.rank;
     this.quizzes = quizzes ?? this.quizzes;
+    this.isAdmin = isAdmin ?? this.isAdmin;
 
     notifyListeners();
   }
