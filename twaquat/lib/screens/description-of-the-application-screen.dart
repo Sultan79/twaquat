@@ -86,7 +86,7 @@ class _Description_Of_The_ApplicationState
                         'All players will be deemed to have accepted the rules of the game. To avoid disappointment players should ensure their predictions are entered and updated comfortably before the 15 minute deadline to account for any internet access issue that is outside of the administrators control.'
                         "It is the players' responsibility to update their predictions page after entering predictions or making any amends to a previous prediction. Failing to do so will result in the prediction or alteration failing to be registered."
                         "In the event of any fixture being changed by Qatar 2022 authorities for whatever reason, or any other issue resulting in changes to the schedule of games in Qatar 2022, every effort will be made to update the predictor chart accordingly. However, in the unlikely event of any issue relating to results of games, the final scores and points awarded, the administrators' decision will be final and no correspondence will be entered into."
-                        "Final score predictions will include extra time play where applicable."),
+                        "Final score predictions will include extra time play where applicable.").tr(),
                   ],
                 ),
               ),
