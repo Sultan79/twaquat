@@ -95,6 +95,14 @@ class GroupWidget extends StatelessWidget {
                                                 .createDynamicLink(id);
                                         await Clipboard.setData(
                                             ClipboardData(text: url));
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: Colors.green,
+                                            content: Text(
+                                                "you have copyed the link"),
+                                          ),
+                                        );
                                       },
                                       child: Align(
                                         alignment: Alignment.center,

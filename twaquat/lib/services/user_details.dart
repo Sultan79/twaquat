@@ -170,4 +170,9 @@ class UserDetails extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  setUserRank(int rank) {
+    this.rank = rank;
+    notifyListeners();
+  }
 }

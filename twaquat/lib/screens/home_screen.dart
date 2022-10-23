@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sizer/sizer.dart';
 import 'package:twaquat/screens/quiz_screen.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
@@ -50,8 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
         .get();
     allUsers.docs.forEach((element) {
       rank++;
-      if (context.read<UserDetails>().id == element.id) {
-        context.read<UserDetails>().rank = rank;
+      if (FirebaseAuth.instance.currentUser!.uid == element.id) {
+        context.read<UserDetails>().setUserRank(rank);
       }
     });
   }
@@ -115,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       border: Border.all(color: Colors.grey.shade400),
                     ),
                     child: Image.asset(
-                      'assets/images/${giftImage}',
+                      'assets/giftsImages/${giftImage}',
                       // fit: BoxFit.scaleDown,
                       cacheHeight: 100,
                     ),
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           .update({'opend': true});
                       Navigator.pop(context);
                     },
-                    child: Text('Exit'),
+                    child: Text('Received'),
                   ),
                 ],
               ),
@@ -260,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             var response = data.data['response'];
                             return response.length == 0
                                 ? Text(
-                                    'There is no matches for today ',
+                                    'There are no matches for today'.tr(),
                                     style: TextStyle(color: Colors.redAccent),
                                   )
                                 : SizedBox(

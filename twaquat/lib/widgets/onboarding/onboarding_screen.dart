@@ -53,6 +53,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            Row(
+              children: [
+                TextButton.icon(
+                    onPressed: () {
+                      context.locale.toString() == "en"
+                          ? context.setLocale(Locale('ar'))
+                          : context.setLocale(Locale('en'));
+                    },
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.black)),
+                    icon: Icon(Icons.language),
+                    label: Text("English".tr())),
+              ],
+            ),
             Expanded(
               flex: 3,
               child: PageView.builder(
@@ -74,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             height: (height >= 840) ? 40 : 30,
                           ),
                           Text(
-                            contents[i].title,
+                            contents[i].title.tr(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -85,7 +100,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             height: 15,
                           ),
                           Text(
-                            contents[i].desc,
+                            contents[i].desc.tr(),
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: (width <= 550) ? 17 : 25,
@@ -118,7 +133,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             onPressed: () async {
                               final prefs =
                                   await SharedPreferences.getInstance();
-                              prefs.setBool('showHome'.tr(), true);
+                              prefs.setBool('showHome', true);
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -127,8 +142,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             },
                             child: Text("START".tr()),
                             style: ElevatedButton.styleFrom(
-                              primary:
-                                  Theme.of(context).colorScheme.primary,
+                              primary: Theme.of(context).colorScheme.primary,
                               shape: new RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),

@@ -33,6 +33,8 @@ class MatchResultCard extends StatefulWidget {
 class _MatchResultCardState extends State<MatchResultCard> {
   int? firstTeamAnticipationScore = 0;
   int? secondTeamAnticipationScore = 0;
+  int? totalWrongsPredictions = 0;
+  int? totalCorrectPredictions = 0;
 
   @override
   void initState() {
@@ -41,6 +43,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
     firstTeamAnticipationScore = widget.firstTeamScore;
     secondTeamAnticipationScore = widget.firstTeamScore;
     getPrediction();
+    getAllPredictions();
   }
 
   void getPrediction() async {
@@ -59,8 +62,28 @@ class _MatchResultCardState extends State<MatchResultCard> {
       secondTeamAnticipationScore = null;
       setState(() {});
     }
-    print(firstTeamAnticipationScore);
-    print(widget.firstTeamScore);
+  }
+
+  void getAllPredictions() async {
+    final allSavePredictoin = await FirebaseFirestore.instance
+        .collection('fixtures')
+        .doc(widget.fixture.toString())
+        .get();
+    if (allSavePredictoin.exists) {
+      totalCorrectPredictions =
+          await allSavePredictoin.data()!['totalCorrectPredictions'] != null
+              ? allSavePredictoin.data()!['totalCorrectPredictions']
+              : 10;
+      totalWrongsPredictions =
+          await allSavePredictoin.data()!['totalWrongsPredictions'] != null
+              ? allSavePredictoin.data()!['totalWrongsPredictions']
+              : 12;
+      setState(() {});
+    } else {
+      totalCorrectPredictions = 0;
+      totalWrongsPredictions = 0;
+      setState(() {});
+    }
   }
 
   @override
@@ -325,7 +348,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                             ),
                           ),
                           Text(
-                            '12',
+                            '${totalCorrectPredictions! + totalWrongsPredictions!}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -363,7 +386,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(
-                            '12',
+                            '$totalCorrectPredictions',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -401,7 +424,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(
-                            '12',
+                            '$totalWrongsPredictions',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!

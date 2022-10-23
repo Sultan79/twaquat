@@ -34,7 +34,7 @@ class _RoutingScreenState extends State<RoutingScreen> {
     MatchesScreen(),
     GroupsPage(),
     RankScreen(),
-    SettingScreen(),
+    ProfileScreen(),
     AdminScreen(),
   ];
 

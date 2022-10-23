@@ -15,18 +15,19 @@ List<OnboardingContents> contents = [
     title: "Register".tr(),
     image: "assets/images/White skin hands with a phone.png",
     desc:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at ultricies felis. Duis vitae magna.".tr(),
+        "Register and send invitation to your friends to be part of Mundial challenge "
+            .tr(),
   ),
   OnboardingContents(
     title: "Challenge".tr(),
     image: "assets/images/1F94A_BoxingGlove_MOD_01_01 1.png",
     desc:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at ultricies felis. Duis vitae magna.".tr(),
+        "Predict match results, answer the quizzes , and challenge your friends"
+            .tr(),
   ),
   OnboardingContents(
     title: "Win".tr(),
     image: "assets/images/Group 54421.png",
-    desc:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at ultricies felis. Duis vitae magna.".tr(),
+    desc: "Earn points and be in the top".tr(),
   ),
 ];

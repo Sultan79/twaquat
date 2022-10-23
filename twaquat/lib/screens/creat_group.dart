@@ -111,7 +111,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           _image!,
                           fit: BoxFit.cover,
                         )
-                      : const FlutterLogo(size: 200),
+                      : const Icon(Icons.image_search, size: 90),
                 ),
               ),
             ),
@@ -131,7 +131,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     height: 13,
                   ),
                   Container(
-                    alignment: Alignment.center,
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       color: Colors.white,

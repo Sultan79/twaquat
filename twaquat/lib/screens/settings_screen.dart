@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
   static String routeName = '/settings';
   @override
-  State<Settings> createState() => _SettingsState();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

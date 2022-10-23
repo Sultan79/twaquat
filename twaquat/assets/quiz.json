@@ -1,122 +1,246 @@
-[
-  {
-    "question": "1 test test test",
-    "answer": "1 11 first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "1 11 first test" },
-      { "option": "1 11 wrong test" },
-      { "option": "1 11 wrong test" },
-      { "option": "1 11 wrong test" }
-    ]
-  },
-  {
-    "question": "2 test test test",
-    "answer": "2 22first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "2 22first test" },
-      { "option": "2 22wrong test" },
-      { "option": "2 22wrong test" },
-      { "option": "2 22wrong test" }
-    ]
-  },
-  {
-    "question": "3 test test test",
-    "answer": "3 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "3 33first test" },
-      { "option": "3 33wrong test" },
-      { "option": "3 33wrong test" },
-      { "option": "3 33wrong test" }
-    ]
-  },
-  {
-    "question": "4 test test test",
-    "answer": "4 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "4 33first test" },
-      { "option": "4 33wrong test" },
-      { "option": "4 33wrong test" },
-      { "option": "4 33wrong test" }
-    ]
-  },
-  {
-    "question": "5 test test test",
-    "answer": "5 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "5 33first test" },
-      { "option": "5 33wrong test" },
-      { "option": "5 33wrong test" },
-      { "option": "5 33wrong test" }
-    ]
-  },
-  {
-    "question": "6 test test test",
-    "answer": "6 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "6 33first test" },
-      { "option": "6 33wrong test" },
-      { "option": "6 33wrong test" },
-      { "option": "6 33wrong test" }
-    ]
-  },
-  {
-    "question": "7 test test test",
-    "answer": "7 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "7 33first test" },
-      { "option": "7 33wrong test" },
-      { "option": "7 33wrong test" },
-      { "option": "7 33wrong test" }
-    ]
-  },
-  {
-    "question": "8 test test test",
-    "answer": "8 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "8 33first test" },
-      { "option": "8 33wrong test" },
-      { "option": "8 33wrong test" },
-      { "option": "8 33wrong test" }
-    ]
-  },
-  {
-    "question": "9 test test test",
-    "answer": "9 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "9 33first test" },
-      { "option": "9 33wrong test" },
-      { "option": "9 33wrong test" },
-      { "option": "9 33wrong test" }
-    ]
-  },
-  {
-    "question": "10 test test test",
-    "answer": "10 33first test",
-    "duration": 5,
-    "shuffleOptions": true,
-    "options": [
-      { "option": "10 33first test" },
-      { "option": "10 33wrong test" },
-      { "option": "10 33wrong test" },
-      { "option": "10 33wrong test" }
-    ]
-  }
-]
+{
+  "en": [
+    {
+      "question": "1 test test test",
+      "answer": "1 11 first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "1 11 first test" },
+        { "option": "1 11 wrong test" },
+        { "option": "1 11 wrong test" },
+        { "option": "1 11 wrong test" }
+      ]
+    },
+    {
+      "question": "2 test test test",
+      "answer": "2 22first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "2 22first test" },
+        { "option": "2 22wrong test" },
+        { "option": "2 22wrong test" },
+        { "option": "2 22wrong test" }
+      ]
+    },
+    {
+      "question": "3 test test test",
+      "answer": "3 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "3 33first test" },
+        { "option": "3 33wrong test" },
+        { "option": "3 33wrong test" },
+        { "option": "3 33wrong test" }
+      ]
+    },
+    {
+      "question": "4 test test test",
+      "answer": "4 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "4 33first test" },
+        { "option": "4 33wrong test" },
+        { "option": "4 33wrong test" },
+        { "option": "4 33wrong test" }
+      ]
+    },
+    {
+      "question": "5 test test test",
+      "answer": "5 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "5 33first test" },
+        { "option": "5 33wrong test" },
+        { "option": "5 33wrong test" },
+        { "option": "5 33wrong test" }
+      ]
+    },
+    {
+      "question": "6 test test test",
+      "answer": "6 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "6 33first test" },
+        { "option": "6 33wrong test" },
+        { "option": "6 33wrong test" },
+        { "option": "6 33wrong test" }
+      ]
+    },
+    {
+      "question": "7 test test test",
+      "answer": "7 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "7 33first test" },
+        { "option": "7 33wrong test" },
+        { "option": "7 33wrong test" },
+        { "option": "7 33wrong test" }
+      ]
+    },
+    {
+      "question": "8 test test test",
+      "answer": "8 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "8 33first test" },
+        { "option": "8 33wrong test" },
+        { "option": "8 33wrong test" },
+        { "option": "8 33wrong test" }
+      ]
+    },
+    {
+      "question": "9 test test test",
+      "answer": "9 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "9 33first test" },
+        { "option": "9 33wrong test" },
+        { "option": "9 33wrong test" },
+        { "option": "9 33wrong test" }
+      ]
+    },
+    {
+      "question": "10 test test test",
+      "answer": "10 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "10 33first test" },
+        { "option": "10 33wrong test" },
+        { "option": "10 33wrong test" },
+        { "option": "10 33wrong test" }
+      ]
+    }
+  ],
+  "ar": [
+    {
+      "question": "1 Arabic",
+      "answer": "1 11 first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "1 11 first test" },
+        { "option": "1 11 wrong test" },
+        { "option": "1 11 wrong test" },
+        { "option": "1 11 wrong test" }
+      ]
+    },
+    {
+      "question": "2 Arabic",
+      "answer": "2 22first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "2 22first test" },
+        { "option": "2 22wrong test" },
+        { "option": "2 22wrong test" },
+        { "option": "2 22wrong test" }
+      ]
+    },
+    {
+      "question": "3 Arabic",
+      "answer": "3 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "3 33first test" },
+        { "option": "3 33wrong test" },
+        { "option": "3 33wrong test" },
+        { "option": "3 33wrong test" }
+      ]
+    },
+    {
+      "question": "4 Arabic",
+      "answer": "4 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "4 33first test" },
+        { "option": "4 33wrong test" },
+        { "option": "4 33wrong test" },
+        { "option": "4 33wrong test" }
+      ]
+    },
+    {
+      "question": "5 Arabic",
+      "answer": "5 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "5 33first test" },
+        { "option": "5 33wrong test" },
+        { "option": "5 33wrong test" },
+        { "option": "5 33wrong test" }
+      ]
+    },
+    {
+      "question": "6 Arabic",
+      "answer": "6 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "6 33first test" },
+        { "option": "6 33wrong test" },
+        { "option": "6 33wrong test" },
+        { "option": "6 33wrong test" }
+      ]
+    },
+    {
+      "question": "7 Arabic",
+      "answer": "7 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "7 33first test" },
+        { "option": "7 33wrong test" },
+        { "option": "7 33wrong test" },
+        { "option": "7 33wrong test" }
+      ]
+    },
+    {
+      "question": "8 Arabic",
+      "answer": "8 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "8 33first test" },
+        { "option": "8 33wrong test" },
+        { "option": "8 33wrong test" },
+        { "option": "8 33wrong test" }
+      ]
+    },
+    {
+      "question": "9 Arabic",
+      "answer": "9 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "9 33first test" },
+        { "option": "9 33wrong test" },
+        { "option": "9 33wrong test" },
+        { "option": "9 33wrong test" }
+      ]
+    },
+    {
+      "question": "10 Arabic",
+      "answer": "10 33first test",
+      "duration": 5,
+      "shuffleOptions": true,
+      "options": [
+        { "option": "10 33first test" },
+        { "option": "10 33wrong test" },
+        { "option": "10 33wrong test" },
+        { "option": "10 33wrong test" }
+      ]
+    }
+  ]
+}

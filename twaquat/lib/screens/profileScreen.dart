@@ -9,20 +9,23 @@ import 'package:sizer/sizer.dart';
 import 'package:twaquat/screens/settings_screen.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
 import 'package:twaquat/services/firebase_dynamic_link.dart';
+import 'package:twaquat/services/send_email.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/utils/showSnackbar.dart';
 import 'package:twaquat/widgets/account_card.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'description-of-the-application-screen.dart';
 
-class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
   static String routeName = '/setting-screen';
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -221,8 +224,6 @@ class _SettingScreenState extends State<SettingScreen> {
                       content: Text("you have copyed the link"),
                     ),
                   );
-                  // Navigator.pushNamed(
-                  //     context, Description_Of_The_Application.routeName);
                 },
               ),
               SizedBox(height: 20),
@@ -260,8 +261,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
                 onTap: () {
-                  // Navigator.pushNamed(
-                  //     context, Description_Of_The_Application.routeName);
+                  SendEmailToSupport();
                 },
               ),
               SizedBox(height: 20),

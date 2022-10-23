@@ -56,13 +56,13 @@ class GiftWidget extends StatelessWidget {
                       border: Border.all(color: Colors.grey.shade400),
                     ),
                     child: Image.asset(
-                      'assets/images/${gifts.giftsImagePath[imageNumber]}',
+                      'assets/giftsImages/${gifts.giftsImagePath[imageNumber]}',
                       // fit: BoxFit.scaleDown,
                       cacheHeight: 80,
                     ),
                   ),
                   Text(
-                    gifts.giftsName[imageNumber],
+                    gifts.giftsName[imageNumber].tr(),
                     // style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Container(
@@ -96,7 +96,6 @@ class GiftWidget extends StatelessWidget {
   void showPopupMessage(BuildContext context) {
     showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         TextEditingController controller = TextEditingController();
         var items;
@@ -133,7 +132,7 @@ class GiftWidget extends StatelessWidget {
                         border: Border.all(color: Colors.grey.shade400),
                       ),
                       child: Image.asset(
-                        'assets/images/${gifts.giftsImagePath[imageNumber]}',
+                        'assets/giftsImages/${gifts.giftsImagePath[imageNumber]}',
                         // fit: BoxFit.scaleDown,
                         cacheHeight: 80,
                       ),

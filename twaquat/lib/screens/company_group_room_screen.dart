@@ -216,7 +216,7 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 15,
                           crossAxisSpacing: 15,
-                          itemCount: 15,
+                          itemCount: 38,
                           itemBuilder: (context, index) {
                             return GiftWidget(
                               imageNumber: index,
@@ -246,6 +246,12 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
                                         widget.id, listSections[index]);
                                 await Clipboard.setData(
                                     ClipboardData(text: url));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.green,
+                                    content: Text("you have copyed the link"),
+                                  ),
+                                );
                               },
                             );
                           },

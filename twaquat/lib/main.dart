@@ -2,12 +2,12 @@ import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twaquat/screens/creat_company_group.dart';
 import 'package:twaquat/screens/description-of-the-application-screen.dart';
-import 'package:twaquat/screens/group_room_screen.dart';
 import 'package:twaquat/screens/groups_page.dart';
 import 'package:twaquat/screens/home_screen.dart';
 import 'package:twaquat/screens/login_screen.dart';
@@ -31,12 +31,32 @@ import 'package:twaquat/static.dart';
 import 'package:sizer/sizer.dart';
 import 'package:twaquat/widgets/onboarding/onboarding_screen.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
+  await FirebaseMessaging.instance.subscribeToTopic("match");
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+    }
+  });
   // Get any initial links
-  final PendingDynamicLinkData? initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
+  final PendingDynamicLinkData? initialLink =
+      await FirebaseDynamicLinks.instance.getInitialLink();
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool("showHome") ?? false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -107,10 +127,10 @@ class MyApp extends StatelessWidget {
               HomeScreen.routeName: (context) => const HomeScreen(),
               CreateGroupScreen.routeName: (context) =>
                   const CreateGroupScreen(),
-              SettingScreen.routeName: (context) => const SettingScreen(),
+              ProfileScreen.routeName: (context) => const ProfileScreen(),
               Description_Of_The_Application.routeName: (context) =>
                   const Description_Of_The_Application(),
-              Settings.routeName: (context) => const Settings(),
+              SettingScreen.routeName: (context) => const SettingScreen(),
               QuizScreen.routeName: (context) => const QuizScreen(),
               MatchesScreen.routeName: (context) => const MatchesScreen(),
               RankScreen.routeName: (context) => const RankScreen(),

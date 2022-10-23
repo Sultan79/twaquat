@@ -74,10 +74,10 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
         foregroundColor: Colors.black,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text(
-          "Dedications",
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+        // title: Text(
+        //   "Dedications",
+        //   style: Theme.of(context).textTheme.bodyLarge,
+        // ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -147,7 +147,7 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 15,
                           crossAxisSpacing: 15,
-                          itemCount: 15,
+                          itemCount: 38,
                           itemBuilder: (context, index) {
                             return GiftWidget(
                               imageNumber: index,
@@ -215,7 +215,7 @@ class AlertWidget extends StatelessWidget {
                   border: Border.all(color: Colors.grey.shade400),
                 ),
                 child: Image.asset(
-                  'assets/images/${giftImage}',
+                  'assets/giftsImages/${giftImage}',
                   // fit: BoxFit.scaleDown,
                   cacheHeight: 30,
                 ),

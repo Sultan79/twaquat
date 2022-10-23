@@ -63,21 +63,23 @@ class _QuizScreenState extends State<QuizScreen> {
       final response = await dio.get(quizDocs.docs.first.data()['url']);
 
       if (response.statusCode == 200) {
-        // If the call to the server was successful, parse the JSON
-        // var values;
-        // values = json.decode(response.data);
-
-        // String data = await data;
-        final jsonResult = response.data;
-        totalQuestions = jsonResult.length;
+        Map jsonResult = response.data;
+        print(jsonResult.values.first);
+        var langVersion;
+        if (context.locale.toString() == "en") {
+          langVersion = jsonResult.values.first;
+        } else {
+          langVersion = jsonResult.values.last;
+        }
+        totalQuestions = langVersion.length;
         for (var questionInfo = 0;
-            questionInfo < jsonResult.length;
+            questionInfo < langVersion.length;
             questionInfo++) {
           questionNumber++;
-          question = jsonResult[questionInfo]["question"];
-          questionTime = jsonResult[questionInfo]["duration"];
-          rightAnswer = jsonResult[questionInfo]["answer"];
-          options = jsonResult[questionInfo]["options"];
+          question = langVersion[questionInfo]["question"];
+          questionTime = langVersion[questionInfo]["duration"];
+          rightAnswer = langVersion[questionInfo]["answer"];
+          options = langVersion[questionInfo]["options"];
 
           for (var questionTimer = 0;
               questionTimer <= questionTime;

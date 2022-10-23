@@ -60,6 +60,8 @@ dependencies:
   shared_preferences: ^2.0.15 
   firebase_dynamic_links: ^5.0.1
   in_app_review: ^2.0.4
+  url_launcher: ^6.1.6
+  firebase_messaging: ^14.0.2
 
 
 dev_dependencies:

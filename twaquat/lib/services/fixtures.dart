@@ -26,9 +26,10 @@ Future<Response<dynamic>?> getPastFixtures() async {
     'https://api-football-v1.p.rapidapi.com/v3/fixtures',
     queryParameters: {
       'league': 1,
-      'season': 20,
+      'season': 2022,
       'timezone': 'Asia/Riyadh',
       'status': "FT",
+      // 'last': 2,
     },
   );
 }

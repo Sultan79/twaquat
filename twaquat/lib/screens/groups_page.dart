@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:twaquat/screens/company_group_room_screen.dart';
 import 'package:twaquat/screens/creat_group.dart';
 import 'package:twaquat/screens/group_room_screen.dart';
+import 'package:twaquat/services/send_email.dart';
 import 'package:twaquat/services/user_details.dart';
 import 'package:twaquat/widgets/groub_widget.dart';
 import 'package:twaquat/widgets/groupProfile.dart';
@@ -46,7 +47,9 @@ class _GroupsPageState extends State<GroupsPage> {
                       height: 50,
                       width: 170,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          SendEmailToJoinCompany();
+                        },
                         child: Text('Companies joining'.tr()),
                       ),
                     ),
