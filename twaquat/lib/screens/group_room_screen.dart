@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -27,13 +29,13 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
   QuerySnapshot<Map<String, dynamic>>? groupAlerts;
   List allGroupUsersDocs = [];
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getAllGroupUsers();
-  }
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getAllGroupUsers();
+  // }
 
-  void getAllGroupUsers() async {
+  Future<void> getAllGroupUsers() async {
     allUsers = await FirebaseFirestore.instance
         .collection('users')
         .orderBy(
@@ -62,7 +64,7 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
         allGroupUsersDocs.add(doc.data());
       }
     }
-    setState(() {});
+    // setState(() {});
   }
 
   @override
@@ -79,93 +81,139 @@ class GroupRoomScreenState extends State<GroupRoomScreen> {
         //   style: Theme.of(context).textTheme.bodyLarge,
         // ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              alignment: WrapAlignment.center,
-              runSpacing: 20,
-              children: [
-                GroupWidget(
-                  onClick: () {},
-                  id: widget.id,
-                  GroupName: widget.doc['groupName'],
-                  GroupDescription: widget.doc['descirption'],
-                  url: widget.doc['url'],
-                  NumberOfMembers: widget.doc['users'].length.toString(),
-                  isPublic: widget.doc['isPlublic'],
-                ),
-                SizedBox(
-                  height: 70.h,
-                  child: CustomTabWidget(
-                    tabss: [
-                      Tab(text: 'Ranking'),
-                      Tab(text: 'Alerts'),
-                      Tab(text: 'Gifts'),
-                    ],
+      body: FutureBuilder(
+          future: getAllGroupUsers(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      GroupRank(allUsers: allGroupUsersDocs),
-                      Center(
-                        child: groupAlerts!.docs.isEmpty
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset('assets/svg/Alert.svg'),
-                                  Text('There is no Alert'),
-                                  SizedBox(
-                                    height: 100,
-                                  ),
-                                ],
-                              )
-                            : ListView.separated(
-                                separatorBuilder: (context, index) => SizedBox(
-                                  height: 10,
-                                ),
-                                itemCount: groupAlerts!.docs.length,
-                                itemBuilder: (context, index) {
-                                  // var userFromName;
-                                  // var userToName;
-                                  // for (var element in collection) {
-                                  //   groupAlerts!.docs[index].data()['fromUser'];
-                                  // }
-                                  return AlertWidget(
-                                    sender: groupAlerts!.docs[index]
-                                        .data()['fromUserName'],
-                                    receiver: groupAlerts!.docs[index]
-                                        .data()['toUserName'],
-                                    giftname:
-                                        groupAlerts!.docs[index].data()['gift'],
-                                  );
-                                },
-                              ),
-                      ),
-                      Center(
-                          child: SizedBox(
+                      FadeShimmer(
+                        height: 100,
                         width: 350,
-                        child: AlignedGridView.count(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 15,
-                          crossAxisSpacing: 15,
-                          itemCount: 38,
-                          itemBuilder: (context, index) {
-                            return GiftWidget(
-                              imageNumber: index,
-                              users: allGroupUsersDocs,
-                              groupId: widget.id,
-                              groupName: widget.doc['groupName'],
-                            );
-                          },
-                        ),
-                      )),
+                        radius: 15,
+                        highlightColor: Color.fromARGB(255, 231, 231, 231),
+                        baseColor: Color(0xffE6E8EB),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      FadeShimmer(
+                        height: 60,
+                        width: 350,
+                        radius: 15,
+                        highlightColor: Color.fromARGB(255, 231, 231, 231),
+                        baseColor: Color(0xffE6E8EB),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      FadeShimmer(
+                        height: 300,
+                        width: 350,
+                        radius: 15,
+                        highlightColor: Color.fromARGB(255, 231, 231, 231),
+                        baseColor: Color(0xffE6E8EB),
+                      ),
                     ],
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+                );
+              default:
+                return SafeArea(
+                  child: SingleChildScrollView(
+                    child: Center(
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        alignment: WrapAlignment.center,
+                        runSpacing: 20,
+                        children: [
+                          GroupWidget(
+                            onClick: () {},
+                            id: widget.id,
+                            GroupName: widget.doc['groupName'],
+                            GroupDescription: widget.doc['descirption'],
+                            url: widget.doc['url'],
+                            NumberOfMembers:
+                                widget.doc['users'].length.toString(),
+                            isPublic: widget.doc['isPlublic'],
+                          ),
+                          SizedBox(
+                            height: 70.h,
+                            child: CustomTabWidget(
+                              tabss: [
+                                Tab(text: 'Ranking'),
+                                Tab(text: 'Alerts'),
+                                Tab(text: 'Gifts'),
+                              ],
+                              children: [
+                                GroupRank(allUsers: allGroupUsersDocs),
+                                Center(
+                                  child: groupAlerts!.docs.isEmpty
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/svg/Alert.svg'),
+                                            Text('There is no Alert'),
+                                            SizedBox(
+                                              height: 100,
+                                            ),
+                                          ],
+                                        )
+                                      : ListView.separated(
+                                          separatorBuilder: (context, index) =>
+                                              SizedBox(
+                                            height: 10,
+                                          ),
+                                          itemCount: groupAlerts!.docs.length,
+                                          itemBuilder: (context, index) {
+                                            // var userFromName;
+                                            // var userToName;
+                                            // for (var element in collection) {
+                                            //   groupAlerts!.docs[index].data()['fromUser'];
+                                            // }
+                                            return AlertWidget(
+                                              sender: groupAlerts!.docs[index]
+                                                  .data()['fromUserName'],
+                                              receiver: groupAlerts!.docs[index]
+                                                  .data()['toUserName'],
+                                              giftname: groupAlerts!.docs[index]
+                                                  .data()['gift'],
+                                            );
+                                          },
+                                        ),
+                                ),
+                                Center(
+                                    child: SizedBox(
+                                  width: 350,
+                                  child: AlignedGridView.count(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 15,
+                                    crossAxisSpacing: 15,
+                                    itemCount: 38,
+                                    itemBuilder: (context, index) {
+                                      return GiftWidget(
+                                        imageNumber: index,
+                                        users: allGroupUsersDocs,
+                                        groupId: widget.id,
+                                        groupName: widget.doc['groupName'],
+                                      );
+                                    },
+                                  ),
+                                )),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+            }
+          }),
     );
   }
 }
@@ -636,7 +684,7 @@ class GroupRank extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              "Correct predictions: ",
+                                              "Correct predictions".tr() + ": ",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!

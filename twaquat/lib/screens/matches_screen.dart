@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -69,7 +70,24 @@ class _MatchesScreenState extends State<MatchesScreen> {
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return Text('Loading....');
+                        return ListView.separated(
+                          itemCount: 4,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 10),
+                          padding: EdgeInsets.only(top: 10),
+                          itemBuilder: (context, index) => Column(
+                            children: [
+                              FadeShimmer(
+                                height: 185,
+                                width: 350,
+                                radius: 15,
+                                highlightColor:
+                                    Color.fromARGB(255, 231, 231, 231),
+                                baseColor: Color(0xffE6E8EB),
+                              ),
+                            ],
+                          ),
+                        );
                       default:
                         if (snapshot.hasError)
                           return Text('Error: ${snapshot.error}');
@@ -83,30 +101,35 @@ class _MatchesScreenState extends State<MatchesScreen> {
                             );
                           } else {
                             var response = data.data['response'];
-                            return ListView.builder(
-                              itemCount: response.length,
-                              itemBuilder: (context, index) {
-                                String date =
-                                    response[index]['fixture']['date'];
-                                return Container(
-                                  margin: EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    children: [
-                                      VotingMatchCard(
-                                        firstTeam: response[index]['teams']
-                                            ['home']['name'],
-                                        secondTeam: response[index]['teams']
-                                            ['away']['name'],
-                                        date: date.split('T').first,
-                                        time: DateFormat.jm()
-                                            .format(DateTime.parse(date)),
-                                        fixture: response[index]['fixture']
-                                            ['id'],
-                                      ),
-                                    ],
-                                  ),
-                                );
+                            return RefreshIndicator(
+                              onRefresh: () async {
+                                setState(() {});
                               },
+                              child: ListView.builder(
+                                itemCount: response.length,
+                                itemBuilder: (context, index) {
+                                  String date =
+                                      response[index]['fixture']['date'];
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      children: [
+                                        VotingMatchCard(
+                                          firstTeam: response[index]['teams']
+                                              ['home']['name'],
+                                          secondTeam: response[index]['teams']
+                                              ['away']['name'],
+                                          date: date.split('T').first,
+                                          time: DateFormat.jm()
+                                              .format(DateTime.parse(date)),
+                                          fixture: response[index]['fixture']
+                                              ['id'],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                             );
                           }
                         }
@@ -118,7 +141,24 @@ class _MatchesScreenState extends State<MatchesScreen> {
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return Text('Loading....');
+                        return ListView.separated(
+                          itemCount: 4,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 10),
+                          padding: EdgeInsets.only(top: 10),
+                          itemBuilder: (context, index) => Column(
+                            children: [
+                              FadeShimmer(
+                                height: 185,
+                                width: 350,
+                                radius: 15,
+                                highlightColor:
+                                    Color.fromARGB(255, 231, 231, 231),
+                                baseColor: Color(0xffE6E8EB),
+                              ),
+                            ],
+                          ),
+                        );
                       default:
                         if (snapshot.hasError)
                           return Text('Error: ${snapshot.error}');
@@ -132,36 +172,41 @@ class _MatchesScreenState extends State<MatchesScreen> {
                             );
                           } else {
                             var response = data.data['response'];
-                            return ListView.builder(
-                              itemCount: response.length,
-                              itemBuilder: (context, index) {
-                                String date =
-                                    response[index]['fixture']['date'];
-                                return Container(
-                                  margin: EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    children: [
-                                      MatchResultCard(
-                                        firstTeam: response[index]['teams']
-                                            ['home']['name'],
-                                        secondTeam: response[index]['teams']
-                                            ['away']['name'],
-                                        firstTeamScore: response[index]['goals']
-                                            ['home'],
-                                        secondTeamScore: response[index]
-                                            ['goals']['away'],
-                                        // firstTeamAnticipationScore: ,
-                                        // secondTeamAnticipationScore: ,
-                                        date: date.split('T').first,
-                                        time: DateFormat.jm()
-                                            .format(DateTime.parse(date)),
-                                        fixture: response[index]['fixture']
-                                            ['id'],
-                                      ),
-                                    ],
-                                  ),
-                                );
+                            return RefreshIndicator(
+                              onRefresh: () async {
+                                setState(() {});
                               },
+                              child: ListView.builder(
+                                itemCount: response.length,
+                                itemBuilder: (context, index) {
+                                  String date =
+                                      response[index]['fixture']['date'];
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      children: [
+                                        MatchResultCard(
+                                          firstTeam: response[index]['teams']
+                                              ['home']['name'],
+                                          secondTeam: response[index]['teams']
+                                              ['away']['name'],
+                                          firstTeamScore: response[index]
+                                              ['goals']['home'],
+                                          secondTeamScore: response[index]
+                                              ['goals']['away'],
+                                          // firstTeamAnticipationScore: ,
+                                          // secondTeamAnticipationScore: ,
+                                          date: date.split('T').first,
+                                          time: DateFormat.jm()
+                                              .format(DateTime.parse(date)),
+                                          fixture: response[index]['fixture']
+                                              ['id'],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                             );
                           }
                         }

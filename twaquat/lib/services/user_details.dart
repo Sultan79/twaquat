@@ -10,7 +10,7 @@ class UserDetails extends ChangeNotifier {
   String? myCuntry;
   String? firstWinner;
   String? secondWinner;
-  List? quizzes;
+  Map? quizzes;
   num? points;
   num? correctGuess;
   num? wrongGuess;
@@ -44,7 +44,7 @@ class UserDetails extends ChangeNotifier {
     num? correctGuess,
     num? wrongGuess,
     num? rating,
-    List? quizzes,
+    Map? quizzes,
     bool? isAdmin,
   }) {
     return UserDetails(
@@ -151,7 +151,7 @@ class UserDetails extends ChangeNotifier {
     num? correctGuess,
     num? wrongGuess,
     num? rating,
-    List? quizzes,
+    Map? quizzes,
     bool? isAdmin,
   }) {
     this.id = id ?? this.id;

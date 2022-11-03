@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,7 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Create a group",
+          "Create a group".tr(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -130,15 +131,15 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
                 const SizedBox(height: 20),
                 CustomFiledText(
                   controller: groupnameControllar,
-                  title: "Name",
-                  hintText: "Enter your group name",
+                  title: "Name".tr(),
+                  hintText: "Enter your group name".tr(),
                 ),
                 const SizedBox(height: 30),
                 Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Description'),
+                      Text('Description'.tr()),
                       SizedBox(
                         height: 13,
                       ),
@@ -162,7 +163,8 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
                             isDense: true,
                             contentPadding: EdgeInsets.zero,
                             hintText:
-                                'Enter teh description related to your groub here',
+                                'Enter teh description related to your groub here'
+                                    .tr(),
                             hintStyle: Theme.of(context).textTheme.labelLarge,
                             fillColor: Colors.red,
                             border: InputBorder.none,
@@ -184,11 +186,9 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
                           itemCount2++;
                           departmentsNameController
                               .add(TextEditingController());
-                          print("items = $itemCount2");
-                          print("deper  = ${departmentsNameController.length}");
                           setState(() {});
                         },
-                        child: Text("Add list")),
+                        child: Text("Add list".tr())),
                     ElevatedButton(
                         onPressed: () {
                           if (itemCount2 == 1) {
@@ -200,7 +200,7 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
                           print("deper  = ${departmentsNameController.length}");
                           setState(() {});
                         },
-                        child: Text("Remove list")),
+                        child: Text("Remove list".tr())),
                   ],
                 ),
                 SizedBox(
@@ -213,8 +213,8 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
                     itemBuilder: (context, index) {
                       return CustomFiledText(
                         controller: departmentsNameController[index],
-                        title: 'Department Name ',
-                        hintText: 'Enter department name',
+                        title: 'Department Name'.tr(),
+                        hintText: 'Enter department name'.tr(),
                       );
                     },
                   ),
@@ -230,7 +230,7 @@ class _CreateCompnyGroupScreenState extends State<CreateCompnyGroupScreen> {
                       createGroup();
                     },
                     child: Text(
-                      'Supmit Group',
+                      'Supmit Group'.tr(),
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!

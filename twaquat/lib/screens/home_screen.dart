@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:twaquat/screens/description-of-the-application-screen.dart';
 import 'package:twaquat/screens/quiz_screen.dart';
 import 'package:twaquat/services/firebase_auth_methods.dart';
 import 'package:twaquat/services/firebase_dynamic_link.dart';
@@ -13,6 +16,7 @@ import 'package:twaquat/widgets/account_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twaquat/widgets/voting_match_card.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,16 +32,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Gifts gifts = Gifts();
   String? adImage;
+  String? adLink;
+
+  Future<void> setUp() async {
+    FirebaseDynamicLinkService.initDynamicLink(context);
+    showRolesScreen();
+    getUserData();
+    showAlerts();
+    getUserRank();
+    getAD();
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseDynamicLinkService.initDynamicLink(context);
-    getUserData();
-    showAlerts();
-    getUserRank();
-    getAD();
+    setUp();
+  }
+
+  Future<void> showRolesScreen() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.get('showRoles') == null
+        ? prefs.setBool('showRoles', true)
+        : prefs.setBool('showRoles', false);
+    prefs.get('showRoles') == true
+        ? Navigator.pushNamed(context, Description_Of_The_Application.routeName)
+        : null;
   }
 
   getUserRank() async {
@@ -64,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .limit(1)
         .get();
     adImage = await adCollection.docs.first.data()['url'];
+    adLink = await adCollection.docs.first.data()['link'];
   }
 
   showAlerts() async {
@@ -74,8 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection("alerts")
         .where('opend', isEqualTo: false)
         .get();
-    print('2022-11-21');
-    print(userAlerts);
 
     if (userAlerts.docs.isEmpty) {
       return;
@@ -180,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
           quizzes: userDoc.data()!["quizzes"],
           isAdmin: userDoc.data()!["isAdmin"],
         );
-    print(context.read<UserDetails>().isAdmin);
+    print(context.read<UserDetails>().quizzes!.values);
     setState(() {});
   }
 
@@ -189,134 +208,182 @@ class _HomeScreenState extends State<HomeScreen> {
     double VoringSizedBoxheight = 205 * 3;
     return Scaffold(
       extendBody: true,
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: SafeArea(
-          bottom: false,
-          child: Center(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 40,
-              runSpacing: 15,
-              children: [
-                SizedBox(
-                  height: 25,
-                ),
-                HomeAccountCard(),
-                QuizButton(),
-                Container(
-                  height: 15.h,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: adImage == null
-                      ? Image.asset('assets/images/football.png')
-                      : Image.network(adImage!, fit: BoxFit.cover),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 5,
+      body: RefreshIndicator(
+        onRefresh: () => setUp(),
+        color: Colors.amber,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: SafeArea(
+            bottom: false,
+            child: Center(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 40,
+                runSpacing: 15,
+                children: [
+                  SizedBox(
+                    height: 25,
                   ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Upcoming matches for Today'.tr()),
-                  ),
-                ),
-                // SizedBox(
-                //   height: VoringSizedBoxheight,
-                //   child: ListView.builder(
-                //     physics: NeverScrollableScrollPhysics(),
-                //     itemCount: 3,
-                //     itemBuilder: (context, index) {
-                //       return Container(
-                //         margin: EdgeInsets.symmetric(vertical: 10),
-                //         child: Column(
-                //           children: [
-                //             VotingMatchCard(),
-                //           ],
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // ),
-
-                FutureBuilder(
-                  future: getTodayFixture(),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Text('Loading....');
-                      default:
-                        if (snapshot.hasError)
-                          return Text('Error: ${snapshot.error}');
-                        else {
-                          Response? data = snapshot.data! as Response?;
-                          if (data!.data['errors'].toString().isEmpty) {
-                            return Text(
-                              'Error: ${data.data['errors']['requests']}',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            );
-                          } else {
-                            var response = data.data['response'];
-                            return response.length == 0
-                                ? Text(
-                                    'There are no matches for today'.tr(),
-                                    style: TextStyle(color: Colors.redAccent),
-                                  )
-                                : SizedBox(
-                                    height: 210 *
-                                        double.parse(
-                                            response.length.toString()),
-                                    child: ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: response.length,
-                                      itemBuilder: (context, index) {
-                                        String date =
-                                            response[index]['fixture']['date'];
-                                        DateTime dateTime = DateTime.parse(
-                                            response[index]['fixture']['date']);
-                                        print(dateTime
-                                                .difference(DateTime.now())
-                                                .inMinutes <
-                                            15);
-                                        print(DateTime.now());
-                                        return Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: Column(
-                                            children: [
-                                              VotingMatchCard(
-                                                firstTeam: response[index]
-                                                    ['teams']['home']['name'],
-                                                secondTeam: response[index]
-                                                    ['teams']['away']['name'],
-                                                date: date.split('T').first,
-                                                time: DateFormat.jm().format(
-                                                    DateTime.parse(date)),
-                                                fixture: response[index]
-                                                    ['fixture']['id'],
-                                                close: dateTime
-                                                        .difference(
-                                                            DateTime.now())
-                                                        .inMinutes >
-                                                    15,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                          }
+                  HomeAccountCard(),
+                  QuizButton(),
+                  InkWell(
+                    onTap: () async {
+                      if (adImage != null) {
+                        if (adLink != null) {
+                          await launchUrlString(adLink!);
                         }
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 100,
-                ),
-              ],
+                      }
+                    },
+                    child: Container(
+                      height: 15.h,
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      child: adImage == null
+                          ? FadeShimmer(
+                              height: 15.h,
+                              width: double.infinity,
+                              radius: 15,
+                              highlightColor:
+                                  Color.fromARGB(255, 231, 231, 231),
+                              baseColor: Color(0xffE6E8EB),
+                            )
+                          : Image.network(adImage!, fit: BoxFit.cover),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0,
+                      vertical: 5,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Upcoming matches for Today'.tr()),
+                    ),
+                  ),
+                  // SizedBox(
+                  //   height: VoringSizedBoxheight,
+                  //   child: ListView.builder(
+                  //     physics: NeverScrollableScrollPhysics(),
+                  //     itemCount: 3,
+                  //     itemBuilder: (context, index) {
+                  //       return Container(
+                  //         margin: EdgeInsets.symmetric(vertical: 10),
+                  //         child: Column(
+                  //           children: [
+                  //             VotingMatchCard(),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+
+                  FutureBuilder(
+                    future: getTodayFixture(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return SizedBox(
+                            height: 210 * 2,
+                            child: ListView.separated(
+                              itemCount: 2,
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(height: 10),
+                              padding: EdgeInsets.only(top: 10),
+                              itemBuilder: (context, index) => Column(
+                                children: [
+                                  FadeShimmer(
+                                    height: 185,
+                                    width: 350,
+                                    radius: 15,
+                                    highlightColor:
+                                        Color.fromARGB(255, 231, 231, 231),
+                                    baseColor: Color(0xffE6E8EB),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                          
+                        default:
+                          if (snapshot.hasError)
+                            return Text('Error: ${snapshot.error}');
+                          else {
+                            Response? data = snapshot.data! as Response?;
+                            if (data!.data['errors'].toString().isEmpty) {
+                              return Text(
+                                'Error: ${data.data['errors']['requests']}',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              );
+                            } else {
+                              var response = data.data['response'];
+                              return response.length == 0
+                                  ? SizedBox(
+                                      height: 150,
+                                      child: Center(
+                                        child: Text(
+                                          'There are no matches for today'.tr(),
+                                          style: TextStyle(
+                                              color: Colors.redAccent),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(
+                                      height: 210 *
+                                          double.parse(
+                                              response.length.toString()),
+                                      child: ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: response.length,
+                                        itemBuilder: (context, index) {
+                                          String date = response[index]
+                                              ['fixture']['date'];
+                                          DateTime dateTime = DateTime.parse(
+                                              response[index]['fixture']
+                                                  ['date']);
+                                          print(dateTime
+                                                  .difference(DateTime.now())
+                                                  .inMinutes <
+                                              15);
+                                          print(DateTime.now());
+                                          return Container(
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: Column(
+                                              children: [
+                                                VotingMatchCard(
+                                                  firstTeam: response[index]
+                                                      ['teams']['home']['name'],
+                                                  secondTeam: response[index]
+                                                      ['teams']['away']['name'],
+                                                  date: date.split('T').first,
+                                                  time: DateFormat.jm().format(
+                                                      DateTime.parse(date)),
+                                                  fixture: response[index]
+                                                      ['fixture']['id'],
+                                                  close: dateTime
+                                                          .difference(
+                                                              DateTime.now())
+                                                          .inMinutes >
+                                                      15,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                            }
+                          }
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 100,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -337,9 +404,9 @@ class HomeAccountCard extends StatelessWidget {
           ? AccountCard(
               name: context.read<UserDetails>().name!,
               image: context.read<UserDetails>().image!,
-              firestTeam: context.read<UserDetails>().myCuntry!,
-              seacondTeam: context.read<UserDetails>().firstWinner!,
-              thirdTeam: context.read<UserDetails>().secondWinner!,
+              userCountry: context.read<UserDetails>().myCuntry!,
+              firstCountry: context.read<UserDetails>().firstWinner!,
+              secondCountry: context.read<UserDetails>().secondWinner!,
               points: context.read<UserDetails>().points!.toString(),
               correctGuess:
                   context.read<UserDetails>().correctGuess!.toString(),
@@ -347,7 +414,13 @@ class HomeAccountCard extends StatelessWidget {
               quizzes: context.read<UserDetails>().quizzes!,
               rank: context.read<UserDetails>().rank!.toString(),
             )
-          : AccountCard(),
+          : FadeShimmer(
+              height: 150,
+              width: 350,
+              radius: 15,
+              highlightColor: Color.fromARGB(255, 231, 231, 231),
+              baseColor: Color(0xffE6E8EB),
+            ),
     );
   }
 }
@@ -370,7 +443,7 @@ class QuizButton extends StatelessWidget {
           actionsPadding: EdgeInsets.only(bottom: 10, right: 20, left: 20),
           contentPadding: EdgeInsets.only(top: 10),
           title: Text(
-            'Test your knowledge !'.tr(),
+            'Are you an expert in World Cups?'.tr(),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
@@ -385,7 +458,7 @@ class QuizButton extends StatelessWidget {
                       width: 250,
                       height: 100,
                       child: Text(
-                          'It is a test consisting of 15 questions. Questions related to football in general. You have only 15 minutes to solve all the questions and finish the test'
+                          'Every day 10 different questions about the previous World Cups You have 5 seconds for each question If you pass the test, you will get a golden star You only have one try'
                               .tr(),
                           textAlign: TextAlign.center,
                           // textWidthBasis: TextWidthBasis.parent,
@@ -434,7 +507,7 @@ class QuizButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () => showPopupMessage(context),
         child: Text(
-          "Test your knowledge and get points".tr(),
+          "Are you an expert in World Cups?".tr(),
           style: Theme.of(context)
               .textTheme
               .titleSmall!

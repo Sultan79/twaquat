@@ -8,11 +8,13 @@ class CustomFiledText extends StatelessWidget {
     required this.controller,
     required this.title,
     required this.hintText,
+    this.obscureText = false,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String title;
   final String hintText;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class CustomFiledText extends StatelessWidget {
             child: TextField(
               controller: controller,
               textAlignVertical: TextAlignVertical.center,
+              obscureText: obscureText,
               decoration: InputDecoration(
                 isDense: true,
                 contentPadding: EdgeInsets.zero,

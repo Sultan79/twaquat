@@ -18,7 +18,7 @@ class _SettingScreenState extends State<SettingScreen> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Setting".tr(),
+          "Settings".tr(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),

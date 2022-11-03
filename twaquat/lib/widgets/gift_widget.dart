@@ -189,7 +189,6 @@ class GiftWidget extends StatelessWidget {
                           gifts.giftsPrices[imageNumber];
 
                       if (newPoints >= 0) {
-                        print("context.read<DropDownUsers>().userPicked");
                         context.read<UserDetails>().points = newPoints;
 
                         await FirebaseFirestore.instance
@@ -234,7 +233,7 @@ class GiftWidget extends StatelessWidget {
                           "time": DateTime.now(),
                         });
                       } else {
-                        showSnackBar(context, 'You Don\'t have Enough points');
+                        showSnackBar(context, 'You Do not have Enough Points'.tr());
                       }
                       context.read<DropDownUsers>().userPicked = null;
                     }

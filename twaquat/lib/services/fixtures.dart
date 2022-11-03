@@ -11,7 +11,8 @@ Future<Response<dynamic>?> getTodayFixture() async {
       'league': 1,
       'season': 2022,
       'timezone': 'Asia/Riyadh',
-      'date': DateTime.now().toString().substring(0, 10)
+      'next': '3'
+      // 'date': DateTime.now().toString().substring(0, 10)
       // 'date': '2022-11-21'
     },
   );

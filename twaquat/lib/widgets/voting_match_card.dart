@@ -56,6 +56,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
         .collection('fixtures')
         .doc(widget.fixture.toString())
         .collection('predictions')
+        .where('votingFor', whereIn: List.of(['AWAY', 'HOME', 'DRAW']))
         .get();
 
     for (var doc in fbFixture.docs) {
@@ -433,8 +434,8 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
         .collection("predictions")
         .doc(widget.fixture.toString())
         .set({
-      "home".tr(): firstTeamScore,
-      "away".tr(): secondTeamScore,
+      "home": firstTeamScore,
+      "away": secondTeamScore,
     }, SetOptions(merge: true));
 
     var fbFixture = FirebaseFirestore.instance
@@ -446,27 +447,27 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
     if (firstTeamScore == secondTeamScore) {
       fbFixture.set(
         {
-          'votingFor'.tr(): "DRAW".tr(),
-          "home".tr(): firstTeamScore,
-          "away".tr(): secondTeamScore,
+          'votingFor': "DRAW",
+          "home": firstTeamScore,
+          "away": secondTeamScore,
         },
         SetOptions(merge: true),
       );
     } else if (firstTeamScore > secondTeamScore) {
       fbFixture.set(
         {
-          'votingFor'.tr(): "HOME".tr(),
-          "home".tr(): firstTeamScore,
-          "away".tr(): secondTeamScore,
+          'votingFor': "HOME",
+          "home": firstTeamScore,
+          "away": secondTeamScore,
         },
         SetOptions(merge: true),
       );
     } else if (firstTeamScore < secondTeamScore) {
       fbFixture.set(
         {
-          'votingFor'.tr(): "AWAY".tr(),
-          "home".tr(): firstTeamScore,
-          "away".tr(): secondTeamScore,
+          'votingFor': "AWAY",
+          "home": firstTeamScore,
+          "away": secondTeamScore,
         },
         SetOptions(merge: true),
       );

@@ -158,7 +158,7 @@ class GroupWidget extends StatelessWidget {
                                       ),
                                 ),
                                 Text(
-                                  " members".tr(),
+                                  " " + " members".tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!

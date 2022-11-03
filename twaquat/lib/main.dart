@@ -43,20 +43,28 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
-  await FirebaseMessaging.instance.subscribeToTopic("match");
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  print('User granted permission: ${settings.authorizationStatus}');
+  FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onMessage.listen((message) {});
+  FirebaseMessaging.onMessageOpenedApp.listen((message) {});
 
-    if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
-    }
-  });
   // Get any initial links
   final PendingDynamicLinkData? initialLink =
       await FirebaseDynamicLinks.instance.getInitialLink();
+
+      
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool("showHome") ?? false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -67,11 +75,11 @@ void main() async {
         builder: (context) => EasyLocalization(
             supportedLocales: [Locale('en'), Locale('ar')],
             path:
-                'assets/translations', // <-- change the path of the translation files
+                'assets/translations', 
             fallbackLocale: Locale('en'),
             child: MyApp(
               showHome: showHome,
-            )), // Wrap your app
+            )), 
       ),
     );
   });

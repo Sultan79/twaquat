@@ -82,7 +82,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
               'url': url_plus!,
               'correctGuess': 0,
               'wrongGuess': 0,
-              'quizzes': [],
+              'quizzes': {},
               'points': 0,
               'isAdmin': false,
             },
@@ -172,6 +172,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                     controller: passwordController,
                     title: 'Password'.tr(),
                     hintText: 'Enter your password here'.tr(),
+                    obscureText: true,
                   ),
                   FlagsDropDown(
                     data: 1,

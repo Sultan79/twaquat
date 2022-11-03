@@ -50,9 +50,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ? AccountCard(
                         name: context.read<UserDetails>().name!,
                         image: context.read<UserDetails>().image!,
-                        firestTeam: context.read<UserDetails>().myCuntry!,
-                        seacondTeam: context.read<UserDetails>().firstWinner!,
-                        thirdTeam: context.read<UserDetails>().secondWinner!,
+                        userCountry: context.read<UserDetails>().myCuntry!,
+                        firstCountry: context.read<UserDetails>().firstWinner!,
+                        secondCountry:
+                            context.read<UserDetails>().secondWinner!,
                         points: context.read<UserDetails>().points!.toString(),
                         correctGuess: context
                             .read<UserDetails>()
@@ -95,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Description of the application'.tr()),
+                      Text('How to play and the Rules'.tr()),
                     ],
                   ),
                 ),

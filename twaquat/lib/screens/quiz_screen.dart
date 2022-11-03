@@ -30,10 +30,10 @@ class _QuizScreenState extends State<QuizScreen> {
   String question = '';
   String rightAnswer = '';
   List options = [
-    {"option".tr(): ""},
-    {"option".tr(): ""},
-    {"option".tr(): ""},
-    {"option".tr(): ""}
+    {"option": ""},
+    {"option": ""},
+    {"option": ""},
+    {"option": ""}
   ];
   double totalPoins = 0;
   String? userPick;
@@ -55,8 +55,9 @@ class _QuizScreenState extends State<QuizScreen> {
         .collection("quizzes")
         .orderBy("number", descending: true)
         .get();
-    List userQuizzes = userFilds['quizzes'];
-    if (quizDocs.docs.first.data()['number'] == userQuizzes.length) {
+    Map userQuizzes = userFilds['quizzes'];
+    final keys = userQuizzes.keys;
+    if (keys.contains(quizDocs.docs.first.data()['number'].toString())) {
       showPopupMessage2(context);
     } else {
       var dio = Dio();
@@ -64,7 +65,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
       if (response.statusCode == 200) {
         Map jsonResult = response.data;
-        print(jsonResult.values.first);
         var langVersion;
         if (context.locale.toString() == "en") {
           langVersion = jsonResult.values.first;
@@ -85,8 +85,6 @@ class _QuizScreenState extends State<QuizScreen> {
               questionTimer <= questionTime;
               questionTimer++) {
             if (userPick != null) {
-              print("::::::::Answer : $userPick");
-              print("::::::::Points : $totalPoins");
               if (userPick == rightAnswer) {
                 totalPoins++;
               }
@@ -102,10 +100,8 @@ class _QuizScreenState extends State<QuizScreen> {
           }
         }
         showPopupMessage(context);
-        showSnackBar(context, 'Done');
-        print("::::::::Finish Timer:::::::");
-        print("::::::::Result : $totalPoins");
-        userQuizzes.add(totalPoins > (questionNumber / 2));
+        userQuizzes[quizDocs.docs.first.data()['number'].toString()] =
+            totalPoins > (questionNumber / 2);
         userDoc.update({'quizzes': userQuizzes});
       }
     }

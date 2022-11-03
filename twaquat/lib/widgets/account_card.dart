@@ -8,16 +8,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AccountCard extends StatelessWidget {
   const AccountCard({
     Key? key,
-    this.name = 'Ahmed Al-Aklouk asdfasdf',
-    this.points = '2500',
-    this.correctGuess = '25',
-    this.wrongGuess = '25',
+    this.name = '',
+    this.points = '',
+    this.correctGuess = '',
+    this.wrongGuess = '',
     this.image,
-    this.firestTeam = 'USA',
-    this.seacondTeam = 'USA',
-    this.thirdTeam = 'USA',
-    this.rank = '0',
-    this.quizzes = const [],
+    this.userCountry = '',
+    this.firstCountry = '',
+    this.secondCountry = '',
+    this.rank = '',
+    this.quizzes = const {},
   }) : super(key: key);
 
   final String name;
@@ -25,11 +25,11 @@ class AccountCard extends StatelessWidget {
   final String correctGuess;
   final String wrongGuess;
   final String? image;
-  final String firestTeam;
-  final String seacondTeam;
-  final String thirdTeam;
+  final String userCountry;
+  final String firstCountry;
+  final String secondCountry;
   final String rank;
-  final List quizzes;
+  final Map quizzes;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +59,7 @@ class AccountCard extends StatelessWidget {
                         border: Border.all(color: Colors.grey.shade300),
                       ),
                       child: image == null
-                          ? Image.asset('assets/images/avatar.png')
+                          ? SizedBox()
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(11),
                               child: Image.network(
@@ -80,7 +80,7 @@ class AccountCard extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 10,
                           backgroundImage:
-                              AssetImage("assets/flags/${firestTeam}.png"),
+                              AssetImage("assets/flags/${userCountry}.png"),
                         ),
                       ),
                     )
@@ -107,7 +107,7 @@ class AccountCard extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 10,
                           backgroundImage:
-                              AssetImage("assets/flags/${seacondTeam}.png"),
+                              AssetImage("assets/flags/${firstCountry}.png"),
                         ),
                       ),
                     ),
@@ -126,7 +126,7 @@ class AccountCard extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 10,
                           backgroundImage:
-                              AssetImage("assets/flags/${thirdTeam}.png"),
+                              AssetImage("assets/flags/${secondCountry}.png"),
                         ),
                       ),
                     ),
@@ -314,7 +314,7 @@ class AccountCard extends StatelessWidget {
                           ),
                           itemBuilder: (context, index) {
                             return Icon(
-                              quizzes[index]
+                              quizzes.values.elementAt(index)
                                   ? Icons.star_rounded
                                   : Icons.star_border_rounded,
                               size: 15,

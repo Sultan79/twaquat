@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -42,7 +45,7 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
     getAllGroupUsers();
   }
 
-  void getAllGroupUsers() async {
+  Future<void> getAllGroupUsers() async {
     allUsers = await FirebaseFirestore.instance
         .collection('users')
         .orderBy(
@@ -103,8 +106,8 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
       }
     });
     listSections = groupDoc!.data()!['department'];
-    print(listSections);
-    setState(() {});
+    // print(listSections);
+    // setState(() {});
   }
 
   @override
@@ -121,150 +124,212 @@ class CompanyGroupRoomScreenState extends State<CompanyGroupRoomScreen> {
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              alignment: WrapAlignment.center,
-              runSpacing: 20,
-              children: [
-                GroupWidget(
-                  onClick: () {},
-                  id: widget.id,
-                  GroupName: widget.doc['groupName'],
-                  GroupDescription: widget.doc['descirption'],
-                  url: widget.doc['url'],
-                  NumberOfMembers: widget.doc['users'].length.toString(),
-                  isPublic: widget.doc['isPlublic'],
-                  isCompany: widget.doc['isCompany'],
-                ),
-                SizedBox(
-                  height: 70.h,
-                  child: CustomTabWidget(
-                    tabss: context.read<UserDetails>().isAdmin
-                        ? [
-                            Tab(
-                              child: FittedBox(
-                                child: Text("Company"),
-                              ),
-                            ),
-                            Tab(
-                              child: FittedBox(
-                                child: Text("Section"),
-                              ),
-                            ),
-                            Tab(text: 'Alerts'),
-                            Tab(text: 'Gifts'),
-                            Tab(text: 'Share'),
-                          ]
-                        : [
-                            Tab(
-                              child: FittedBox(
-                                child: Text("Company"),
-                              ),
-                            ),
-                            Tab(
-                              child: FittedBox(
-                                child: Text("Section"),
-                              ),
-                            ),
-                            Tab(text: 'Alerts'),
-                            Tab(text: 'Gifts'),
-                          ],
+      body: FutureBuilder(
+          future: getAllGroupUsers(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      GroupRank(allUsers: allGroupUsersDocs),
-                      GroupRank(allUsers: allSectionUsersDocs),
-                      Center(
-                        child: groupAlerts!.docs.isEmpty
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset('assets/svg/Alert.svg'),
-                                  Text('There is no Alert'),
-                                  SizedBox(
-                                    height: 100,
-                                  ),
-                                ],
-                              )
-                            : ListView.separated(
-                                separatorBuilder: (context, index) => SizedBox(
-                                  height: 10,
-                                ),
-                                itemCount: groupAlerts!.docs.length,
-                                itemBuilder: (context, index) {
-                                  // var userFromName;
-                                  // var userToName;
-                                  // for (var element in collection) {
-                                  //   groupAlerts!.docs[index].data()['fromUser'];
-                                  // }
-                                  return AlertWidget(
-                                    sender: groupAlerts!.docs[index]
-                                        .data()['fromUserName'],
-                                    receiver: groupAlerts!.docs[index]
-                                        .data()['toUserName'],
-                                    giftname:
-                                        groupAlerts!.docs[index].data()['gift'],
-                                  );
-                                },
-                              ),
+                      FadeShimmer(
+                        height: 100,
+                        width: 350,
+                        radius: 15,
+                        highlightColor: Color.fromARGB(255, 231, 231, 231),
+                        baseColor: Color(0xffE6E8EB),
                       ),
-                      Center(
-                          child: SizedBox(
+                      SizedBox(
+                        height: 25,
+                      ),
+                      FadeShimmer(
+                        height: 60,
                         width: 350,
-                        child: AlignedGridView.count(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 15,
-                          crossAxisSpacing: 15,
-                          itemCount: 38,
-                          itemBuilder: (context, index) {
-                            return GiftWidget(
-                              imageNumber: index,
-                              users: allGroupUsersDocs,
-                              groupId: widget.id,
-                              groupName: widget.doc['groupName'],
-                            );
-                          },
-                        ),
-                      )),
-                      Center(
-                          child: SizedBox(
+                        radius: 15,
+                        highlightColor: Color.fromARGB(255, 231, 231, 231),
+                        baseColor: Color(0xffE6E8EB),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      FadeShimmer(
+                        height: 300,
                         width: 350,
-                        child: ListView.separated(
-                          itemCount: listSections.length,
-                          separatorBuilder: (context, index) => SizedBox(
-                            height: 25,
-                          ),
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              leading: Icon(Icons.share),
-                              title: Text("Section: ${listSections[index]}"),
-                              subtitle: Text('Click to copy link'.tr()),
-                              onTap: () async {
-                                String url = await FirebaseDynamicLinkService
-                                    .createDynamicCompanyLink(
-                                        widget.id, listSections[index]);
-                                await Clipboard.setData(
-                                    ClipboardData(text: url));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Colors.green,
-                                    content: Text("you have copyed the link"),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      )),
+                        radius: 15,
+                        highlightColor: Color.fromARGB(255, 231, 231, 231),
+                        baseColor: Color(0xffE6E8EB),
+                      ),
                     ],
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+                );
+              default:
+                return SafeArea(
+                  child: SingleChildScrollView(
+                    child: Center(
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        alignment: WrapAlignment.center,
+                        runSpacing: 20,
+                        children: [
+                          GroupWidget(
+                            onClick: () {},
+                            id: widget.id,
+                            GroupName: widget.doc['groupName'],
+                            GroupDescription: widget.doc['descirption'],
+                            url: widget.doc['url'],
+                            NumberOfMembers:
+                                widget.doc['users'].length.toString(),
+                            isPublic: widget.doc['isPlublic'],
+                            isCompany: widget.doc['isCompany'],
+                          ),
+                          SizedBox(
+                            height: 70.h,
+                            child: CustomTabWidget(
+                              tabss: context.read<UserDetails>().isAdmin
+                                  ? [
+                                      Tab(
+                                        child: FittedBox(
+                                          child: Text("Company".tr()),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: FittedBox(
+                                          child: Text("Section".tr()),
+                                        ),
+                                      ),
+                                      Tab(text: 'Alerts'.tr()),
+                                      Tab(text: 'Gifts'.tr()),
+                                      Tab(text: 'Share'.tr()),
+                                    ]
+                                  : [
+                                      Tab(
+                                        child: FittedBox(
+                                          child: Text("Company".tr()),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: FittedBox(
+                                          child: Text("Section".tr()),
+                                        ),
+                                      ),
+                                      Tab(text: 'Alerts'.tr()),
+                                      Tab(text: 'Gifts'.tr()),
+                                    ],
+                              children: [
+                                GroupRank(allUsers: allGroupUsersDocs),
+                                GroupRank(allUsers: allSectionUsersDocs),
+                                Center(
+                                  child: groupAlerts!.docs.isEmpty
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/svg/Alert.svg'),
+                                            Text('There is no Alert'.tr()),
+                                            SizedBox(
+                                              height: 100,
+                                            ),
+                                          ],
+                                        )
+                                      : RefreshIndicator(
+                                          onRefresh: () async {
+                                            getAllGroupUsers;
+                                            setState(() {});
+                                          },
+                                          child: ListView.separated(
+                                            separatorBuilder:
+                                                (context, index) => SizedBox(
+                                              height: 10,
+                                            ),
+                                            itemCount: groupAlerts!.docs.length,
+                                            itemBuilder: (context, index) {
+                                              // var userFromName;
+                                              // var userToName;
+                                              // for (var element in collection) {
+                                              //   groupAlerts!.docs[index].data()['fromUser'];
+                                              // }
+                                              return AlertWidget(
+                                                sender: groupAlerts!.docs[index]
+                                                    .data()['fromUserName'],
+                                                receiver: groupAlerts!
+                                                    .docs[index]
+                                                    .data()['toUserName'],
+                                                giftname: groupAlerts!
+                                                    .docs[index]
+                                                    .data()['gift'],
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                ),
+                                Center(
+                                    child: SizedBox(
+                                  width: 350,
+                                  child: AlignedGridView.count(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 15,
+                                    crossAxisSpacing: 15,
+                                    itemCount: 38,
+                                    itemBuilder: (context, index) {
+                                      return GiftWidget(
+                                        imageNumber: index,
+                                        users: allGroupUsersDocs,
+                                        groupId: widget.id,
+                                        groupName: widget.doc['groupName'],
+                                      );
+                                    },
+                                  ),
+                                )),
+                                Center(
+                                    child: SizedBox(
+                                  width: 350,
+                                  child: ListView.separated(
+                                    itemCount: listSections.length,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(
+                                      height: 25,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        leading: Icon(Icons.share),
+                                        title: Text("Section:".tr() +
+                                            " ${listSections[index]}"),
+                                        subtitle:
+                                            Text('Click to copy link'.tr()),
+                                        onTap: () async {
+                                          String url =
+                                              await FirebaseDynamicLinkService
+                                                  .createDynamicCompanyLink(
+                                                      widget.id,
+                                                      listSections[index]);
+                                          await Clipboard.setData(
+                                              ClipboardData(text: url));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: Colors.green,
+                                              content: Text(
+                                                  "you have copyed the link"
+                                                      .tr()),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                )),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+            }
+          }),
     );
   }
 }
@@ -314,7 +379,7 @@ class AlertWidget extends StatelessWidget {
                   border: Border.all(color: Colors.grey.shade400),
                 ),
                 child: Image.asset(
-                  'assets/images/${giftImage}',
+                  'assets/giftsImages/${giftImage}',
                   // fit: BoxFit.scaleDown,
                   cacheHeight: 30,
                 ),
@@ -326,8 +391,13 @@ class AlertWidget extends StatelessWidget {
                 height: 30,
                 width: 265,
                 child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("${sender} send ${giftname} to ${receiver}",
+                  alignment: Alignment.center,
+                  child: Text(
+                      "${sender} " +
+                          "send".tr() +
+                          " ${giftname.tr()} " +
+                          "to".tr() +
+                          " ${receiver}",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
@@ -449,7 +519,7 @@ class GroupRank extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'points',
+                                'points'.tr(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!
@@ -535,7 +605,7 @@ class GroupRank extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'points',
+                          'points'.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -623,7 +693,7 @@ class GroupRank extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'points',
+                                'points'.tr(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!
@@ -720,7 +790,7 @@ class GroupRank extends StatelessWidget {
                                                   ),
                                             ),
                                             Text(
-                                              " points",
+                                              " " + "points".tr(),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!
@@ -735,7 +805,7 @@ class GroupRank extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              "Correct predictions: ",
+                                              "Correct predictions".tr() + ": ",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!

@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           runSpacing: 25,
           spacing: 1000,
           children: [
-             Text(
+            Text(
               "Login".tr(),
               style: TextStyle(fontSize: 30),
             ),
@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: passwordController,
               title: 'Password'.tr(),
               hintText: 'Enter your password here'.tr(),
+              obscureText: true,
             ),
             const SizedBox(height: 40),
             Column(

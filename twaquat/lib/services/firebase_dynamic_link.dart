@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +11,10 @@ class FirebaseDynamicLinkService {
       link: Uri.parse("https://twaquat.page.link/groub?id=$groubID"),
       androidParameters:
           const AndroidParameters(packageName: "sandaqa.tech.twaquat"),
-      iosParameters: const IOSParameters(bundleId: "sandaqa.tech.twaquat"),
+      iosParameters: const IOSParameters(
+        bundleId: "sandaqa.tech.twaquat",
+        appStoreId: "6443883588",
+      ),
     );
     final dynamicLink =
         await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
@@ -29,7 +33,10 @@ class FirebaseDynamicLinkService {
           "https://twaquat.page.link/groub?id=$groubID&section=$sectionID"),
       androidParameters:
           const AndroidParameters(packageName: "sandaqa.tech.twaquat"),
-      iosParameters: const IOSParameters(bundleId: "sandaqa.tech.twaquat"),
+      iosParameters: const IOSParameters(
+        bundleId: "sandaqa.tech.twaquat",
+        appStoreId: "6443883588",
+      ),
     );
     final dynamicLink =
         await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
@@ -46,7 +53,10 @@ class FirebaseDynamicLinkService {
       link: Uri.parse("https://twaquat.page.link/"),
       androidParameters:
           const AndroidParameters(packageName: "sandaqa.tech.twaquat"),
-      iosParameters: const IOSParameters(bundleId: "sandaqa.tech.twaquat"),
+      iosParameters: const IOSParameters(
+        bundleId: "sandaqa.tech.twaquat",
+        appStoreId: "6443883588",
+      ),
     );
     final dynamicLink =
         await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
@@ -61,6 +71,9 @@ class FirebaseDynamicLinkService {
     FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) async {
       final Uri deepLink = dynamicLinkData.link;
 
+      print(deepLink.fragment);
+      print(deepLink.data);
+
       String userId = FirebaseAuth.instance.currentUser!.uid;
       var groupDoc = await FirebaseFirestore.instance
           .collection('group')
@@ -70,7 +83,7 @@ class FirebaseDynamicLinkService {
       if (deepLink.queryParameters['id'] == null) {
         return;
       }
-      
+
       if (deepLink.queryParameters['section'] == null) {
         List groupUsers = groupDoc.data()!['users'];
         print(groupUsers);
@@ -100,6 +113,12 @@ class FirebaseDynamicLinkService {
           'userss': groupUserss,
         });
       }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("you successfully join the group".tr()),
+        ),
+      );
     }).onError((error) {
       // Handle errors
       print(error);
