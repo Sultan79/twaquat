@@ -37,10 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
           runSpacing: 25,
           spacing: 1000,
           children: [
-            Text(
-              "Login".tr(),
-              style: TextStyle(fontSize: 30),
-            ),
+            // Text(
+            //   "Login".tr(),
+            //   style: TextStyle(fontSize: 30),
+            // ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.08),
             CustomFiledText(
               controller: emailController,

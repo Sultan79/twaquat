@@ -88,6 +88,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
 
   @override
   Widget build(BuildContext context) {
+    final total = totalCorrectPredictions! + totalWrongsPredictions!;
     return Container(
       height: 225 + 10,
       width: 350,
@@ -348,7 +349,7 @@ class _MatchResultCardState extends State<MatchResultCard> {
                             ),
                           ),
                           Text(
-                            '${totalCorrectPredictions! + totalWrongsPredictions!}',
+                            '${total}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -386,7 +387,9 @@ class _MatchResultCardState extends State<MatchResultCard> {
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(
-                            '$totalCorrectPredictions',
+                            total == 0
+                                ? '% 0'
+                                : '% ${(totalCorrectPredictions! / total * 100).round()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -424,7 +427,9 @@ class _MatchResultCardState extends State<MatchResultCard> {
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(
-                            '$totalWrongsPredictions',
+                            total == 0
+                                ? '% 0'
+                                : '% ${(totalWrongsPredictions! / total * 100).round()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!

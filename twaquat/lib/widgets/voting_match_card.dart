@@ -80,6 +80,7 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
   @override
   Widget build(BuildContext context) {
     // DateFormat.jm().format(DateTime.parse(DateTime.now().toString().substring(0, 10)));
+    final total = firstTeamVotes + secondTeamVotes + drawVotes;
     return Container(
       height: 185,
       width: 350,
@@ -320,7 +321,9 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                             ),
                           ),
                           Text(
-                            "$firstTeamVotes",
+                            total == 0
+                                ? "%0"
+                                : "% ${(firstTeamVotes / total * 100).round()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -358,7 +361,9 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           Text(
-                            "$drawVotes",
+                            total == 0
+                                ? "%0"
+                                : "% ${(drawVotes / total * 100).round()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -406,7 +411,9 @@ class _VotingMatchCardState extends State<VotingMatchCard> {
                             ),
                           ),
                           Text(
-                            "$secondTeamVotes",
+                            total == 0
+                                ? "%0"
+                                : "% ${(secondTeamVotes / total * 100).round()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
