@@ -183,7 +183,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
-                      'Pick your predictions for World Cup winner'.tr(),
+                      'Pick your predictions for Football winner'.tr(),
                       textAlign: TextAlign.center,
                     ),
                   ),

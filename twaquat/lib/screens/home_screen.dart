@@ -304,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           );
-                          
+
                         default:
                           if (snapshot.hasError)
                             return Text('Error: ${snapshot.error}');
@@ -443,7 +443,7 @@ class QuizButton extends StatelessWidget {
           actionsPadding: EdgeInsets.only(bottom: 10, right: 20, left: 20),
           contentPadding: EdgeInsets.only(top: 10),
           title: Text(
-            'Are you an expert in World Cups?'.tr(),
+            'Are you an expert in Football?'.tr(),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
@@ -458,7 +458,7 @@ class QuizButton extends StatelessWidget {
                       width: 250,
                       height: 100,
                       child: Text(
-                          'Every day 10 different questions about the previous World Cups You have 5 seconds for each question If you pass the test, you will get a golden star You only have one try'
+                          'Every day 10 different questions about the previous Football You have 5 seconds for each question If you pass the test, you will get a golden star You only have one try'
                               .tr(),
                           textAlign: TextAlign.center,
                           // textWidthBasis: TextWidthBasis.parent,
@@ -507,7 +507,7 @@ class QuizButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () => showPopupMessage(context),
         child: Text(
-          "Are you an expert in World Cups?".tr(),
+          "Are you an expert in Football?".tr(),
           style: Theme.of(context)
               .textTheme
               .titleSmall!
